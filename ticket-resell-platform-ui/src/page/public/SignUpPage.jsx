@@ -1,21 +1,15 @@
 import {
   Button,
   Card,
-  Checkbox,
   FormControl,
-  FormControlLabel,
   FormGroup,
-  Input,
   InputLabel,
   Link,
-  SvgIcon,
   Typography,
   OutlinedInput,
   IconButton,
   InputAdornment,
 } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
@@ -99,7 +93,6 @@ export default function SignUp() {
     }
     setFormValid(null);
     setSuccess("Form Submitted Successfully");
-    navigate(LOGIN_PAGE);
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
