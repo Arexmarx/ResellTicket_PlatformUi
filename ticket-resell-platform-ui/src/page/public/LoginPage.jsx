@@ -158,7 +158,7 @@ export default function Login() {
               variant="contained"
               startIcon={<LoginIcon />}
               fullWidth
-              sx={{ mt: 1, backgroundColor: "#28a745" }}
+              sx={{ mt: 1, backgroundColor: "#2dc275" }}
             >
               Log in
             </Button>
@@ -185,7 +185,7 @@ export default function Login() {
                 <Link
                   component="button"
                   onClick={() => navigate(SIGN_UP_PAGE)}
-                  sx={{ color: "#28a745" }}
+                  sx={{ color: "#2dc275" }}
                 >
                   Register
                 </Link>
@@ -199,7 +199,7 @@ export default function Login() {
             fullWidth={true}
             variant="outlined"
             startIcon={<SvgIcon component={GoogleIcon} />}
-            sx={{ mt: 1, color: "#28a745" }}
+            sx={{ mt: 1, color: "#2dc275" }}
           >
             Login with Google
           </Button>

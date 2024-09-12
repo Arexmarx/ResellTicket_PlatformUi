@@ -99,7 +99,6 @@ export default function SignUp() {
     }
     setFormValid(null);
     setSuccess("Form Submitted Successfully");
-    navigate(LOGIN_PAGE);
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);

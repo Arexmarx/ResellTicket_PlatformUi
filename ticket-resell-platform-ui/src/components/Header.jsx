@@ -7,16 +7,14 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import MenuItem from "@mui/material/MenuItem";
-import NoteAltIcon from "@mui/icons-material/NoteAlt";
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from "react-router-dom";
-import {LOGIN_PAGE} from "../config/Constant"
+import {LOGIN_PAGE,HOME_PAGE} from "../config/Constant"
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Search = styled('div')(({ theme }) => ({
@@ -46,6 +44,7 @@ const Search = styled('div')(({ theme }) => ({
   
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
+    width: '100%',
     '& .MuiInputBase-input': {
       padding: theme.spacing(1, 1, 1, 0),
       // vertical padding + font size from searchIcon
@@ -53,7 +52,8 @@ const Search = styled('div')(({ theme }) => ({
       transition: theme.transitions.create('width'),
       width: '100%',
       [theme.breakpoints.up('md')]: {
-        width: '20ch',
+        width: '100%',
+        
       },
     },
   }));
@@ -91,6 +91,10 @@ const Search = styled('div')(({ theme }) => ({
             console.log("User Search:",search);          
         }
     }
+
+    const handleHomepage =() => {
+        navigate(HOME_PAGE)
+    }
   
     return (
       <AppBar style={{backgroundColor: '#28a745'}}>
@@ -111,6 +115,7 @@ const Search = styled('div')(({ theme }) => ({
                 color: 'inherit',
                 textDecoration: 'none',
               }}
+              onClick={handleHomepage}
             >
               Ticket Resell
             </Typography>
