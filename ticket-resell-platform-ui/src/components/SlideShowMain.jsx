@@ -68,7 +68,7 @@ export default function SlideShowMain() {
         className="position-absolute top-50 translate-middle-y"
         style={{
           cursor: 'pointer',
-          color: 'white',
+          color: 'black',
           left: '-40px', // Adjust this value to move the icon further left,
           padding: '10px',
           borderRadius: '50%',
@@ -82,7 +82,7 @@ export default function SlideShowMain() {
         className="position-absolute top-50 translate-middle-y"
         style={{
           cursor: 'pointer',
-          color: 'white',
+          color: 'black',
           right: '-40px', // Adjust this value to move the icon further right
           padding: '10px',
           borderRadius: '50%',

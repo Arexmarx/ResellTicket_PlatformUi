@@ -44,7 +44,7 @@ export default function SlideShowDetail({ Event }) {
   }
   return (
     <MDBContainer className="my-5 position-relative">
-      <MDBTypography variant='h4' className='mb-4' color='white'>{Event}</MDBTypography>
+      <MDBTypography variant='h4' className='mb-4' color='black'>{Event}</MDBTypography>
       <MDBCarousel showControls={false} showIndicators={false} fade>
         <MDBCarouselItem className="active">
           <MDBRow className="justify-content-center">
@@ -69,7 +69,7 @@ export default function SlideShowDetail({ Event }) {
         className="position-absolute top-50 translate-middle-y"
         style={{
           cursor: 'pointer',
-          color: 'white',
+          color: 'black',
           left: '-40px', // Adjust this value to move the icon further left,
           padding: '10px',
           borderRadius: '50%',
@@ -83,7 +83,7 @@ export default function SlideShowDetail({ Event }) {
         className="position-absolute top-50 translate-middle-y"
         style={{
           cursor: 'pointer',
-          color: 'white',
+          color: 'black',
           right: '-40px', // Adjust this value to move the icon further right
           padding: '10px',
           borderRadius: '50%',

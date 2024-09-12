@@ -48,7 +48,7 @@ export default function SlideShowHotEvent() {
 
   return (
     <MDBContainer className="my-5 position-relative">
-      <MDBTypography variant='h4' className='mb-4' color='white'>Sự kiện đặc biệt</MDBTypography>
+      <MDBTypography variant='h4' className='mb-4' color='black'>Sự kiện đặc biệt</MDBTypography>
       <MDBCarousel showControls={false} showIndicators={false} fade>
         <MDBCarouselItem className="active">
           <MDBRow className="justify-content-center">
@@ -85,7 +85,7 @@ export default function SlideShowHotEvent() {
         className="position-absolute top-50 translate-middle-y"
         style={{
           cursor: 'pointer',
-          color: 'white',
+          color: 'black',
           left: '-40px',
           padding: '10px',
           borderRadius: '50%',
@@ -99,7 +99,7 @@ export default function SlideShowHotEvent() {
         className="position-absolute top-50 translate-middle-y"
         style={{
           cursor: 'pointer',
-          color: 'white',
+          color: 'black',
           right: '-40px',
           padding: '10px',
           borderRadius: '50%',

@@ -24,7 +24,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import * as React from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import {HOME_PAGE} from "../../config/Constant"
+import {HOME_PAGE,SIGN_UP_PAGE} from "../../config/Constant"
 export default function Login() {
   const [showPassword, setShowPassword] = React.useState(false);
   // Inputs
@@ -184,7 +184,7 @@ export default function Login() {
                 Not have account?{" "}
                 <Link
                   component="button"
-                  onClick={() => navigate()}
+                  onClick={() => navigate(SIGN_UP_PAGE)}
                   sx={{ color: "#28a745" }}
                 >
                   Register

@@ -80,11 +80,14 @@ const Search = styled('div')(({ theme }) => ({
     };
 
     const handleSearchInput =(e) => {
-        setSearch(e.target.value);
+      setSearch(e.target.value);
     }
 
     const handleSearchKeyDown =(e) => {
         if(e.key === 'Enter'){
+          if(e.target.value ===''){
+            setSearch("Search for the Ticket")
+          }
             console.log("User Search:",search);          
         }
     }
