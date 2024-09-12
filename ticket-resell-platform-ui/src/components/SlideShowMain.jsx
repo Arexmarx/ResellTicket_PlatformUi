@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { MDBCarousel, MDBCarouselItem, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBIcon } from 'mdb-react-ui-kit';
 import { useNavigate } from "react-router-dom";
-import {LOGIN_PAGE} from "../config/Constant";
+import { EVENT_DETAIL_PAGE } from "../config/Constant";
+
 export default function SlideShowMain() {
   const items = [
     { id: 1, title: 'Concert A', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg', description: 'Description for Concert A' },
@@ -34,14 +35,12 @@ export default function SlideShowMain() {
 
     return visibleItems;
   };
+
   const navigate = useNavigate();
-  const handleClick  = (item) => {
-    console.log(item.id);
-    // You can use the item data here, for example:
-    // navigate(`${LOGIN_PAGE}?itemId=${item.id}`);
-    // Or just navigate to the login page:
-    navigate(LOGIN_PAGE);
+  const handleClick = (item) => {
+    navigate(EVENT_DETAIL_PAGE, { state: { event: item } });
   }
+
   return (
     <MDBContainer className="my-5 position-relative">
       <MDBCarousel showControls={false} showIndicators={false} fade>
