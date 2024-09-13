@@ -21,16 +21,21 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {LOGIN_PAGE} from "../../config/Constant"
 const isEmail = (email) =>
   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+/**
+ * Author: Phan Nguyễn Mạnh Cường
+ */
 export default function SignUp() {
   const [showPassword, setShowPassword] = React.useState(false);
   // Inputs
   const [userNameInput, setUserNameInput] = React.useState();
   const [passwordInput, setPasswordInput] = React.useState();
+  const [rePasswordInput, setRePasswordInput] = React.useState();
   const [emailInput, setEmailInput] = React.useState();
 
   //Inputs Error
   const [userNameError, setUserNameError] = React.useState(false);
   const [passwordError, setPasswordError] = React.useState(false);
+  const [rePasswordError, setRePasswordError] = React.useState(false);
   const [emailError, setEmailError] = React.useState(false);
 
   // Overall Form Validity
@@ -62,6 +67,13 @@ export default function SignUp() {
     }
     setPasswordError(false);
   };
+  const handleRePassword = () => {
+    if (!rePasswordInput && rePasswordInput === passwordInput ) {
+      setRePasswordError(true);
+      return;
+    }
+    setRePasswordError(false);
+  };
   //Validation for on Blur Email
   const handleEmail = () => {
     console.log(isEmail(emailInput));
@@ -84,6 +96,12 @@ export default function SignUp() {
     if (passwordError || !passwordInput) {
       setFormValid(
         "Password is set btw 5 - 20 characters long. Please Re-Enter"
+      );
+      return;
+    }
+    if (rePasswordError || !rePasswordInput) {
+      setFormValid(
+        "Re-Password is not the same Password. Please Re-Enter"
       );
       return;
     }
@@ -167,7 +185,37 @@ export default function SignUp() {
                     onMouseUp={handleMouseUpPassword}
                     edge="end"
                   >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+            />
+          </FormControl>
+          <FormControl sx={{ marginBottom: 3 }}>
+            <InputLabel
+              error={rePasswordError}
+              htmlFor="outlined-adornment-password"
+            >
+              Re-Password
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={showPassword ? "text" : "password"}
+              value={rePasswordInput}
+              onChange={(e) => setRePasswordInput(e.target.value)}
+              error={rePasswordError}
+              onBlur={handleRePassword}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    onMouseUp={handleMouseUpPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
               }

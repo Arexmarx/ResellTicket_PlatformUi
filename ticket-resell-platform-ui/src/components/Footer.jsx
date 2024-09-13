@@ -6,6 +6,9 @@ import {
   MDBCol,
   MDBIcon,
 } from "mdb-react-ui-kit";
+/**
+ * Author: Phan Nguyễn Mạnh Cường
+ */
 export default function Footer() {
   return (
     <MDBFooter bgColor="light" className="text-center text-lg-start text-muted">

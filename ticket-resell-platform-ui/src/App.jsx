@@ -5,27 +5,21 @@ import {
   HOME_PAGE,
   SIGN_UP_PAGE,
   LOGIN_PAGE,
-<<<<<<< HEAD
   BOUGHT_TICKET_MANEMENT_PAGE,
   PROFILE_PAGE,
   MY_SHOP_PAGE,
-=======
   EVENT_DETAIL_PAGE,
->>>>>>> 8ea1da836ffb12d0a49d818d54c7c382d8790ec7
 } from "./config/Constant";
 import HomePage from "./page/public/HomePage";
 import SignUp from "./page/public/SignUpPage";
 import Login from "./page/public/LoginPage";
-<<<<<<< HEAD
 import BoughtTicketManagementPage from './page/private/BoughtTicketManagementPage';
 import ProfilePage from "./page/private/ProfilePage";
 import MyShopPage from "./page/private/MyShopPage";
 
 
 
-=======
 import EventDetail from "./page/public/EventDetailPage";
->>>>>>> 8ea1da836ffb12d0a49d818d54c7c382d8790ec7
 function App() {
   return (
     <div>
@@ -40,7 +34,6 @@ function App() {
           <Route path={HOME_PAGE} element={<HomePage />}></Route>
 
           <Route path={SIGN_UP_PAGE} element={<SignUp />}></Route>
-<<<<<<< HEAD
 
           <Route path={BOUGHT_TICKET_MANEMENT_PAGE} element={<BoughtTicketManagementPage/>}></Route>
 
@@ -48,9 +41,7 @@ function App() {
 
           <Route path={MY_SHOP_PAGE} element={ <MyShopPage/> }></Route>
 
-=======
           <Route path={EVENT_DETAIL_PAGE} element={<EventDetail />}></Route>
->>>>>>> 8ea1da836ffb12d0a49d818d54c7c382d8790ec7
         </Routes>
       </BrowserRouter>
     </div>

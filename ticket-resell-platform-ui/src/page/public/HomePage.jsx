@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import {
   MDBBtn,
-  MDBBtnGroup,
   MDBContainer,
   MDBRow,
   MDBCol,
@@ -12,6 +11,9 @@ import SlideShowMain from "../../components/SlideShowMain.jsx";
 import SlideShowHotEvent from "../../components/SlideShowHotEvent.jsx";
 import SlideShowDetail from "../../components/SlideShowDetail.jsx";
 import { Event } from "../../config/Constant.js";
+/**
+ * Author: Phan Nguyễn Mạnh Cường
+ */
 export default function HomePage() {
   const musicRef = useRef(null);
   const exhibitionRef = useRef(null);

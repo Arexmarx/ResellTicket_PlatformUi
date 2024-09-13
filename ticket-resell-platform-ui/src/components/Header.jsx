@@ -14,8 +14,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from "react-router-dom";
-import {LOGIN_PAGE,HOME_PAGE} from "../config/Constant"
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import {LOGIN_PAGE,HOME_PAGE,BOUGHT_TICKET_MANEMENT_PAGE,PROFILE_PAGE, MAIN_COLOR} from "../config/Constant"
+/**
+ * Author: Phan Nguyễn Mạnh Cường
+ */
+const settings = ["Quản lý tài khoản", "Vé Đã Mua", "Đăng Xuất"];
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -73,10 +76,17 @@ const Search = styled('div')(({ theme }) => ({
     };
   
     const handleEventUser = (e) => {
-      if (e === 'Logout') {
+      if (e === 'Đăng Xuất') {
         navigate(LOGIN_PAGE);
         return;
       }
+      if(e === 'Vé Đã Mua'){
+        navigate(BOUGHT_TICKET_MANEMENT_PAGE);
+        return;
+      }
+      if(e === 'Quản lý tài khoản')
+        navigate(PROFILE_PAGE)
+        return;
     };
 
     const handleSearchInput =(e) => {
@@ -97,7 +107,7 @@ const Search = styled('div')(({ theme }) => ({
     }
   
     return (
-      <AppBar style={{backgroundColor: '#28a745'}}>
+      <AppBar style={{backgroundColor: MAIN_COLOR}}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <LocalActivityIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
