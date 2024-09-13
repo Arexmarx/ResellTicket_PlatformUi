@@ -11,7 +11,13 @@ import SlideShowMain from "../../components/SlideShowMain.jsx";
 import SlideShowHotEvent from "../../components/SlideShowHotEvent.jsx";
 import SlideShowDetail from "../../components/SlideShowDetail.jsx";
 import { Event } from "../../config/Constant.js";
+<<<<<<< HEAD
 
+=======
+/**
+ * Author: Phan Nguyễn Mạnh Cường
+ */
+>>>>>>> 8105fcc46583f36d8b42bc8c927ce066fdce2582
 export default function HomePage() {
 
   const musicRef = useRef(null);

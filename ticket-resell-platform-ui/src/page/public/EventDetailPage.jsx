@@ -15,36 +15,12 @@ import {
 import Footer from "../../components/Footer.jsx";
 import Header from "../../components/Header.jsx";
 import { Avatar, Typography } from "@mui/material";
-const seller = [
-  {
-    name: 'A',
-    ticketName:'Vé Hạng S',
-    ticketType:'Vé Online',
-    ticketDiscription:'Vé siêu cấp vip Pro',
-    ticketPrice:'1000000'    
-  },
-  {
-      name: 'B',
-      ticketName:'Vé Hạng D',
-      ticketType:'Vé giấy',
-      ticketDiscription:'Vé siêu ngon',
-      ticketPrice:'1000000'
-  },
-  {
-      name: 'C',
-      ticketName:'Vé Hạng A',
-      ticketType:'Vé online',
-      ticketDiscription:'Vé mới mua chưa sử dụng',
-      ticketPrice:'222222'
-  },
-  {
-      name: 'D',
-      ticketName:'Vé Hạng B',
-      ticketType:'vé giấy',
-      ticketDiscription:'vé siêu rẻ',
-      ticketPrice:'343434'
-  },
-]
+import { MAIN_COLOR } from "../../config/Constant.js";
+import { SELLER } from '../../test/DataTest.js'
+/**
+ * Author: Phan Nguyễn Mạnh Cường
+ */
+const seller = SELLER
 export default function EventDetail() {
   const location = useLocation();
   const { event } = location.state || {};
@@ -95,13 +71,16 @@ export default function EventDetail() {
                       <Typography>Loại vé: {x.ticketType}</Typography>
                     </MDBCol>
                     <MDBCol>
+                      <Typography>Khu vực: {x.ticketArea}</Typography>
+                    </MDBCol>
+                    <MDBCol>
                       <Typography>Mô tả: {x.ticketDiscription}</Typography>
                     </MDBCol>
                     <MDBCol>
                       <Typography>Giá bán: {x.ticketPrice}</Typography>
                     </MDBCol>
                     <MDBCol size="auto">
-                      <MDBBtn color="primary">Mua</MDBBtn>
+                      <MDBBtn style={{backgroundColor: MAIN_COLOR}}>Mua</MDBBtn>
                     </MDBCol>
                   </MDBRow>
                 </MDBCardBody>

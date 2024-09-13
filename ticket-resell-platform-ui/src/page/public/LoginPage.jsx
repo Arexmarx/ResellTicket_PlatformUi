@@ -25,6 +25,9 @@ import * as React from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {HOME_PAGE,SIGN_UP_PAGE} from "../../config/Constant"
+/**
+ * Author: Phan Nguyễn Mạnh Cường
+ */
 export default function Login() {
   const [showPassword, setShowPassword] = React.useState(false);
   // Inputs
@@ -145,7 +148,7 @@ export default function Login() {
                     onMouseUp={handleMouseUpPassword}
                     edge="end"
                   >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
               }
