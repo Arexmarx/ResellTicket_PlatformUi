@@ -6,6 +6,9 @@ import SideBar from '../../components/SideBar'
 import { SidebarOption } from '../../config/Constant'
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
+/*
+    Author: Nguyen Tien Thuan
+*/
 export default function ProfilePage() {
 
     const handleFileChange = (event) => {
