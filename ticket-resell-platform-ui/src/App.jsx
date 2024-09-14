@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes} from "react-router-dom";
 import {
   DEFAULT_PAGE,
   HOME_PAGE,
@@ -10,6 +10,7 @@ import {
   PROFILE_PAGE,
   MY_SHOP_PAGE,
   BUY_TICKET_PAGE,
+  Check_OUT_PAGE,
 } from "./config/Constant";
 import HomePage from "./page/public/HomePage";
 import SignUp from "./page/public/SignUpPage";
@@ -18,13 +19,15 @@ import BoughtTicketManagementPage from './page/private/BoughtTicketManagementPag
 import ProfilePage from "./page/private/ProfilePage";
 import MyShopPage from "./page/private/MyShopPage";
 import EventDetail from "./page/public/EventDetailPage";
-import BuyTicketPage from "./page/private/BuyTicketPage"
-
+import BuyTicketPage from "./page/private/BuyTicketPage";
+import CheckOutPage from "./page/private/CheckOutPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
+        <ScrollToTop/>
         <Routes>
 
 
@@ -45,6 +48,8 @@ function App() {
           <Route path={EVENT_DETAIL_PAGE} element={ <EventDetail/> }></Route>
 
           <Route path={BUY_TICKET_PAGE} element={<BuyTicketPage/>}></Route>
+
+          <Route path={Check_OUT_PAGE} element={<CheckOutPage/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

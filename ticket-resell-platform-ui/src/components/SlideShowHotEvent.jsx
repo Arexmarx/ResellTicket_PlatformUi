@@ -61,6 +61,8 @@ export default function SlideShowHotEvent() {
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
+                        borderRadius: '15px', // Add rounded corners
+                        border: '2px solid #ddd', // Add a border
                       }}
                     />
                   </div>

@@ -53,7 +53,11 @@ export const SELLER = [
 
 // User data
 export const USER_DATA = {
-  is_seller: false
+  is_seller: false,
+  name: "Nguyễn Văn He",
+  email: "abc@gmail.com",
+  phone: "0937489382",
+  add: "Nguyễn Văn Tăng, TP Hồ Chí Minh"
 }
 
 export const BOUGHT_TICKET_DATA = [
