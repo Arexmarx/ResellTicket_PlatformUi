@@ -9,9 +9,10 @@ import {
   MDBCardBody,
   MDBCardTitle,
   MDBCardText,
-  MDBIcon,
   MDBBtn,
 } from "mdb-react-ui-kit";
+import {BUY_TICKET_PAGE} from '../../config/Constant.js'
+import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer.jsx";
 import Header from "../../components/Header.jsx";
 import { Avatar, Typography } from "@mui/material";
@@ -23,12 +24,17 @@ import { SELLER } from '../../test/DataTest.js'
 const seller = SELLER
 export default function EventDetail() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { event } = location.state || {};
 
   if (!event) {
     return <div>No event data available</div>;
   }
 
+  
+  const handleBuy =(x) => {
+      navigate(BUY_TICKET_PAGE, {state: {ticket: x}})
+  }
   return (
     <div>
       <Header />
@@ -80,7 +86,12 @@ export default function EventDetail() {
                       <Typography>Giá bán: {x.ticketPrice}</Typography>
                     </MDBCol>
                     <MDBCol size="auto">
-                      <MDBBtn style={{backgroundColor: MAIN_COLOR}}>Mua</MDBBtn>
+                      <MDBBtn 
+                        style={{backgroundColor: MAIN_COLOR}}
+                        onClick={() => handleBuy(x)}
+                      >
+                        Mua
+                      </MDBBtn>
                     </MDBCol>
                   </MDBRow>
                 </MDBCardBody>

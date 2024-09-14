@@ -10,37 +10,46 @@ export const ITEMS = [
 export const SELLER = [
   {
     name: 'A',
-    ticketName: 'Vé Hạng S',
-    ticketType: 'Vé Online',
+    ticketName:'Vé Hạng S',
+    ticketType:'Vé Online',
     ticketArea: 'Khu A',
-    ticketDiscription: 'Vé siêu cấp vip Pro',
-    ticketPrice: '1000000'
+    ticketDiscription:'Vé siêu cấp vip Pro',
+    ticketDetailDiscipt:'Đây là mô tả chi tiết cho vé này , siêu chi tiết nên có nhiều text để nó dài nhìn cho nó chuyên nghiệp',
+    ticketImage:'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(1).jpg',
+    ticketPrice:'1000000'
   },
   {
-    name: 'B',
-    ticketName: 'Vé Hạng D',
-    ticketType: 'Vé giấy',
-    ticketArea: 'Khu C',
-    ticketDiscription: 'Vé siêu ngon',
-    ticketPrice: '1000000'
+      name: 'B',
+      ticketName:'Vé Hạng D',
+      ticketType:'Vé giấy',
+      ticketArea: 'Khu C',
+      ticketDiscription:'Vé siêu ngon',
+      ticketDetailDiscipt:'Đây là mô tả chi tiết cho vé này , siêu chi tiết nên có nhiều text để nó dài nhìn cho nó chuyên nghiệp',
+      ticketImage:'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(2).jpg',
+      ticketPrice:'1000000'
   },
   {
-    name: 'C',
-    ticketName: 'Vé Hạng A',
-    ticketType: 'Vé online',
-    ticketArea: 'Khu E',
-    ticketDiscription: 'Vé mới mua chưa sử dụng',
-    ticketPrice: '222222'
+      name: 'C',
+      ticketName:'Vé Hạng A',
+      ticketType:'Vé online',
+      ticketArea: 'Khu E',
+      ticketDiscription:'Vé mới mua chưa sử dụng',
+      ticketDetailDiscipt:'Đây là mô tả chi tiết cho vé này , siêu chi tiết nên có nhiều text để nó dài nhìn cho nó chuyên nghiệp',
+      ticketImage:'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(3).jpg',
+      ticketPrice:'222222'
   },
   {
-    name: 'D',
-    ticketName: 'Vé Hạng B',
-    ticketType: 'vé giấy',
-    ticketArea: 'Khu B',
-    ticketDiscription: 'vé siêu rẻ',
-    ticketPrice: '343434'
-  },
+      name: 'D',
+      ticketName:'Vé Hạng B',
+      ticketType:'vé giấy',
+      ticketArea: 'Khu B',
+      ticketDiscription:'vé siêu rẻ',
+      ticketDetailDiscipt:'Đây là mô tả chi tiết cho vé này , siêu chi tiết nên có nhiều text để nó dài nhìn cho nó chuyên nghiệp',
+      ticketImage:'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(4).jpg',
+      ticketPrice:'343434'
+  }
 ]
+
 
 // User data
 export const USER_DATA = {
@@ -71,9 +80,6 @@ export const BOUGHT_TICKET_DATA = [
       name: "Đang xử lý"
     }
   },
-
-
-  
   {
     seller: {
       id: "101",

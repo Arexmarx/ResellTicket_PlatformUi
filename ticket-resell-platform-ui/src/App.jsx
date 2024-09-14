@@ -8,7 +8,8 @@ import {
   EVENT_DETAIL_PAGE,
   BOUGHT_TICKET_MANEMENT_PAGE,
   PROFILE_PAGE,
-  MY_SHOP_PAGE
+  MY_SHOP_PAGE,
+  BUY_TICKET_PAGE,
 } from "./config/Constant";
 import HomePage from "./page/public/HomePage";
 import SignUp from "./page/public/SignUpPage";
@@ -17,6 +18,7 @@ import BoughtTicketManagementPage from './page/private/BoughtTicketManagementPag
 import ProfilePage from "./page/private/ProfilePage";
 import MyShopPage from "./page/private/MyShopPage";
 import EventDetail from "./page/public/EventDetailPage";
+import BuyTicketPage from "./page/private/BuyTicketPage"
 
 
 function App() {
@@ -42,6 +44,7 @@ function App() {
 
           <Route path={EVENT_DETAIL_PAGE} element={ <EventDetail/> }></Route>
 
+          <Route path={BUY_TICKET_PAGE} element={<BuyTicketPage/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
