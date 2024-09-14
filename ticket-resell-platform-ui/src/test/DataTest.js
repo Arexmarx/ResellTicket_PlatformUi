@@ -14,7 +14,9 @@ export const ITEMS = [
       ticketType:'Vé Online',
       ticketArea: 'Khu A',
       ticketDiscription:'Vé siêu cấp vip Pro',
-      ticketPrice:'1000000'    
+      ticketDetailDiscipt:'Đây là mô tả chi tiết cho vé này , siêu chi tiết nên có nhiều text để nó dài nhìn cho nó chuyên nghiệp',
+      ticketImage:'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(1).jpg',
+      ticketPrice:'1000000'
     },
     {
         name: 'B',
@@ -22,6 +24,8 @@ export const ITEMS = [
         ticketType:'Vé giấy',
         ticketArea: 'Khu C',
         ticketDiscription:'Vé siêu ngon',
+        ticketDetailDiscipt:'Đây là mô tả chi tiết cho vé này , siêu chi tiết nên có nhiều text để nó dài nhìn cho nó chuyên nghiệp',
+        ticketImage:'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(2).jpg',
         ticketPrice:'1000000'
     },
     {
@@ -30,6 +34,8 @@ export const ITEMS = [
         ticketType:'Vé online',
         ticketArea: 'Khu E',
         ticketDiscription:'Vé mới mua chưa sử dụng',
+        ticketDetailDiscipt:'Đây là mô tả chi tiết cho vé này , siêu chi tiết nên có nhiều text để nó dài nhìn cho nó chuyên nghiệp',
+        ticketImage:'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(3).jpg',
         ticketPrice:'222222'
     },
     {
@@ -38,6 +44,8 @@ export const ITEMS = [
         ticketType:'vé giấy',
         ticketArea: 'Khu B',
         ticketDiscription:'vé siêu rẻ',
+        ticketDetailDiscipt:'Đây là mô tả chi tiết cho vé này , siêu chi tiết nên có nhiều text để nó dài nhìn cho nó chuyên nghiệp',
+        ticketImage:'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(4).jpg',
         ticketPrice:'343434'
     },
   ]

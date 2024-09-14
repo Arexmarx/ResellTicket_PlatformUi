@@ -5,6 +5,7 @@ export const HOME_PAGE = "/home"
 export const BOUGHT_TICKET_MANEMENT_PAGE = "/users/dashboard"
 export const PROFILE_PAGE = "/users/profile"
 export const MY_SHOP_PAGE = "/users/myshop";
+export const BUY_TICKET_PAGE ="/users/buyTicket"
 
 // Color
 export const MAIN_COLOR = '#2dc275';
