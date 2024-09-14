@@ -10,18 +10,19 @@ import {
   MDBCardTitle,
   MDBCardText,
   MDBBtn,
+  MDBCardHeader,
 } from "mdb-react-ui-kit";
-import {BUY_TICKET_PAGE} from '../../config/Constant.js'
+import { BUY_TICKET_PAGE } from "../../config/Constant.js";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer.jsx";
 import Header from "../../components/Header.jsx";
 import { Avatar, Typography } from "@mui/material";
 import { MAIN_COLOR } from "../../config/Constant.js";
-import { SELLER } from '../../test/DataTest.js'
+import { SELLER } from "../../test/DataTest.js";
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
-const seller = SELLER
+const seller = SELLER;
 export default function EventDetail() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -31,10 +32,9 @@ export default function EventDetail() {
     return <div>No event data available</div>;
   }
 
-  
-  const handleBuy =(x) => {
-      navigate(BUY_TICKET_PAGE, {state: {ticket: x}})
-  }
+  const handleBuy = (x) => {
+    navigate(BUY_TICKET_PAGE, { state: { ticket: x } });
+  };
   return (
     <div>
       <Header />
@@ -54,14 +54,23 @@ export default function EventDetail() {
                 src={event.image}
                 alt={event.title}
                 position="top"
+                style={{
+                  cursor: 'pointer',
+                  borderRadius: '15px', // Add rounded corners
+                  border: '2px solid #ddd', // Add a border
+                  boxShadow: '0 4px 8px rgba(0,0,0,0.1)', // Optional: add a subtle shadow
+                }}
               />
             </MDBCard>
           </MDBCol>
         </MDBRow>
         <MDBRow className="mt-4">
-          <MDBCol>
+          <MDBCol style={{marginBottom: "3%"}}>
+            <MDBCardHeader style={{ textAlign: "center" ,fontSize:"30px"}}>
+              VÉ ĐANG BÁN
+            </MDBCardHeader>
             {seller.map((x) => (
-                <MDBCard key={x}>
+              <MDBCard key={x} style={{ marginTop: "2%" }}>
                 <MDBCardBody>
                   <MDBRow className="align-items-center">
                     <MDBCol size="auto">
@@ -86,8 +95,8 @@ export default function EventDetail() {
                       <Typography>Giá bán: {x.ticketPrice}</Typography>
                     </MDBCol>
                     <MDBCol size="auto">
-                      <MDBBtn 
-                        style={{backgroundColor: MAIN_COLOR}}
+                      <MDBBtn
+                        style={{ backgroundColor: MAIN_COLOR }}
                         onClick={() => handleBuy(x)}
                       >
                         Mua
@@ -97,7 +106,6 @@ export default function EventDetail() {
                 </MDBCardBody>
               </MDBCard>
             ))}
-            
           </MDBCol>
         </MDBRow>
       </MDBContainer>
