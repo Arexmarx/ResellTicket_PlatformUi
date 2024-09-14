@@ -4,7 +4,9 @@ import Header from "../../components/Header"
 import SideBar from "../../components/SideBar"
 import { SidebarOption } from "../../config/Constant"
 
-
+/*
+    Author: Nguyen Tien Thuan
+*/
 export default function MyShopPage() {
 
     const user = {

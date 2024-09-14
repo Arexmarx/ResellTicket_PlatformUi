@@ -14,7 +14,9 @@ import { useNavigate } from 'react-router-dom';
 import KeyIcon from '@mui/icons-material/Key';
 import PropTypes from 'prop-types';
 
-
+/*
+    Author: Nguyen Tien Thuan
+*/
 export default function SideBar({sideBarOption}) {
 
     SideBar.propTypes = {

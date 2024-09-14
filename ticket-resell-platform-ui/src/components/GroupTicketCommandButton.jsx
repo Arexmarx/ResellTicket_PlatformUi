@@ -1,7 +1,9 @@
 import { useState } from "react";
 import '../assets/css/GroupTicketCommandutton.css'
 
-
+/*
+    Author: Nguyen Tien Thuan
+*/
 export default function GroupTicketCommandButton() {
 
     const [activeTab, setActiveTab] = useState('Đang xử lý');
