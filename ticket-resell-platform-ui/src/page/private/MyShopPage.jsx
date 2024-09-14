@@ -1,17 +1,16 @@
-import { Button } from "@mui/material"
+ import { Button } from "@mui/material"
 import Footer from "../../components/Footer"
 import Header from "../../components/Header"
 import SideBar from "../../components/SideBar"
 import { SidebarOption } from "../../config/Constant"
+import { USER_DATA } from "../../test/DataTest"
 
 /*
     Author: Nguyen Tien Thuan
 */
 export default function MyShopPage() {
 
-    const user = {
-        is_seller: false
-    }
+    const user = USER_DATA;
 
     return (
         <div>
@@ -45,7 +44,8 @@ export default function MyShopPage() {
                                     :
                                     null
                             }
-                        </div>
+                        </div>  
+
                     </div>
                 </div>
             </div>

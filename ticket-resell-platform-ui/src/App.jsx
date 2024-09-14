@@ -17,8 +17,10 @@ import Login from "./page/public/LoginPage";
 import BoughtTicketManagementPage from './page/private/BoughtTicketManagementPage';
 import ProfilePage from "./page/private/ProfilePage";
 import MyShopPage from "./page/private/MyShopPage";
-import BuyTicketPage from "./page/private/BuyTicketPage"
 import EventDetail from "./page/public/EventDetailPage";
+import BuyTicketPage from "./page/private/BuyTicketPage"
+
+
 function App() {
   return (
     <div>
@@ -41,7 +43,7 @@ function App() {
           <Route path={MY_SHOP_PAGE} element={ <MyShopPage/> }></Route>
 
           <Route path={EVENT_DETAIL_PAGE} element={ <EventDetail/> }></Route>
-          
+
           <Route path={BUY_TICKET_PAGE} element={<BuyTicketPage/>}></Route>
         </Routes>
       </BrowserRouter>

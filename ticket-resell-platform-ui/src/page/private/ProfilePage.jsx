@@ -13,7 +13,7 @@ export default function ProfilePage() {
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
-        console.log(file);  // You can handle the selected file here.
+        console.log(file);  
     };
 
     return (
