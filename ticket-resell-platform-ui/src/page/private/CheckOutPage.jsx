@@ -25,14 +25,10 @@ import Select from "@mui/material/Select";
 export default function CheckOutPage() {
   const location = useLocation();
   const { ticket, quantity } = location.state || {};
-  const [age, setAge] = React.useState("");
   if (!ticket) {
     return <div>No event data available</div>;
   }
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
   return (
     <div>
       <Header />

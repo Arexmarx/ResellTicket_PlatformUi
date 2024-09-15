@@ -4,7 +4,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Avatar, Badge } from '@mui/material';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
-import { BOUGHT_TICKET_MANEMENT_PAGE, MAIN_COLOR, MY_SHOP_PAGE, PROFILE_PAGE, SidebarOption } from '../config/Constant';
+import { BOUGHT_TICKET_MANEMENT_PAGE, MAIN_COLOR, MY_SHOP_PAGE, PROFILE_PAGE, SidebarOption ,MANAGE_BUYER_PAGE} from '../config/Constant';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import Divider from '@mui/material/Divider';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
@@ -69,6 +69,7 @@ export default function SideBar({sideBarOption}) {
 
                 <ListItemButton 
                     sx={sideBarOption === SidebarOption.BALANCE ? { backgroundColor: MAIN_COLOR } : {}}
+                    onClick={() => { navigator(MANAGE_BUYER_PAGE)}}
                 >
                     <ListItemIcon>
                         <LocalAtmIcon />

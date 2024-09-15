@@ -12,7 +12,7 @@ import {
   MDBBtn,
 } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
-import { MAIN_COLOR, Check_OUT_PAGE } from "../../config/Constant.js";
+import { MAIN_COLOR, CHECK_OUT_PAGE } from "../../config/Constant.js";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 /**
@@ -29,7 +29,7 @@ export default function BuyTicketPage() {
   }
 
   const handleBuy = (x) => {
-    navigate(Check_OUT_PAGE, { state: { ticket: x, quantity: quantity } });
+    navigate(CHECK_OUT_PAGE, { state: { ticket: x, quantity: quantity } });
   };
 
   const handleQuantityChange = (delta) => {

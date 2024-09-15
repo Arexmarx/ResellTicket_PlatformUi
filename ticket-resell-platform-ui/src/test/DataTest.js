@@ -57,7 +57,8 @@ export const USER_DATA = {
   name: "Nguyễn Văn He",
   email: "abc@gmail.com",
   phone: "0937489382",
-  add: "Nguyễn Văn Tăng, TP Hồ Chí Minh"
+  add: "Nguyễn Văn Tăng, TP Hồ Chí Minh",
+  money:"1000000000"
 }
 
 export const BOUGHT_TICKET_DATA = [
