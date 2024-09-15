@@ -1,16 +1,13 @@
 /* eslint-disable react/prop-types */
-import { Avatar, Box, Button, Divider } from "@mui/material";
+import { Avatar, Box, Divider } from "@mui/material";
 import { formatToVND, stringAvatar } from "../service/StringService";
 import {
     MDBBtn,
     MDBModal,
     MDBModalDialog,
     MDBModalContent,
-    MDBModalHeader,
-    MDBModalTitle,
     MDBModalBody,
     MDBModalFooter,
-    MDBCheckbox,
 } from 'mdb-react-ui-kit';
 import { useState } from "react";
 
