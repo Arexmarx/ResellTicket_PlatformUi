@@ -20,6 +20,7 @@ import SideBar from "../../components/SideBar";
 import { USER_DATA } from "../../test/DataTest.js";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
+import { formatToVND} from'../../service/StringService.js'
 export default function ManageBuyerMoney() {
   return (
     <div>
@@ -40,7 +41,7 @@ export default function ManageBuyerMoney() {
               <MDBCardHeader
                 style={{ textAlign: "center", fontSize: "30px", color: "red" }}
               >
-                Tiền của bạn: {USER_DATA.money}
+                Tiền của bạn: {formatToVND(USER_DATA.money)}
               </MDBCardHeader>
               <hr />
             </MDBRow>
