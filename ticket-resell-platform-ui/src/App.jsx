@@ -10,7 +10,8 @@ import {
   PROFILE_PAGE,
   MY_SHOP_PAGE,
   BUY_TICKET_PAGE,
-  Check_OUT_PAGE,
+  CHECK_OUT_PAGE,
+  MANAGE_BUYER_PAGE,
 } from "./config/Constant";
 import HomePage from "./page/public/HomePage";
 import SignUp from "./page/public/SignUpPage";
@@ -22,14 +23,13 @@ import EventDetail from "./page/public/EventDetailPage";
 import BuyTicketPage from "./page/private/BuyTicketPage";
 import CheckOutPage from "./page/private/CheckOutPage";
 import ScrollToTop from "./components/ScrollToTop";
-
+import ManageBuyerPage from"./page/private/ManageBuyerMoney";
 function App() {
   return (
     <div>
       <BrowserRouter>
         <ScrollToTop/>
         <Routes>
-
 
           <Route path={DEFAULT_PAGE} element={<HomePage />}></Route>
 
@@ -49,7 +49,9 @@ function App() {
 
           <Route path={BUY_TICKET_PAGE} element={<BuyTicketPage/>}></Route>
 
-          <Route path={Check_OUT_PAGE} element={<CheckOutPage/>}></Route>
+          <Route path={CHECK_OUT_PAGE} element={<CheckOutPage/>}></Route>
+
+          <Route path={MANAGE_BUYER_PAGE} element={<ManageBuyerPage/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
