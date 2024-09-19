@@ -28,12 +28,16 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = React.useState(false);
   // Inputs
   const [userNameInput, setUserNameInput] = React.useState();
+  const[firstNameInput, setFirstNameInput] = React.useState();
+  const[lastNameInput, setLastNameInput] = React.useState();
   const [passwordInput, setPasswordInput] = React.useState();
   const [rePasswordInput, setRePasswordInput] = React.useState();
   const [emailInput, setEmailInput] = React.useState();
 
   //Inputs Error
   const [userNameError, setUserNameError] = React.useState(false);
+  const[firstNameError, setFirstNameError] = React.useState();
+  const[lastNameError, setLastNameError] = React.useState();
   const [passwordError, setPasswordError] = React.useState(false);
   const [rePasswordError, setRePasswordError] = React.useState(false);
   const [emailError, setEmailError] = React.useState(false);
@@ -55,12 +59,28 @@ export default function SignUp() {
     }
     setUserNameError(false);
   };
+  //Validation for Blur FirstName
+  const handleFirstName =() => {
+    if(!firstNameInput || firstNameInput.length < 5 || firstNameInput.length > 50){
+      setFirstNameError(true);
+      return;
+    }
+    setFirstNameError(false);
+  }
+    //Validation for Blur FirstName
+    const handleLastName =() => {
+      if(!lastNameInput || lastNameInput.length < 5 || lastNameInput.length > 50){
+        setLastNameError(true);
+        return;
+      }
+      setLastNameError(false);
+    }
   //Validation for on Blur Password
   const handlePassword = () => {
     if (
       !passwordInput ||
       passwordInput.length < 5 ||
-      passwordInput.length > 20
+      passwordInput.length > 50
     ) {
       setPasswordError(true);
       return;
@@ -68,7 +88,7 @@ export default function SignUp() {
     setPasswordError(false);
   };
   const handleRePassword = () => {
-    if (!rePasswordInput && rePasswordInput === passwordInput ) {
+    if (!rePasswordInput && rePasswordInput !== passwordInput ) {
       setRePasswordError(true);
       return;
     }
@@ -93,18 +113,29 @@ export default function SignUp() {
       );
       return;
     }
+    if (firstNameError || !firstNameInput) {
+      setFormValid(
+        "First Name is set btw 5 - 50 characters long. Please Re-Enter"
+      );
+      return;
+    }
+    if (lastNameError || !lastNameInput) {
+      setFormValid(
+        "Last Name is set btw 5 - 50 characters long. Please Re-Enter"
+      );
+      return;
+    }
     if (passwordError || !passwordInput) {
       setFormValid(
         "Password is set btw 5 - 20 characters long. Please Re-Enter"
       );
       return;
     }
-    if (rePasswordError || !rePasswordInput) {
-      setFormValid(
-        "Re-Password is not the same Password. Please Re-Enter"
-      );
+    if (rePasswordError || !rePasswordInput || rePasswordInput !== passwordInput) {
+      setFormValid("Re-Password is not the same as Password. Please Re-Enter");
       return;
     }
+    
     if (emailError || !emailInput) {
       setFormValid("Email is Invalid. Please Re-Enter");
       return;
@@ -148,6 +179,28 @@ export default function SignUp() {
               onChange={(e) => setUserNameInput(e.target.value)}
               error={userNameError}
               onBlur={handleUsername}
+            />
+          </FormControl>
+          <FormControl sx={{ marginBottom: 3 }}>
+            <TextField
+              label={"First Name"}
+              id="margin-none-1"
+              fullWidth
+              value={firstNameInput}
+              onChange={(e) => setFirstNameInput(e.target.value)}
+              error={firstNameError}
+              onBlur={handleFirstName}
+            />
+          </FormControl>
+          <FormControl sx={{ marginBottom: 3 }}>
+            <TextField
+              label={"Last Name"}
+              id="margin-none-1"
+              fullWidth
+              value={lastNameInput}
+              onChange={(e) => setLastNameInput(e.target.value)}
+              error={lastNameError}
+              onBlur={handleLastName}
             />
           </FormControl>
           <FormControl sx={{ marginBottom: 3 }}>
