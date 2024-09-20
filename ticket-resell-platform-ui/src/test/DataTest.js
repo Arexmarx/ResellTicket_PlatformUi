@@ -58,7 +58,9 @@ export const USER_DATA = {
   email: "abc@gmail.com",
   phone: "0937489382",
   add: "Nguyễn Văn Tăng, TP Hồ Chí Minh",
-  money:"1000000000"
+  money:"1000000000",
+  rating: 4,
+  detailRating:"Shop này bán hàng uy tín đáng mua, vé đẹp"
 }
 
 export const BOUGHT_TICKET_DATA = [

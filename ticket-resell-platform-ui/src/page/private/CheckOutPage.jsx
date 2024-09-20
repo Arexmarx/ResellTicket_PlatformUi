@@ -22,6 +22,9 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+/**
+ * Author: Phan Nguyễn Mạnh Cường
+ */
 export default function CheckOutPage() {
   const location = useLocation();
   const { ticket, quantity } = location.state || {};

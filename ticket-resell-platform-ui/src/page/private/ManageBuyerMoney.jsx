@@ -21,6 +21,9 @@ import { USER_DATA } from "../../test/DataTest.js";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import { formatToVND} from'../../service/StringService.js'
+/**
+ * Author: Phan Nguyễn Mạnh Cường
+ */
 export default function ManageBuyerMoney() {
   return (
     <div>
