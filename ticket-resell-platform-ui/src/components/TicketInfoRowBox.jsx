@@ -11,6 +11,9 @@ import {
   MDBModalBody,
   MDBModalFooter,
   MDBCheckbox,
+  MDBCollapse,
+  MDBRow,
+  MDBContainer,
 } from "mdb-react-ui-kit";
 import Rating from "@mui/material/Rating";
 import { useState } from "react";
@@ -116,14 +119,12 @@ export default function TicketInfoRowBox({ ticket }) {
           </div>
         </div>
       </div>
-      <MDBModal
+      <MDBCollapse
         open={basicModal}
         onClose={() => setBasicModal(false)}
-        tabIndex="-1"
       >
-        <MDBModalDialog centered={true} scrollable size="x2">
-          <MDBModalContent>
-            <MDBModalBody>
+          <MDBContainer fluid>
+            <MDBRow>
               {ticket.orderDetail.map((detail) => (
                 <div key={detail.serial}>
                   <p>Mã số vé: {detail.serial}</p>
@@ -131,16 +132,9 @@ export default function TicketInfoRowBox({ ticket }) {
                   <img src={detail.image} alt="" />
                 </div>
               ))}
-            </MDBModalBody>
-
-            <MDBModalFooter>
-              <MDBBtn onClick={toggleOpen} color="success">
-                Đóng
-              </MDBBtn>
-            </MDBModalFooter>
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
+            </MDBRow>
+          </MDBContainer>
+      </MDBCollapse>
       <MDBModal open={ratingModal} onClose={() => setRatingModal(false)}>
         <MDBModalDialog centered={true} size="lg">
           <MDBModalContent>
