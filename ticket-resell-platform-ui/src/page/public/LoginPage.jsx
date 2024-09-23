@@ -88,6 +88,10 @@ export default function Login() {
     navigate(HOME_PAGE);
   };
 
+  const sendLoginRequest = () => {
+    
+  }
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
