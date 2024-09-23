@@ -18,7 +18,8 @@ import LoginIcon from "@mui/icons-material/Login";
 import * as React from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import {LOGIN_PAGE} from "../../config/Constant"
+import { LOGIN_PAGE } from "../../config/Constant"
+import AuthenticationAPI from "../../service/api/AuthenticationAPI";
 const isEmail = (email) =>
   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 /**
@@ -28,16 +29,16 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = React.useState(false);
   // Inputs
   const [userNameInput, setUserNameInput] = React.useState();
-  const[firstNameInput, setFirstNameInput] = React.useState();
-  const[lastNameInput, setLastNameInput] = React.useState();
+  const [firstNameInput, setFirstNameInput] = React.useState();
+  const [lastNameInput, setLastNameInput] = React.useState();
   const [passwordInput, setPasswordInput] = React.useState();
   const [rePasswordInput, setRePasswordInput] = React.useState();
   const [emailInput, setEmailInput] = React.useState();
 
   //Inputs Error
   const [userNameError, setUserNameError] = React.useState(false);
-  const[firstNameError, setFirstNameError] = React.useState();
-  const[lastNameError, setLastNameError] = React.useState();
+  const [firstNameError, setFirstNameError] = React.useState();
+  const [lastNameError, setLastNameError] = React.useState();
   const [passwordError, setPasswordError] = React.useState(false);
   const [rePasswordError, setRePasswordError] = React.useState(false);
   const [emailError, setEmailError] = React.useState(false);
@@ -60,21 +61,21 @@ export default function SignUp() {
     setUserNameError(false);
   };
   //Validation for Blur FirstName
-  const handleFirstName =() => {
-    if(!firstNameInput || firstNameInput.length < 5 || firstNameInput.length > 50){
+  const handleFirstName = () => {
+    if (!firstNameInput || firstNameInput.length < 5 || firstNameInput.length > 50) {
       setFirstNameError(true);
       return;
     }
     setFirstNameError(false);
   }
-    //Validation for Blur FirstName
-    const handleLastName =() => {
-      if(!lastNameInput || lastNameInput.length < 5 || lastNameInput.length > 50){
-        setLastNameError(true);
-        return;
-      }
-      setLastNameError(false);
+  //Validation for Blur FirstName
+  const handleLastName = () => {
+    if (!lastNameInput || lastNameInput.length < 5 || lastNameInput.length > 50) {
+      setLastNameError(true);
+      return;
     }
+    setLastNameError(false);
+  }
   //Validation for on Blur Password
   const handlePassword = () => {
     if (
@@ -88,7 +89,7 @@ export default function SignUp() {
     setPasswordError(false);
   };
   const handleRePassword = () => {
-    if (!rePasswordInput && rePasswordInput !== passwordInput ) {
+    if (!rePasswordInput && rePasswordInput !== passwordInput) {
       setRePasswordError(true);
       return;
     }
@@ -135,14 +136,34 @@ export default function SignUp() {
       setFormValid("Re-Password is not the same as Password. Please Re-Enter");
       return;
     }
-    
+
     if (emailError || !emailInput) {
       setFormValid("Email is Invalid. Please Re-Enter");
       return;
     }
-    setFormValid(null);
-    setSuccess("Form Submitted Successfully");
+    
+    sendRegisterRequest();
+    
   };
+
+  const sendRegisterRequest = () => {
+    let registerRequest = {
+      username: userNameInput,
+      password: passwordInput,
+      email: emailInput,
+      firstname: firstNameInput,
+      lastname: lastNameInput
+    }
+    AuthenticationAPI.register(registerRequest).then(
+      response => {
+        setFormValid(null);
+        setSuccess(response.data.message);
+      }
+    )
+    .catch(
+      error => console.log(error)
+    );
+  }
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
