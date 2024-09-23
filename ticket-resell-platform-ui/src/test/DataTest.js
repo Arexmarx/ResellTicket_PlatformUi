@@ -1,10 +1,10 @@
 export const ITEMS = [
-  { id: 1, title: 'Concert A', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg', description: 'Description for Concert A' },
-  { id: 2, title: 'Concert B', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(19).jpg', description: 'Description for Concert B' },
-  { id: 3, title: 'Concert C', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(20).jpg', description: 'Description for Concert C' },
-  { id: 4, title: 'Concert D', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(21).jpg', description: 'Description for Concert D' },
-  { id: 5, title: 'Concert E', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(22).jpg', description: 'Description for Concert E' },
-  { id: 6, title: 'Concert F', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(23).jpg', description: 'Description for Concert F' },
+  { id: 1, title: 'Concert A', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg', description: 'Sự kiện đặc biệt về thiên nhiên và cây cỏ 1 rất nổi tiếng và ít người biết đến hãy mau chóng tham gia và chở thành 1 trong số ít người biết đến.', startDate: '25/06/2024', endDate: '27/06/2024' },
+  { id: 2, title: 'Concert B', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(19).jpg', description: 'Sự kiện đặc biệt về thiên nhiên và cây cỏ 2 rất nổi tiếng và ít người biết đến hãy mau chóng tham gia và chở thành 1 trong số ít người biết đến.', startDate: '26/06/2024', endDate: '29/06/2024' },
+  { id: 3, title: 'Concert C', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(20).jpg', description: 'Sự kiện đặc biệt về thiên nhiên và cây cỏ 3 rất nổi tiếng và ít người biết đến hãy mau chóng tham gia và chở thành 1 trong số ít người biết đến.', startDate: '27/06/2024', endDate: '29/06/2024' },
+  { id: 4, title: 'Concert D', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(21).jpg', description: 'Sự kiện đặc biệt về thiên nhiên và cây cỏ 4 rất nổi tiếng và ít người biết đến hãy mau chóng tham gia và chở thành 1 trong số ít người biết đến.', startDate: '28/06/2024', endDate: '30/06/2024' },
+  { id: 5, title: 'Concert E', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(22).jpg', description: 'Sự kiện đặc biệt về thiên nhiên và cây cỏ 5 rất nổi tiếng và ít người biết đến hãy mau chóng tham gia và chở thành 1 trong số ít người biết đến.', startDate: '29/06/2024', endDate: '31/06/2024' },
+  { id: 6, title: 'Concert F', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(23).jpg', description: 'Sự kiện đặc biệt về thiên nhiên và cây cỏ 6 rất nổi tiếng và ít người biết đến hãy mau chóng tham gia và chở thành 1 trong số ít người biết đến.', startDate: '30/06/2024', endDate:' 01/07/2024' },
 ];
 
 export const SELLER = [

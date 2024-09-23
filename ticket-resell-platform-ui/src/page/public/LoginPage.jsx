@@ -24,6 +24,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import * as React from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import {MAIN_COLOR} from "../../config/Constant"
 import {HOME_PAGE,SIGN_UP_PAGE} from "../../config/Constant"
 /**
  * Author: Phan Nguyễn Mạnh Cường
@@ -111,12 +112,12 @@ export default function Login() {
     >
       <Card sx={{ minWidth: 500, marginTop: "2%", borderRadius: 3 }}>
         <Typography variant="h3" className="text-center mt-5">
-          Log in
+          Đăng Nhập
         </Typography>
         <FormGroup sx={{ margin: 5, minWidth: 450 }}>
           <FormControl sx={{ marginBottom: 3 }}>
             <TextField
-              label={"User Name"}
+              label={"Tên tài khoản"}
               id="margin-none-1"
               fullWidth
               value={userNameInput}
@@ -130,7 +131,7 @@ export default function Login() {
               error={passwordError}
               htmlFor="outlined-adornment-password"
             >
-              Password
+              Mật khẩu
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
@@ -161,9 +162,9 @@ export default function Login() {
               variant="contained"
               startIcon={<LoginIcon />}
               fullWidth
-              sx={{ mt: 1, backgroundColor: "#2dc275" }}
+              sx={{ mt: 1, backgroundColor: MAIN_COLOR }}
             >
-              Log in
+              Đăng nhập
             </Button>
           </FormControl>
           {formValid && (
@@ -182,15 +183,15 @@ export default function Login() {
           )}
           <FormControl sx={{ marginBottom: 0 }}>
             <div className="d-flex justify-content-between align-items-center">
-              <FormControlLabel control={<Checkbox />} label="Remember me" />
+              <FormControlLabel control={<Checkbox />} label="Ghi nhớ đăng nhập" />
               <div>
-                Not have account?{" "}
+                Chưa có tài khoản ?{" "}
                 <Link
                   component="button"
                   onClick={() => navigate(SIGN_UP_PAGE)}
-                  sx={{ color: "#2dc275" }}
+                  sx={{ color: MAIN_COLOR }}
                 >
-                  Register
+                  Đăng ký
                 </Link>
               </div>
             </div>
@@ -202,9 +203,9 @@ export default function Login() {
             fullWidth={true}
             variant="outlined"
             startIcon={<SvgIcon component={GoogleIcon} />}
-            sx={{ mt: 1, color: "#2dc275" }}
+            sx={{ mt: 1, color: MAIN_COLOR , borderColor: MAIN_COLOR}}
           >
-            Login with Google
+            Đăng nhập bằng Google
           </Button>
         </div>
       </Card>

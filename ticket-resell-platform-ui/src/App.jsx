@@ -24,10 +24,26 @@ import BuyTicketPage from "./page/private/BuyTicketPage";
 import CheckOutPage from "./page/private/CheckOutPage";
 import ScrollToTop from "./components/ScrollToTop";
 import ManageBuyerPage from"./page/private/ManageBuyerMoney";
+import { Global, css } from '@emotion/react';
+const GlobalStyles = () => (
+  <Global
+      styles={css`
+    /* Apply global styles */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      font-family: 'Playwrite DE Grund';
+      color: #333;
+    }
+  `}
+  />
+);
 function App() {
   return (
     <div>
       <BrowserRouter>
+        <GlobalStyles/>
         <ScrollToTop/>
         <Routes>
 

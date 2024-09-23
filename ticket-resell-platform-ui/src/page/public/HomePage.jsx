@@ -33,7 +33,7 @@ export default function HomePage() {
     >
       <Header />
       <MDBContainer style={{ marginTop: "5%" }}>
-        <MDBRow>
+        <MDBRow >
           <MDBCol>
             <MDBBtn
               outline

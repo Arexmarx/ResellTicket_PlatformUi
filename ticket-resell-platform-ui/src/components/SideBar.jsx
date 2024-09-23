@@ -44,7 +44,7 @@ export default function SideBar({sideBarOption}) {
                     <ListItemIcon>
                         <ManageAccountsIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Quản lý tài khoản" />
+                    <div> Quản lý tài khoản</div>
                 </ListItemButton>
 
                 <ListItemButton 
@@ -54,7 +54,7 @@ export default function SideBar({sideBarOption}) {
                     <ListItemIcon>
                         <LocalActivityIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Vé đã mua" />
+                    <div>Vé đã mua</div>
                 </ListItemButton>
 
                 <ListItemButton
@@ -64,7 +64,7 @@ export default function SideBar({sideBarOption}) {
                     <ListItemIcon>
                         <AddBusinessIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Shop của tôi" />
+                    <div>Shop của tôi</div>
                 </ListItemButton>
 
                 <ListItemButton 
@@ -74,7 +74,7 @@ export default function SideBar({sideBarOption}) {
                     <ListItemIcon>
                         <LocalAtmIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Quản lý số dư" />
+                    <div>Quản lý số dư</div>
                 </ListItemButton>
             </div>
 
@@ -90,7 +90,7 @@ export default function SideBar({sideBarOption}) {
 
                     </Badge>
                     </ListItemIcon>
-                    <ListItemText primary="Thông báo" />
+                    <div>Thông báo</div>
                 </ListItemButton>
 
                 <ListItemButton 
@@ -99,7 +99,7 @@ export default function SideBar({sideBarOption}) {
                     <ListItemIcon>
                         <KeyIcon/>
                     </ListItemIcon>
-                    <ListItemText primary="Đổi mật khẩu" />
+                    <div>Đổi mật khẩu</div>
                 </ListItemButton>
             </div>
 

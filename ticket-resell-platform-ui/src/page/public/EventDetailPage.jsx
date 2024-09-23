@@ -36,15 +36,17 @@ export default function EventDetail() {
     navigate(BUY_TICKET_PAGE, { state: { ticket: x } });
   };
   return (
-    <div>
+    <div >
       <Header />
       <MDBContainer style={{ marginTop: "5%" }}>
         <MDBRow className="justify-content-center">
           <MDBCol md="6" className="mb-6">
             <MDBCard>
               <MDBCardBody>
-                <MDBCardTitle>{event.title}</MDBCardTitle>
+                <MDBCardHeader style={{fontSize:'35px'}}>{event.title}</MDBCardHeader>
                 <MDBCardText>{event.description}</MDBCardText>
+                <MDBCardText>Ngày bắt đầu: {event.startDate}</MDBCardText>
+                <MDBCardText>Ngày kết thúc: {event.endDate}</MDBCardText>
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
@@ -77,22 +79,22 @@ export default function EventDetail() {
                       <Avatar alt="Seller" src="broken-image.jpg" />
                     </MDBCol>
                     <MDBCol>
-                      <Typography>Người Bán:{x.name}</Typography>
+                      <div>Người Bán:{x.name}</div>
                     </MDBCol>
                     <MDBCol>
-                      <Typography>Tên vé: {x.ticketName}</Typography>
+                      <div>Tên vé: {x.ticketName}</div>
                     </MDBCol>
                     <MDBCol>
-                      <Typography>Loại vé: {x.ticketType}</Typography>
+                      <div>Loại vé: {x.ticketType}</div>
                     </MDBCol>
                     <MDBCol>
-                      <Typography>Khu vực: {x.ticketArea}</Typography>
+                      <div>Khu vực: {x.ticketArea}</div>
                     </MDBCol>
                     <MDBCol>
-                      <Typography>Mô tả: {x.ticketDiscription}</Typography>
+                      <div>Mô tả: {x.ticketDiscription}</div>
                     </MDBCol>
                     <MDBCol>
-                      <Typography>Giá bán: {x.ticketPrice}</Typography>
+                      <div>Giá bán: {x.ticketPrice}</div>
                     </MDBCol>
                     <MDBCol size="auto">
                       <MDBBtn

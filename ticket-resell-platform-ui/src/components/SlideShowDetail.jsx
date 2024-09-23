@@ -49,7 +49,8 @@ export default function SlideShowDetail({ Event }) {
                   <MDBCardImage src={item.image} alt={item.title} position='top'/>
                   <MDBCardBody>
                     <MDBCardTitle>{item.title}</MDBCardTitle>
-                    <MDBCardText>{item.description}</MDBCardText>
+                    <MDBCardText>Ngày bắt đầu: {item.startDate}</MDBCardText>
+                    <MDBCardText>Ngày kết thúc: {item.endDate}</MDBCardText>
                   </MDBCardBody>
                 </MDBCard>
               </MDBCol>
