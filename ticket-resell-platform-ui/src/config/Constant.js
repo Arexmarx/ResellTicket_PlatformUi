@@ -26,3 +26,5 @@ export const Event = {
     EVENT: "Sự Kiện"
 }
 
+export const FONT_MAIN = 'Quicksand';
+

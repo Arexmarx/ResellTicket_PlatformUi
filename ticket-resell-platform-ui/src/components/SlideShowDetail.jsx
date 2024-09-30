@@ -46,7 +46,7 @@ export default function SlideShowDetail({ Event }) {
             {getVisibleItems().map((item) => (
               <MDBCol key={item.id} md="3" className="mb-3">
                 <MDBCard onClick={() => handleClick(item)}>
-                  <MDBCardImage src={item.image} alt={item.title} position='top'/>
+                  <MDBCardImage src={item.image} alt={item.title} position='top' style={{maxHeight: '206px'}}/>
                   <MDBCardBody>
                     <MDBCardTitle>{item.title}</MDBCardTitle>
                     <MDBCardText>Ngày bắt đầu: {item.startDate}</MDBCardText>

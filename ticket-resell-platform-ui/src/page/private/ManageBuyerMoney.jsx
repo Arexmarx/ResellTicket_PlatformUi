@@ -14,7 +14,7 @@ import {
   MDBCardHeader,
   MDBBtnGroup,
 } from "mdb-react-ui-kit";
-import { MAIN_COLOR } from "../../config/Constant.js";
+import { MAIN_COLOR, FONT_MAIN } from "../../config/Constant.js";
 import { SidebarOption } from "../../config/Constant";
 import SideBar from "../../components/SideBar";
 import { USER_DATA } from "../../test/DataTest.js";
@@ -49,11 +49,11 @@ export default function ManageBuyerMoney() {
               <hr />
             </MDBRow>
             <MDBRow>
-              <Alert severity="info">
-                <AlertTitle><strong style={{fontSize:'20px'}}>Thông báo</strong></AlertTitle>
+              <Alert severity="info" style={{fontFamily: FONT_MAIN}}>
+                <AlertTitle style={{fontFamily: FONT_MAIN}}><strong style={{fontSize:'20px'}}>Thông báo</strong></AlertTitle>
                 <p>Nạp vào số điện thoại sẽ không được xử lí, vui lòng chọn các phương thức nạp bên dưới và làm theo hướng dẫn</p>
-                <p style={{color:'red'}}>* Quan trọng! Chỉ chấp nhận giao dịch từ 10,000đ, những giao dịch thấp hơn sẽ không được cộng xu.</p>
-                <p style={{color:'red'}}>* Quan trọng! Chuyển khoản MB sẽ bị chậm vì hệ thống ngân hàng có thay đổi, hệ thống sẽ tự cập nhật sau khi nhận được tiền, vui lòng bình tĩnh đừng hối~</p>
+                <p style={{color:'red'}}>* Quan trọng! Chỉ chấp nhận giao dịch từ 10,000đ, những giao dịch thấp hơn sẽ không được cộng tiền.</p>
+                <p style={{color:'red'}}>* Quan trọng! Chuyển khoản Ngân hàng sẽ bị chậm vì hệ thống ngân hàng có thay đổi, hệ thống sẽ tự cập nhật sau khi nhận được tiền, vui lòng bình tĩnh đừng hối~</p>
               </Alert>
             </MDBRow>
             <MDBRow style={{marginTop:'2%',marginBottom:'2%'}}>

@@ -14,7 +14,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from "react-router-dom";
-import {LOGIN_PAGE,HOME_PAGE,BOUGHT_TICKET_MANEMENT_PAGE,PROFILE_PAGE, MAIN_COLOR} from "../config/Constant"
+import {LOGIN_PAGE,HOME_PAGE,BOUGHT_TICKET_MANEMENT_PAGE,PROFILE_PAGE, MAIN_COLOR,FONT_MAIN} from "../config/Constant"
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
@@ -119,7 +119,7 @@ const Search = styled('div')(({ theme }) => ({
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
-                fontFamily: 'Playwrite DE Grund',
+                fontFamily: FONT_MAIN,
                 fontWeight: 700,
                 letterSpacing: '.3rem',
                 color: 'inherit',
@@ -139,7 +139,7 @@ const Search = styled('div')(({ theme }) => ({
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
-                fontFamily: 'Playwrite DE Grund',
+                fontFamily: FONT_MAIN,
                 fontWeight: 700,
                 letterSpacing: '.3rem',
                 color: 'inherit',

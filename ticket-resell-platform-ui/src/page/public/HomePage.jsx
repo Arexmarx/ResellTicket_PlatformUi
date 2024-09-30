@@ -10,7 +10,7 @@ import Header from "../../components/Header.jsx";
 import SlideShowMain from "../../components/SlideShowMain.jsx";
 import SlideShowHotEvent from "../../components/SlideShowHotEvent.jsx";
 import SlideShowDetail from "../../components/SlideShowDetail.jsx";
-import { Event } from "../../config/Constant.js";
+import { Event, FONT_MAIN } from "../../config/Constant.js";
 
 /**
  * Author: Phan Nguyễn Mạnh Cường
@@ -32,37 +32,37 @@ export default function HomePage() {
       style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
     >
       <Header />
-      <MDBContainer style={{ marginTop: "5%" }}>
-        <MDBRow >
+      <MDBRow style={{marginTop: '4%', marginLeft: '15%'}}>
           <MDBCol>
             <MDBBtn
-              outline
-              color="success"
-              size="sm"
+              color="tertiary"
+              size="lg"
               onClick={() => scrollToSection(musicRef)}
+              style={{borderColor: 'white', color:'black'}}
             >
               Âm Nhạc
             </MDBBtn>
             <MDBBtn
-              outline
-              color="success"
-              size="sm"
+              color="tertiary"
+              size="lg"
               style={{ marginLeft: "30px" }}
               onClick={() => scrollToSection(eventRef)}
+              style={{borderColor: 'white', marginLeft: '2%', color:'black'}}
             >
               Sự Kiện
             </MDBBtn>
             <MDBBtn
-              outline
-              color="success"
-              size="sm"
+              color="tertiary"
+              size="lg"
               style={{ marginLeft: "30px" }}
               onClick={() => scrollToSection(exhibitionRef)}
+              style={{borderColor: 'white', marginLeft: '2%',color:'black'}}
             >
               Triển Lãm
             </MDBBtn>
           </MDBCol>
         </MDBRow>
+      <MDBContainer style={{ marginTop: "3%" }}>
       </MDBContainer>
       <SlideShowMain />
       <SlideShowHotEvent />

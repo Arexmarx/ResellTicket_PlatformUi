@@ -33,7 +33,7 @@ const GlobalStyles = () => (
       margin: 0;
       padding: 0;
       background-color: #ffffff;
-      font-family: 'Playwrite DE Grund';
+      font-family: 'Quicksand';
       color: #333;
     }
   `}
