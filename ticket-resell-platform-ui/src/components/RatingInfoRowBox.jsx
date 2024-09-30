@@ -29,20 +29,20 @@ export default function RatingInfoRowBox({ user, ticket }) {
             </div>
             <div className="row">{ticket.ticketName}</div>
           </div>
-          <div className="col-md-1 d-flex justify-content-center align-items-center">
-            <Avatar {...stringAvatar(user.name)} />
-          </div>
-          <div className="col-md-2">
+          {/* <div className="col-md-1 d-flex justify-content-center align-items-center">
+            <Avatar {...stringAvatar(user.firstname+" "+user.lastname)} />
+          </div> */}
+          {/* <div className="col-md-2">
             <div style={titleCss} className="row">
               Người mua
             </div>
             <div className="row">{user.name}</div>
-          </div>
+          </div> */}
           <div className="col-md-2">
             <div style={titleCss} className="row">
               Đánh giá
             </div>
-            <div className="row">          
+            <div className="row">
               <Rating name="read-only" value={Number(user.rating)} readOnly />
             </div>
           </div>
@@ -61,15 +61,15 @@ export default function RatingInfoRowBox({ user, ticket }) {
 }
 
 RatingInfoRowBox.propTypes = {
-    user: PropTypes.shape({
+  user: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    rating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    detailRating: PropTypes.string.isRequired,
+  }).isRequired,
+  ticket: PropTypes.shape({
+    seller: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      rating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      detailRating: PropTypes.string.isRequired,
     }).isRequired,
-    ticket: PropTypes.shape({
-      seller: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      }).isRequired,
-      ticketName: PropTypes.string.isRequired,
-    }).isRequired,
-  };
+    ticketName: PropTypes.string.isRequired,
+  }).isRequired,
+};

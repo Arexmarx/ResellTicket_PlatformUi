@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import { Avatar, Badge } from '@mui/material';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
-import { BOUGHT_TICKET_MANEMENT_PAGE, MAIN_COLOR, MY_SHOP_PAGE, PROFILE_PAGE, SidebarOption ,MANAGE_BUYER_PAGE} from '../config/Constant';
+import { BOUGHT_TICKET_MANEMENT_PAGE, MAIN_COLOR, MY_SHOP_PAGE, PROFILE_PAGE, SidebarOption ,MANAGE_BUYER_PAGE, CHANGE_PASSWORD_PAGE} from '../config/Constant';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import Divider from '@mui/material/Divider';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
@@ -13,14 +13,16 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { useNavigate } from 'react-router-dom';
 import KeyIcon from '@mui/icons-material/Key';
 import PropTypes from 'prop-types';
+import { formatToVND } from '../service/StringService';
 
 /*
     Author: Nguyen Tien Thuan
 */
-export default function SideBar({sideBarOption}) {
+// eslint-disable-next-line react/prop-types
+export default function SideBar({sideBarOption, user}) {
 
     SideBar.propTypes = {
-        sideBarOption: PropTypes.oneOf(['BOUGHT_TICKET', 'PROFILE', 'MY_SHOP', 'BALANCE', 'INFORM']).isRequired, 
+        sideBarOption: PropTypes.oneOf(['BOUGHT_TICKET', 'PROFILE', 'MY_SHOP', 'BALANCE', 'INFORM', 'CHANGE_PASS']).isRequired, 
     };
 
     const navigator = useNavigate();
@@ -32,9 +34,14 @@ export default function SideBar({sideBarOption}) {
             aria-labelledby="nested-list-subheader"
         >
             <div className='d-flex justify-content-center mb-3'>
-                <Avatar sx={{ width: 72, height: 72 }} src="/broken-image.jpg" />
+                <Avatar src={ !user || !user.avatar ? "/broken-image.jpg" : "data:image/png;base64, "+ user.avatar } sx={{ width: 72, height: 72 }} /> 
+                {/*  src="/broken-image.jpg" */}
             </div>
-            <h5 className='text-center mb-3'>Nguyễn Tiến Thuận</h5>
+            {
+                // eslint-disable-next-line react/prop-types
+                user ? <h5 className='text-center mb-3'>{user.firstname} {user.lastname}</h5> : ''
+            }
+            <p className='text-center small'>Số dư: <span className='text-danger small'>{formatToVND(user.balance)}</span></p>
             <div className='mb-3'><Divider /></div>
             <div className='mb-3'>
                 <ListItemButton
@@ -94,7 +101,8 @@ export default function SideBar({sideBarOption}) {
                 </ListItemButton>
 
                 <ListItemButton 
-                    sx={sideBarOption === SidebarOption.INFORM ? { backgroundColor: MAIN_COLOR } : {}}
+                    sx={sideBarOption === SidebarOption.CHANGE_PASS ? { backgroundColor: MAIN_COLOR } : {}}
+                    onClick={() => navigator(CHANGE_PASSWORD_PAGE)}
                 >
                     <ListItemIcon>
                         <KeyIcon/>

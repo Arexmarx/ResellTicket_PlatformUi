@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import {
   MDBContainer,
@@ -15,6 +15,10 @@ import { useNavigate } from "react-router-dom";
 import { MAIN_COLOR, CHECK_OUT_PAGE } from "../../config/Constant.js";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { formatToVND } from "../../service/StringService.js";
+import { Avatar } from "@mui/material";
+import TicketAPI from "../../service/api/TicketAPI.js";
+import HttpStatus from "../../config/HttpStatus.js";
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
@@ -23,6 +27,11 @@ export default function BuyTicketPage() {
   const { ticket } = location.state || {};
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1); // Khởi tạo số lượng là 1
+  const [numberOfTickets, setNumberOfTickets] = useState()
+
+  console.log(ticket);
+  // console.log(event);
+  
 
   if (!ticket) {
     return <div>No event data available</div>;
@@ -35,9 +44,22 @@ export default function BuyTicketPage() {
   const handleQuantityChange = (delta) => {
     setQuantity((prevQuantity) => {
       const newQuantity = prevQuantity + delta;
-      return newQuantity < 1 ? 1 : newQuantity; // Đảm bảo số lượng không nhỏ hơn 1
+      return newQuantity < 1 ? 1 : ( newQuantity > numberOfTickets ? numberOfTickets : newQuantity ); // Đảm bảo số lượng không nhỏ hơn 1
     });
   };
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+
+    const fetchData = async () => {
+      const response = await TicketAPI.getTotalTicketsInGenericTicket(ticket.id)
+      if (response.data.httpStatus == HttpStatus.OK) {
+        setNumberOfTickets(response.data.object)
+      }
+    }
+
+    fetchData().catch(console.log)
+  }, [ticket.id])
 
   return (
     <div>
@@ -47,13 +69,23 @@ export default function BuyTicketPage() {
           <MDBCol md="6" className="mb-6">
             <MDBCard>
               <MDBCardBody>
-                <MDBCardTitle>Tên: {ticket.ticketName}</MDBCardTitle>
-                <MDBCardText>Loại vé: {ticket.ticketType}</MDBCardText>
-                <MDBCardText>Khu vực vé: {ticket.ticketArea}</MDBCardText>
-                <MDBCardText>Mô tả: {ticket.ticketDetailDiscipt}</MDBCardText>
-                <MDBCardTitle>Giá vé: {ticket.ticketPrice}</MDBCardTitle>
-
-                <div style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
+                <MDBCardTitle>
+                    <div className="d-flex align-items-center">
+                      <Avatar alt="Seller" src={ticket.seller.avatar ? "data:image/png;base64, " + ticket.seller.avatar : "broken-image.jpg" }  />
+                      <MDBCol className="mx-3">
+                            {ticket.seller.firstname} {ticket.seller.lastname}
+                      </MDBCol>
+                    </div>
+                </MDBCardTitle>
+                <hr />
+                <MDBCardTitle><strong>{ticket.ticketName}</strong></MDBCardTitle>
+                <MDBCardText><strong>Loại vé:</strong> {ticket.isPaper ? "Giấy" : "Online"}</MDBCardText>
+                <MDBCardText><strong>Khu vực vé:</strong> {ticket.area}</MDBCardText>
+                <MDBCardText><strong>Mô tả:</strong> {ticket.description}</MDBCardText>
+                <MDBCardText><strong>Giá vé:</strong> <span className="text-danger">{formatToVND(ticket.price)}</span></MDBCardText>
+                <MDBCardText><strong>Số lượng hiện có: </strong> {numberOfTickets ? numberOfTickets : '0' }</MDBCardText>
+                <hr />
+                <div  style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
                   <MDBBtn
                     color="danger"
                     outline
@@ -81,6 +113,7 @@ export default function BuyTicketPage() {
                 <MDBBtn
                   style={{ backgroundColor: MAIN_COLOR }}
                   onClick={() => handleBuy(ticket)}
+                  disabled={ numberOfTickets ? false : true }
                 >
                   Mua
                 </MDBBtn>
@@ -90,7 +123,8 @@ export default function BuyTicketPage() {
           <MDBCol md="6" className="mb-6">
             <MDBCard>
               <MDBCardImage
-                src={ticket.ticketImage}
+                // src={ticket.ticketImage}
+                src={"data:image/png;base64, " + ticket.event.image}
                 alt={ticket.title}
                 position="top"
                 style={{

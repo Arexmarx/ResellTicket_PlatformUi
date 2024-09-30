@@ -6,29 +6,29 @@ import '../assets/css/GroupTicketCommandutton.css'
 */
 export default function GroupTicketCommandButton() {
 
-    const [activeTab, setActiveTab] = useState('Đang xử lý');
-
     const tabs = [
-        { label: 'Đang xử lý' },
-        { label: 'Đang giao'},
-        { label: 'Chờ giao hàng' },
-        { label: 'Hoàn thành' },
-        { label: 'Đã hủy' },
-        { label: 'Đánh giá' }
+        { id: '1', label: 'Đang xử lý' },
+        { id: '2', label: 'Đang giao' },
+        { id: '3', label: 'Chờ giao hàng' },
+        { id: '4', label: 'Hoàn thành' },
+        { id: '5', label: 'Đã hủy' },
+        { id: '6', label: 'Đánh giá' }
     ];
+
+    const [activeTab, setActiveTab] = useState(tabs[0]);
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
     };
 
     return (
-        <div className="tab-menu" style={{width: '98%'}}>
+        <div className="tab-menu" style={{ width: '98%' }}>
             {tabs.map((tab) => (
                 <a
-                    key={tab.label}
+                    key={tab.id}
                     href="#"
-                    className={activeTab === tab.label ? 'active' : ''}
-                    onClick={() => handleTabClick(tab.label)}
+                    className={activeTab.id === tab.id ? 'active' : ''}
+                    onClick={() => handleTabClick(tab)}
                 >
                     {tab.label} {tab.count && <span>({tab.count})</span>}
                 </a>
