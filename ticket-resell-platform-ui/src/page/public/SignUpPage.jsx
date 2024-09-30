@@ -211,10 +211,10 @@ export default function SignUp() {
               label={"Tên"}
               id="margin-none-1"
               fullWidth
-              value={firstNameInput}
-              onChange={(e) => setFirstNameInput(e.target.value)}
-              error={firstNameError}
-              onBlur={handleFirstName}
+              value={lastNameInput}
+              onChange={(e) => setLastNameInput(e.target.value)}
+              error={lastNameError}
+              onBlur={handleLastName}
             />
           </FormControl>
           <FormControl sx={{ marginBottom: 3 }}>
@@ -222,10 +222,10 @@ export default function SignUp() {
               label={"Họ"}
               id="margin-none-1"
               fullWidth
-              value={lastNameInput}
-              onChange={(e) => setLastNameInput(e.target.value)}
-              error={lastNameError}
-              onBlur={handleLastName}
+              value={firstNameInput}
+              onChange={(e) => setFirstNameInput(e.target.value)}
+              error={firstNameError}
+              onBlur={handleFirstName}
             />
           </FormControl>
           <FormControl sx={{ marginBottom: 3 }}>

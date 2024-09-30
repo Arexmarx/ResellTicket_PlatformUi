@@ -30,10 +30,6 @@ export const Event = {
     OTHER: "Khác"
 }
 
-<<<<<<< HEAD
-export const FONT_MAIN = 'Quicksand';
-
-=======
 // Local storage key
 export const USER_ID_KEY = "user_id"
 
@@ -48,4 +44,3 @@ export const FONT_MAIN = "Quicksand"
 
 // Http Gateway Base Api
 export const BASE_GETWAY_API = "http://localhost:8090"
->>>>>>> 1f18c0767ddc67352c377887f4aa68cb0ef44dff

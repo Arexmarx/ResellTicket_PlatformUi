@@ -49,20 +49,6 @@ export default function SlideShowDetail({ Category, Events }) {
       <MDBCarousel showControls={false} showIndicators={false} fade>
         <MDBCarouselItem className="active">
           <MDBRow className="justify-content-center">
-<<<<<<< HEAD
-            {getVisibleItems().map((item) => (
-              <MDBCol key={item.id} md="3" className="mb-3">
-                <MDBCard onClick={() => handleClick(item)}>
-                  <MDBCardImage src={item.image} alt={item.title} position='top' style={{maxHeight: '206px'}}/>
-                  <MDBCardBody>
-                    <MDBCardTitle>{item.title}</MDBCardTitle>
-                    <MDBCardText>Ngày bắt đầu: {item.startDate}</MDBCardText>
-                    <MDBCardText>Ngày kết thúc: {item.endDate}</MDBCardText>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-            ))}
-=======
             {
               getVisibleItems().map((item) => (
                 <MDBCol style={{ cursor: 'pointer' }} key={item.id} md="3" className="mb-3">
@@ -77,7 +63,6 @@ export default function SlideShowDetail({ Category, Events }) {
                 </MDBCol>
               ))
             }
->>>>>>> 1f18c0767ddc67352c377887f4aa68cb0ef44dff
           </MDBRow>
         </MDBCarouselItem>
       </MDBCarousel>

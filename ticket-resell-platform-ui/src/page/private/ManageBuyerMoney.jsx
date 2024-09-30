@@ -5,20 +5,11 @@ import {
   MDBCol,
   MDBContainer,
   MDBRow,
-  MDBCard,
   MDBCardImage,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
   MDBBtn,
-  MDBCardHeader,
-  MDBBtnGroup,
+  MDBCardHeader
 } from "mdb-react-ui-kit";
-<<<<<<< HEAD
-import { MAIN_COLOR, FONT_MAIN } from "../../config/Constant.js";
-=======
 import { FONT_MAIN, MAIN_COLOR, USER_ID_KEY } from "../../config/Constant.js";
->>>>>>> 1f18c0767ddc67352c377887f4aa68cb0ef44dff
 import { SidebarOption } from "../../config/Constant";
 import SideBar from "../../components/SideBar";
 import Alert from "@mui/material/Alert";
@@ -67,13 +58,8 @@ export default function ManageBuyerMoney() {
               <hr />
             </MDBRow>
             <MDBRow>
-<<<<<<< HEAD
-              <Alert severity="info" style={{fontFamily: FONT_MAIN}}>
-                <AlertTitle style={{fontFamily: FONT_MAIN}}><strong style={{fontSize:'20px'}}>Thông báo</strong></AlertTitle>
-=======
               <Alert severity="info" style={{ fontFamily: FONT_MAIN, fontSize: 16 }}>
                 <AlertTitle style={{ fontFamily: FONT_MAIN }}><strong style={{fontSize:'20px'}}>Thông báo</strong></AlertTitle>
->>>>>>> 1f18c0767ddc67352c377887f4aa68cb0ef44dff
                 <p>Nạp vào số điện thoại sẽ không được xử lí, vui lòng chọn các phương thức nạp bên dưới và làm theo hướng dẫn</p>
                 <p style={{color:'red'}}>* Quan trọng! Chỉ chấp nhận giao dịch từ 10,000đ, những giao dịch thấp hơn sẽ không được cộng tiền.</p>
                 <p style={{color:'red'}}>* Quan trọng! Chuyển khoản Ngân hàng sẽ bị chậm vì hệ thống ngân hàng có thay đổi, hệ thống sẽ tự cập nhật sau khi nhận được tiền, vui lòng bình tĩnh đừng hối~</p>

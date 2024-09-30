@@ -10,14 +10,10 @@ import Header from "../../components/Header.jsx";
 import SlideShowMain from "../../components/SlideShowMain.jsx";
 import SlideShowHotEvent from "../../components/SlideShowHotEvent.jsx";
 import SlideShowDetail from "../../components/SlideShowDetail.jsx";
-<<<<<<< HEAD
-import { Event, FONT_MAIN } from "../../config/Constant.js";
-=======
 import { Event } from "../../config/Constant.js";
 import EventAPI from "../../service/api/EventAPI.js";
 import CategoryAPI from "../../service/api/CategoryAPI.js";
 
->>>>>>> 1f18c0767ddc67352c377887f4aa68cb0ef44dff
 
 /**
  * Author: Phan Nguyễn Mạnh Cường
@@ -59,7 +55,7 @@ export default function HomePage() {
   useEffect(()  => {
     
     const fetchData = async () => {
-      const musicEventResponse = await EventAPI.getHappeningEventByCateName('Ca nhạc')
+      const musicEventResponse = await EventAPI.getHappeningEventByCateName('Âm nhạc')
       //console.log(musicEventResponse.data.object);
       setMusicEvents(musicEventResponse.data.object)
     }
@@ -120,30 +116,17 @@ export default function HomePage() {
       <Header />
       <MDBRow style={{marginTop: '4%', marginLeft: '15%'}}>
           <MDBCol>
-<<<<<<< HEAD
-            <MDBBtn
-              color="tertiary"
-              size="lg"
-              onClick={() => scrollToSection(musicRef)}
-              style={{borderColor: 'white', color:'black'}}
-            >
-              Âm Nhạc
-            </MDBBtn>
-            <MDBBtn
-              color="tertiary"
-              size="lg"
-=======
 
             {
               (categories) ?
               categories.map(cate => (
                 <MDBBtn key={cate.id}
                   outline
-                  color="success"
-                  size="sm"
-                  style={{ marginLeft: "30px" }}
+                  color="tertiary"
+                  size="lg"
+                  style={{borderColor: '#fbf9f9',fontWeight:'bold' }}
                   onClick={() => scrollToSection(
-                    (cate.name == 'Ca nhạc') ? musicRef :
+                    (cate.name == 'Âm nhạc') ? musicRef :
                       (cate.name == 'Sự kiện') ? eventRef :
                         (cate.name == 'Triển lãm') ? exhibitionRef : otherRef
                   )}
@@ -157,7 +140,6 @@ export default function HomePage() {
               outline
               color="success"
               size="sm"
->>>>>>> 1f18c0767ddc67352c377887f4aa68cb0ef44dff
               style={{ marginLeft: "30px" }}
               onClick={() => scrollToSection(eventRef)}
               style={{borderColor: 'white', marginLeft: '2%', color:'black'}}

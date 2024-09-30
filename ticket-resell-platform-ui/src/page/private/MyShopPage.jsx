@@ -6,6 +6,7 @@ import PolicyCheckBox from "../../components/PolicyCheckBox"
 import React, { useEffect, useState } from "react"
 import UserAPI from "../../service/api/UserAPI"
 import '../../assets/css/GroupTicketCommandutton.css'
+import DetailSellingTicket from "../../components/DetailSellingTicket"
 
 /*
     Author: Nguyen Tien Thuan
@@ -48,6 +49,7 @@ export default function MyShopPage() {
     const [activeTab, setActiveTab] = useState(tabs[0]);
 
     const handleTabClick = (tab) => {
+
         setActiveTab(tab);
     };
 
@@ -82,12 +84,10 @@ export default function MyShopPage() {
                                                     </a>
                                                 ))}
                                             </div>
-                                            <div className="row mt-3 mb-3">
-                                                <div className="col-md-2">
-                                                    <a href={ADD_TICKET_PAGE} className="btn btn-warning">Thêm vé mới</a>
-                                                </div>
+                                            <div style={{marginTop:'1%',padding: '0'}}>
+                                                <DetailSellingTicket/>
                                             </div>
-                                            <hr />
+                                            
                                             
                                         </div>
 

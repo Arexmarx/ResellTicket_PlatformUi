@@ -14,14 +14,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-import {LOGIN_PAGE,HOME_PAGE,BOUGHT_TICKET_MANEMENT_PAGE,PROFILE_PAGE, MAIN_COLOR,FONT_MAIN} from "../config/Constant"
-=======
-import { LOGIN_PAGE, HOME_PAGE, BOUGHT_TICKET_MANEMENT_PAGE, PROFILE_PAGE, MAIN_COLOR, USER_ID_KEY } from "../config/Constant"
+import { LOGIN_PAGE, HOME_PAGE, BOUGHT_TICKET_MANEMENT_PAGE, PROFILE_PAGE, MAIN_COLOR, USER_ID_KEY, FONT_MAIN } from "../config/Constant"
 import { Button } from "@mui/material";
 import UserAPI from "../service/api/UserAPI";
 import { stringAvatar } from "../service/StringService";
->>>>>>> 1f18c0767ddc67352c377887f4aa68cb0ef44dff
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
@@ -97,111 +93,8 @@ function Header() {
     return;
   };
 
-<<<<<<< HEAD
-    const handleHomepage =() => {
-        navigate(HOME_PAGE)
-    }
-  
-    return (
-      <AppBar style={{backgroundColor: MAIN_COLOR}}>
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            <LocalActivityIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="#app-bar-with-responsive-menu"
-              sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: FONT_MAIN,
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-              onClick={handleHomepage}
-            >
-              Ticket Resell
-            </Typography>
-  
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="#app-bar-with-responsive-menu"
-              sx={{
-                mr: 2,
-                display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
-                fontFamily: FONT_MAIN,
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              Ticket Resell
-            </Typography>
-  
-            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
-              <Search sx={{ width: { xs: '80%', md: '50%' } }}>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder={search}
-                  inputProps={{ 'aria-label': 'search' }}
-                  onChange={handleSearchInput}
-                  onKeyDown={handleSearchKeyDown}
-                />
-              </Search>
-            </Box>
-  
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem
-                    key={setting}
-                    onClick={() => {
-                      handleEventUser(setting);
-                      handleCloseUserMenu();
-                    }}
-                  >
-                    <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-    );
-=======
   const handleSearchInput = (e) => {
     setSearch(e.target.value);
->>>>>>> 1f18c0767ddc67352c377887f4aa68cb0ef44dff
   }
 
   const handleSearchKeyDown = (e) => {
@@ -238,7 +131,8 @@ function Header() {
     <AppBar style={{ backgroundColor: MAIN_COLOR }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <LocalActivityIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* <LocalActivityIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
+          <img src="src\assets\logo\LogoTab-Photoroom.png" style={{maxHeight: '40px'}}/>
           <Typography
             variant="h6"
             noWrap
@@ -247,16 +141,18 @@ function Header() {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'Playwrite DE Grund',
+              fontFamily: FONT_MAIN,
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
+              marginLeft:'1%'
             }}
             onClick={handleHomepage}
           >
             Ticket Resell
           </Typography>
+          
 
           <Typography
             variant="h5"
@@ -267,7 +163,7 @@ function Header() {
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: 'Playwrite DE Grund',
+              fontFamily: FONT_MAIN,
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
