@@ -20,6 +20,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { LOGIN_PAGE } from "../../config/Constant"
 import AuthenticationAPI from "../../service/api/AuthenticationAPI";
+import {MAIN_COLOR} from "../../config/Constant"
 const isEmail = (email) =>
   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 /**
@@ -62,7 +63,7 @@ export default function SignUp() {
   };
   //Validation for Blur FirstName
   const handleFirstName = () => {
-    if (!firstNameInput || firstNameInput.length < 5 || firstNameInput.length > 50) {
+    if (!firstNameInput || firstNameInput.length < 2 || firstNameInput.length > 50) {
       setFirstNameError(true);
       return;
     }
@@ -70,7 +71,7 @@ export default function SignUp() {
   }
   //Validation for Blur FirstName
   const handleLastName = () => {
-    if (!lastNameInput || lastNameInput.length < 5 || lastNameInput.length > 50) {
+    if (!lastNameInput || lastNameInput.length < 2 || lastNameInput.length > 50) {
       setLastNameError(true);
       return;
     }
@@ -88,12 +89,15 @@ export default function SignUp() {
     }
     setPasswordError(false);
   };
+  //Validation for Blur Re-Password
   const handleRePassword = () => {
-    if (!rePasswordInput && rePasswordInput !== passwordInput) {
-      setRePasswordError(true);
-      return;
-    }
-    setRePasswordError(false);
+      if (!rePasswordInput || rePasswordInput !== passwordInput ) {
+        setRePasswordError(true);
+        
+      } else{
+        setRePasswordError(false);
+      }
+    // setRePasswordError(false);
   };
   //Validation for on Blur Email
   const handleEmail = () => {
@@ -110,13 +114,13 @@ export default function SignUp() {
     setSuccess(null);
     if (userNameError || !userNameInput) {
       setFormValid(
-        "Username is set btw 5 - 15 characters long. Please Re-Enter"
+        "Username is set btw 2 - 15 characters long. Please Re-Enter"
       );
       return;
     }
     if (firstNameError || !firstNameInput) {
       setFormValid(
-        "First Name is set btw 5 - 50 characters long. Please Re-Enter"
+        "First Name is set btw 2 - 50 characters long. Please Re-Enter"
       );
       return;
     }
@@ -188,12 +192,12 @@ export default function SignUp() {
     >
       <Card sx={{ minWidth: 500, marginTop: "2%", borderRadius: 3 }}>
         <Typography variant="h3" className="text-center mt-5">
-          Sign Up
+          Đăng Ký
         </Typography>
         <FormGroup sx={{ margin: 5, minWidth: 450 }}>
           <FormControl sx={{ marginBottom: 3 }}>
             <TextField
-              label={"User Name"}
+              label={"Tên người dùng"}
               id="margin-none-1"
               fullWidth
               value={userNameInput}
@@ -204,7 +208,7 @@ export default function SignUp() {
           </FormControl>
           <FormControl sx={{ marginBottom: 3 }}>
             <TextField
-              label={"First Name"}
+              label={"Tên"}
               id="margin-none-1"
               fullWidth
               value={firstNameInput}
@@ -215,7 +219,7 @@ export default function SignUp() {
           </FormControl>
           <FormControl sx={{ marginBottom: 3 }}>
             <TextField
-              label={"Last Name"}
+              label={"Họ"}
               id="margin-none-1"
               fullWidth
               value={lastNameInput}
@@ -241,7 +245,7 @@ export default function SignUp() {
               error={passwordError}
               htmlFor="outlined-adornment-password"
             >
-              Password
+              Mật Khẩu
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
@@ -263,18 +267,18 @@ export default function SignUp() {
                   </IconButton>
                 </InputAdornment>
               }
-              label="Password"
+              label="Mật Khẩu"
             />
           </FormControl>
           <FormControl sx={{ marginBottom: 3 }}>
             <InputLabel
               error={rePasswordError}
-              htmlFor="outlined-adornment-password"
+              htmlFor="outlined-adornment-re-password"
             >
-              Re-Password
+              Nhập lại mật khẩu
             </InputLabel>
             <OutlinedInput
-              id="outlined-adornment-password"
+              id="outlined-adornment-re-password"
               type={showPassword ? "text" : "password"}
               value={rePasswordInput}
               onChange={(e) => setRePasswordInput(e.target.value)}
@@ -293,7 +297,7 @@ export default function SignUp() {
                   </IconButton>
                 </InputAdornment>
               }
-              label="Password"
+              label="Nhập lại mật khẩu"
             />
           </FormControl>
           <FormControl sx={{ marginBottom: 3 }}>
@@ -304,7 +308,7 @@ export default function SignUp() {
               fullWidth
               sx={{ mt: 1, backgroundColor: "#28a745" }}
             >
-              Sign Up
+              Đăng Ký
             </Button>
           </FormControl>
           {formValid && (
@@ -324,13 +328,13 @@ export default function SignUp() {
           <FormControl sx={{ marginBottom: 0 }}>
             <div className="d-flex justify-content-between align-items-center">
               <div>
-                Already Have Account ?{" "}
+                Đã có tài khoản ?{" "}
                 <Link
                   component="button"
                   onClick={() => navigate(LOGIN_PAGE)}
                   sx={{ color: "#28a745" }}
                 >
-                  Login
+                  Đăng nhập
                 </Link>
               </div>
             </div>

@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import { Avatar, Badge } from '@mui/material';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
-import { BOUGHT_TICKET_MANEMENT_PAGE, MAIN_COLOR, MY_SHOP_PAGE, PROFILE_PAGE, SidebarOption ,MANAGE_BUYER_PAGE} from '../config/Constant';
+import { BOUGHT_TICKET_MANEMENT_PAGE, MAIN_COLOR, MY_SHOP_PAGE, PROFILE_PAGE, SidebarOption ,MANAGE_BUYER_PAGE, CHANGE_PASSWORD_PAGE} from '../config/Constant';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import Divider from '@mui/material/Divider';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
@@ -13,14 +13,16 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { useNavigate } from 'react-router-dom';
 import KeyIcon from '@mui/icons-material/Key';
 import PropTypes from 'prop-types';
+import { formatToVND } from '../service/StringService';
 
 /*
     Author: Nguyen Tien Thuan
 */
-export default function SideBar({sideBarOption}) {
+// eslint-disable-next-line react/prop-types
+export default function SideBar({sideBarOption, user}) {
 
     SideBar.propTypes = {
-        sideBarOption: PropTypes.oneOf(['BOUGHT_TICKET', 'PROFILE', 'MY_SHOP', 'BALANCE', 'INFORM']).isRequired, 
+        sideBarOption: PropTypes.oneOf(['BOUGHT_TICKET', 'PROFILE', 'MY_SHOP', 'BALANCE', 'INFORM', 'CHANGE_PASS']).isRequired, 
     };
 
     const navigator = useNavigate();
@@ -32,9 +34,14 @@ export default function SideBar({sideBarOption}) {
             aria-labelledby="nested-list-subheader"
         >
             <div className='d-flex justify-content-center mb-3'>
-                <Avatar sx={{ width: 72, height: 72 }} src="/broken-image.jpg" />
+                <Avatar src={ !user || !user.avatar ? "/broken-image.jpg" : "data:image/png;base64, "+ user.avatar } sx={{ width: 72, height: 72 }} /> 
+                {/*  src="/broken-image.jpg" */}
             </div>
-            <h5 className='text-center mb-3'>Nguyễn Tiến Thuận</h5>
+            {
+                // eslint-disable-next-line react/prop-types
+                user ? <h5 className='text-center mb-3'>{user.firstname} {user.lastname}</h5> : ''
+            }
+            <p className='text-center small'>Số dư: <span className='text-danger small'>{formatToVND(user.balance)}</span></p>
             <div className='mb-3'><Divider /></div>
             <div className='mb-3'>
                 <ListItemButton
@@ -44,7 +51,7 @@ export default function SideBar({sideBarOption}) {
                     <ListItemIcon>
                         <ManageAccountsIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Quản lý tài khoản" />
+                    <div> Quản lý tài khoản</div>
                 </ListItemButton>
 
                 <ListItemButton 
@@ -54,7 +61,7 @@ export default function SideBar({sideBarOption}) {
                     <ListItemIcon>
                         <LocalActivityIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Vé đã mua" />
+                    <div>Vé đã mua</div>
                 </ListItemButton>
 
                 <ListItemButton
@@ -64,7 +71,7 @@ export default function SideBar({sideBarOption}) {
                     <ListItemIcon>
                         <AddBusinessIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Shop của tôi" />
+                    <div>Shop của tôi</div>
                 </ListItemButton>
 
                 <ListItemButton 
@@ -74,7 +81,7 @@ export default function SideBar({sideBarOption}) {
                     <ListItemIcon>
                         <LocalAtmIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Quản lý số dư" />
+                    <div>Quản lý số dư</div>
                 </ListItemButton>
             </div>
 
@@ -90,16 +97,17 @@ export default function SideBar({sideBarOption}) {
 
                     </Badge>
                     </ListItemIcon>
-                    <ListItemText primary="Thông báo" />
+                    <div>Thông báo</div>
                 </ListItemButton>
 
                 <ListItemButton 
-                    sx={sideBarOption === SidebarOption.INFORM ? { backgroundColor: MAIN_COLOR } : {}}
+                    sx={sideBarOption === SidebarOption.CHANGE_PASS ? { backgroundColor: MAIN_COLOR } : {}}
+                    onClick={() => navigator(CHANGE_PASSWORD_PAGE)}
                 >
                     <ListItemIcon>
                         <KeyIcon/>
                     </ListItemIcon>
-                    <ListItemText primary="Đổi mật khẩu" />
+                    <div>Đổi mật khẩu</div>
                 </ListItemButton>
             </div>
 

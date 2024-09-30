@@ -29,15 +29,15 @@ export default function RatingInfoRowBox({ user, ticket }) {
             </div>
             <div className="row">{ticket.ticketName}</div>
           </div>
-          <div className="col-md-1 d-flex justify-content-center align-items-center">
-            <Avatar {...stringAvatar(user.name)} />
-          </div>
-          <div className="col-md-2">
+          {/* <div className="col-md-1 d-flex justify-content-center align-items-center">
+            <Avatar {...stringAvatar(user.firstname+" "+user.lastname)} />
+          </div> */}
+          {/* <div className="col-md-2">
             <div style={titleCss} className="row">
               Người mua
             </div>
             <div className="row">{user.name}</div>
-          </div>
+          </div> */}
           <div className="col-md-2">
             <div style={titleCss} className="row">
               Đánh giá

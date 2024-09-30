@@ -12,6 +12,8 @@ import {
   BUY_TICKET_PAGE,
   CHECK_OUT_PAGE,
   MANAGE_BUYER_PAGE,
+  ADD_TICKET_PAGE,
+  CHANGE_PASSWORD_PAGE,
 } from "./config/Constant";
 import HomePage from "./page/public/HomePage";
 import SignUp from "./page/public/SignUpPage";
@@ -24,10 +26,29 @@ import BuyTicketPage from "./page/private/BuyTicketPage";
 import CheckOutPage from "./page/private/CheckOutPage";
 import ScrollToTop from "./components/ScrollToTop";
 import ManageBuyerPage from"./page/private/ManageBuyerMoney";
+import { Global, css } from '@emotion/react';
+import AddingTicketPage from "./page/private/AddingTicketPage";
+import Loader from "./components/Loader";
+import ChangePasswordPage from "./page/private/ChangePasswordPage";
+const GlobalStyles = () => (
+  <Global
+      styles={css`
+    /* Apply global styles */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      font-family: 'Quicksand';
+      color: #333;
+    }
+  `}
+  />
+);
 function App() {
   return (
     <div>
       <BrowserRouter>
+        <GlobalStyles/>
         <ScrollToTop/>
         <Routes>
 
@@ -52,6 +73,13 @@ function App() {
           <Route path={CHECK_OUT_PAGE} element={<CheckOutPage/>}></Route>
 
           <Route path={MANAGE_BUYER_PAGE} element={<ManageBuyerPage/>}></Route>
+
+          <Route path={ADD_TICKET_PAGE} element={<AddingTicketPage/>}></Route>
+
+          {/* <Route path="/loading" element={ <Loader/> }></Route> */}
+
+          <Route path={CHANGE_PASSWORD_PAGE} element={ <ChangePasswordPage/> }></Route>
+          
         </Routes>
       </BrowserRouter>
     </div>

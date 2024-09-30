@@ -4,16 +4,31 @@ import GroupTicketCommandButton from "../../components/GroupTicketCommandButton"
 import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
 import TicketInfoRowBox from "../../components/TicketInfoRowBox";
-import { SidebarOption } from "../../config/Constant";
-import { BOUGHT_TICKET_DATA, USER_DATA } from "../../test/DataTest";
+import { SidebarOption, USER_ID_KEY } from "../../config/Constant";
+import { BOUGHT_TICKET_DATA } from "../../test/DataTest";
 import RatingInfoRowBox from "../../components/RatingInfoRowBox";
+import { useEffect, useState } from "react";
+import UserAPI from "../../service/api/UserAPI";
 
 /*
     Author: Nguyen Tien Thuan
 */
 export default function BoughtTicketManagementPage() {
   const tickets = BOUGHT_TICKET_DATA;
-  const user = USER_DATA;
+
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    let userId = localStorage.getItem(USER_ID_KEY);
+    if (userId) {
+      const fetchData = async () => {
+        const response = await UserAPI.getUserInfo(userId);
+        setUser(response.data.object)
+      }
+      fetchData().catch(console.error);
+    }
+  }, [])
+
   return (
     <div>
       <div className="row">
@@ -23,7 +38,7 @@ export default function BoughtTicketManagementPage() {
       <div className="container-fluid mb-5">
         <div className="row" style={{ marginTop: "7%" }}>
           <div className="col-md-2">
-            <SideBar sideBarOption={SidebarOption.BOUGHT_TICKET} />
+            <SideBar user={user} sideBarOption={SidebarOption.BOUGHT_TICKET} />
           </div>
           {/* <div className='col-md-1' ></div> */}
           <div className="col-md-10">

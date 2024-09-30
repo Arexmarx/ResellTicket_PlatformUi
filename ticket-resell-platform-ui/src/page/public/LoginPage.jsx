@@ -5,7 +5,6 @@ import {
   FormControl,
   FormControlLabel,
   FormGroup,
-  Input,
   InputLabel,
   Link,
   SvgIcon,
@@ -15,7 +14,6 @@ import {
   InputAdornment,
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
@@ -24,7 +22,10 @@ import LoginIcon from "@mui/icons-material/Login";
 import * as React from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import {MAIN_COLOR, USER_ID_KEY} from "../../config/Constant"
 import {HOME_PAGE,SIGN_UP_PAGE} from "../../config/Constant"
+import AuthenticationAPI from "../../service/api/AuthenticationAPI";
+import HttpStatus from "../../config/HttpStatus";
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
@@ -41,13 +42,14 @@ export default function Login() {
   // Overall Form Validity
   const [formValid, setFormValid] = React.useState();
   const [success, setSuccess] = React.useState();
+  const [loginErrorMessage, setLoginErrorMessage] = React.useState(null);
 
   const navigate = useNavigate();
   //Validation for on Blur Username
   const handleUsername = () => {
     if (
       !userNameInput ||
-      userNameInput.length < 5 ||
+      userNameInput.length <=0 ||
       userNameInput.length > 20
     ) {
       setUserNameError(true);
@@ -59,7 +61,7 @@ export default function Login() {
   const handlePassword = () => {
     if (
       !passwordInput ||
-      passwordInput.length < 5 ||
+      passwordInput.length <= 0 ||
       passwordInput.length > 20
     ) {
       setPasswordError(true);
@@ -73,23 +75,33 @@ export default function Login() {
     setSuccess(null);
     if (userNameError || !userNameInput) {
       setFormValid(
-        "Username is set btw 5 - 15 characters long. Please Re-Enter"
+        "Tên đăng nhập không được để trống!"
       );
       return;
     }
     if (passwordError || !passwordInput) {
       setFormValid(
-        "Password is set btw 5 - 20 characters long. Please Re-Enter"
+        "Mật khẩu không được để trống"
       );
       return;
     }
-    setFormValid(null);
-    setSuccess("Form Submitted Successfully");
-    navigate(HOME_PAGE);
+    sendLoginRequest().catch(console.error);
   };
 
-  const sendLoginRequest = () => {
-    
+  const sendLoginRequest =  async () => {
+    let authenticationRequest = {
+      username: userNameInput, 
+      password: passwordInput
+    }
+    const response = await AuthenticationAPI.login(authenticationRequest);
+    if (response.data.httpStatus == HttpStatus.FORBIDDEN) {
+      setLoginErrorMessage(response.data.message)
+      
+    }
+    else {
+      localStorage.setItem(USER_ID_KEY, response.data.object.id)
+      navigate(HOME_PAGE);
+    }
   }
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -115,12 +127,12 @@ export default function Login() {
     >
       <Card sx={{ minWidth: 500, marginTop: "2%", borderRadius: 3 }}>
         <Typography variant="h3" className="text-center mt-5">
-          Log in
+          Đăng Nhập
         </Typography>
         <FormGroup sx={{ margin: 5, minWidth: 450 }}>
           <FormControl sx={{ marginBottom: 3 }}>
             <TextField
-              label={"User Name"}
+              label={"Tên tài khoản"}
               id="margin-none-1"
               fullWidth
               value={userNameInput}
@@ -134,7 +146,7 @@ export default function Login() {
               error={passwordError}
               htmlFor="outlined-adornment-password"
             >
-              Password
+              Mật khẩu
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
@@ -159,15 +171,18 @@ export default function Login() {
               label="Password"
             />
           </FormControl>
+          {
+            loginErrorMessage && <div className="mt-2 mb-3 text-danger">{loginErrorMessage}</div>
+          }
           <FormControl sx={{ marginBottom: 3 }}>
             <Button
               onClick={handleSubmit}
               variant="contained"
               startIcon={<LoginIcon />}
               fullWidth
-              sx={{ mt: 1, backgroundColor: "#2dc275" }}
+              sx={{ mt: 1, backgroundColor: MAIN_COLOR }}
             >
-              Log in
+              Đăng nhập
             </Button>
           </FormControl>
           {formValid && (
@@ -186,15 +201,15 @@ export default function Login() {
           )}
           <FormControl sx={{ marginBottom: 0 }}>
             <div className="d-flex justify-content-between align-items-center">
-              <FormControlLabel control={<Checkbox />} label="Remember me" />
+              <FormControlLabel control={<Checkbox />} label="Ghi nhớ đăng nhập" />
               <div>
-                Not have account?{" "}
+                Chưa có tài khoản ?{" "}
                 <Link
                   component="button"
                   onClick={() => navigate(SIGN_UP_PAGE)}
-                  sx={{ color: "#2dc275" }}
+                  sx={{ color: MAIN_COLOR }}
                 >
-                  Register
+                  Đăng ký
                 </Link>
               </div>
             </div>
@@ -206,9 +221,9 @@ export default function Login() {
             fullWidth={true}
             variant="outlined"
             startIcon={<SvgIcon component={GoogleIcon} />}
-            sx={{ mt: 1, color: "#2dc275" }}
+            sx={{ mt: 1, color: MAIN_COLOR , borderColor: MAIN_COLOR}}
           >
-            Login with Google
+            Đăng nhập bằng Google
           </Button>
         </div>
       </Card>

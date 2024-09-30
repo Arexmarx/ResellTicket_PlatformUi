@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import {
@@ -14,24 +14,38 @@ import {
   MDBCardHeader,
   MDBBtnGroup,
 } from "mdb-react-ui-kit";
-import { MAIN_COLOR } from "../../config/Constant.js";
+import { FONT_MAIN, MAIN_COLOR, USER_ID_KEY } from "../../config/Constant.js";
 import { SidebarOption } from "../../config/Constant";
 import SideBar from "../../components/SideBar";
-import { USER_DATA } from "../../test/DataTest.js";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import { formatToVND} from'../../service/StringService.js'
+import UserAPI from "../../service/api/UserAPI.js";
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
 export default function ManageBuyerMoney() {
+
+  const [user, setUser] = useState({});
+
+    useEffect(() => {
+        let userId = localStorage.getItem(USER_ID_KEY);
+        if (userId) {
+            const fetchData = async () => {
+                const response = await UserAPI.getUserInfo(userId);
+                setUser(response.data.object)
+            }
+            fetchData().catch(console.error);
+        }
+    }, [])
+
   return (
     <div>
       <Header />
       <MDBContainer fluid mb="5">
         <MDBRow style={{ marginTop: "7%" }}>
           <MDBCol md="2">
-            <SideBar sideBarOption={SidebarOption.BALANCE} />
+            <SideBar user={user} sideBarOption={SidebarOption.BALANCE} />
           </MDBCol>
           <MDBCol md="10">
             <MDBBtn style={{ backgroundColor: MAIN_COLOR, marginRight: "2%" }}>
@@ -44,13 +58,13 @@ export default function ManageBuyerMoney() {
               <MDBCardHeader
                 style={{ textAlign: "center", fontSize: "30px", color: "red" }}
               >
-                Tiền của bạn: {formatToVND(USER_DATA.money)}
+                Tiền của bạn: {formatToVND(user.balance)}
               </MDBCardHeader>
               <hr />
             </MDBRow>
             <MDBRow>
-              <Alert severity="info">
-                <AlertTitle><strong style={{fontSize:'20px'}}>Thông báo</strong></AlertTitle>
+              <Alert severity="info" style={{ fontFamily: FONT_MAIN, fontSize: 16 }}>
+                <AlertTitle style={{ fontFamily: FONT_MAIN }}><strong style={{fontSize:'20px'}}>Thông báo</strong></AlertTitle>
                 <p>Nạp vào số điện thoại sẽ không được xử lí, vui lòng chọn các phương thức nạp bên dưới và làm theo hướng dẫn</p>
                 <p style={{color:'red'}}>* Quan trọng! Chỉ chấp nhận giao dịch từ 10,000đ, những giao dịch thấp hơn sẽ không được cộng xu.</p>
                 <p style={{color:'red'}}>* Quan trọng! Chuyển khoản MB sẽ bị chậm vì hệ thống ngân hàng có thay đổi, hệ thống sẽ tự cập nhật sau khi nhận được tiền, vui lòng bình tĩnh đừng hối~</p>
