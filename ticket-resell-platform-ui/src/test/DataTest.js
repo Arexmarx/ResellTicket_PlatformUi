@@ -100,6 +100,7 @@ export const BOUGHT_TICKET_DATA = [
     ]
   }
 
+
   // },
   // {
   //   seller: {
@@ -124,4 +125,54 @@ export const BOUGHT_TICKET_DATA = [
   //   }
   // }
 
+]
+
+export const TICKET_DATA = [
+
+  {
+    ticketSerial: "ABC123456",
+    image: "https://c1.wallpaperflare.com/preview/498/569/96/ticket-entry-focus-coupon.jpg",
+    IsCheck: true,
+    IsBought: false,
+    IsValid: true,
+    note: "Ticket for VIP event",
+    process: "Pending",
+    boughtDate: null,
+    genericTicketId: "GTID001",
+    buyerID: null,
+    genericTicketObject: {
+      id: "GTID001",
+      ticketName: "Concert VIP Ticket",
+      price: 1500000,
+      salePercent: "10%",
+      area: "VIP Section",
+      expiredDate: "2024-12-31",
+      description: "Access to VIP area and meet-and-greet with artists.",
+      linkEvent: "https://example.com/event/123",
+      isPaper: false
+    }
+  },
+  {
+    ticketSerial: "DEF789101",
+    image: "https://c1.wallpaperflare.com/preview/282/530/546/ticket-hand-holding-crowd.jpg",
+    IsCheck: false,
+    IsBought: true,
+    IsValid: true,
+    note: "General admission ticket",
+    process: "Completed",
+    boughtDate: "2024-09-01",
+    genericTicketId: "GTID002",
+    buyerID: "BID12345",
+    genericTicketObject: {
+      id: "GTID002",
+      ticketName: "Concert General Admission",
+      price: 500000,
+      salePercent: "5%",
+      area: "General Area",
+      expiredDate: "2024-12-31",
+      description: "General entry to the event.",
+      linkEvent: "https://example.com/event/456",
+      isPaper: true
+    }
+  }
 ]

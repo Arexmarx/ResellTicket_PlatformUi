@@ -22,6 +22,7 @@ import { SELLER } from "../../test/DataTest.js";
 import { formatDateTime } from "../../service/DateService.js";
 import TicketAPI from "../../service/api/TicketAPI.js";
 import HttpStatus from "../../config/HttpStatus.js";
+import { formatToVND } from "../../service/StringService.js";
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
@@ -128,7 +129,7 @@ export default function EventDetail() {
                         <div>Mô tả: {gTicket.description}</div>
                       </MDBCol> */}
                       <MDBCol>
-                        <div>Giá bán: {gTicket.price}</div>
+                        <div>Giá bán: {formatToVND(gTicket.price)}</div>
                       </MDBCol>
                       <MDBCol size="auto">
                         <MDBBtn

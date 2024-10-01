@@ -14,7 +14,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from "react-router-dom";
-import { LOGIN_PAGE, HOME_PAGE, BOUGHT_TICKET_MANEMENT_PAGE, PROFILE_PAGE, MAIN_COLOR, USER_ID_KEY } from "../config/Constant"
+import { LOGIN_PAGE, HOME_PAGE, BOUGHT_TICKET_MANEMENT_PAGE, PROFILE_PAGE, MAIN_COLOR, USER_ID_KEY, FONT_MAIN } from "../config/Constant"
 import { Button } from "@mui/material";
 import UserAPI from "../service/api/UserAPI";
 import { stringAvatar } from "../service/StringService";
@@ -131,7 +131,8 @@ function Header() {
     <AppBar style={{ backgroundColor: MAIN_COLOR }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <LocalActivityIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* <LocalActivityIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
+          <img src="src\assets\logo\LogoTab-Photoroom.png" style={{maxHeight: '40px'}}/>
           <Typography
             variant="h6"
             noWrap
@@ -140,16 +141,18 @@ function Header() {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'Playwrite DE Grund',
+              fontFamily: FONT_MAIN,
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
+              marginLeft:'1%'
             }}
             onClick={handleHomepage}
           >
             Ticket Resell
           </Typography>
+          
 
           <Typography
             variant="h5"
@@ -160,7 +163,7 @@ function Header() {
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: 'Playwrite DE Grund',
+              fontFamily: FONT_MAIN,
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',

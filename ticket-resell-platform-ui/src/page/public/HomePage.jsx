@@ -55,7 +55,7 @@ export default function HomePage() {
   useEffect(()  => {
     
     const fetchData = async () => {
-      const musicEventResponse = await EventAPI.getHappeningEventByCateName('Ca nhạc')
+      const musicEventResponse = await EventAPI.getHappeningEventByCateName('Âm nhạc')
       //console.log(musicEventResponse.data.object);
       setMusicEvents(musicEventResponse.data.object)
     }
@@ -114,8 +114,7 @@ export default function HomePage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
-      <MDBContainer style={{ marginTop: "5%" }}>
-        <MDBRow >
+      <MDBRow style={{marginTop: '4%', marginLeft: '15%'}}>
           <MDBCol>
 
             {
@@ -123,11 +122,11 @@ export default function HomePage() {
               categories.map(cate => (
                 <MDBBtn key={cate.id}
                   outline
-                  color="success"
-                  size="sm"
-                  style={{ marginLeft: "30px" }}
+                  color="tertiary"
+                  size="lg"
+                  style={{borderColor: '#fbf9f9',fontWeight:'bold' }}
                   onClick={() => scrollToSection(
-                    (cate.name == 'Ca nhạc') ? musicRef :
+                    (cate.name == 'Âm nhạc') ? musicRef :
                       (cate.name == 'Sự kiện') ? eventRef :
                         (cate.name == 'Triển lãm') ? exhibitionRef : otherRef
                   )}
@@ -143,21 +142,23 @@ export default function HomePage() {
               size="sm"
               style={{ marginLeft: "30px" }}
               onClick={() => scrollToSection(eventRef)}
+              style={{borderColor: 'white', marginLeft: '2%', color:'black'}}
             >
               Sự Kiện
             </MDBBtn>
             <MDBBtn
-              outline
-              color="success"
-              size="sm"
+              color="tertiary"
+              size="lg"
               style={{ marginLeft: "30px" }}
               onClick={() => scrollToSection(exhibitionRef)}
+              style={{borderColor: 'white', marginLeft: '2%',color:'black'}}
             >
               Triển Lãm
             </MDBBtn> */}
           </MDBCol>
 
         </MDBRow>
+      <MDBContainer style={{ marginTop: "3%" }}>
       </MDBContainer>
 
       <SlideShowMain />
