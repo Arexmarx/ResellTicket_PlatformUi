@@ -12,35 +12,50 @@ import {
   MDBBtn,
   MDBCardHeader,
 } from "mdb-react-ui-kit";
-import { BUY_TICKET_PAGE, USER_ID_KEY } from "../../config/Constant.js";
+import { BUY_TICKET_PAGE } from "../../config/Constant.js";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer.jsx";
 import Header from "../../components/Header.jsx";
-import { Avatar, Typography } from "@mui/material";
+import { Alert, Avatar, Typography } from "@mui/material";
 import { MAIN_COLOR } from "../../config/Constant.js";
-import { SELLER } from "../../test/DataTest.js";
 import { formatDateTime } from "../../service/DateService.js";
 import TicketAPI from "../../service/api/TicketAPI.js";
 import HttpStatus from "../../config/HttpStatus.js";
 import { formatToVND } from "../../service/StringService.js";
+import useAxios from "../../utils/useAxios.jsx";
+import API from "../../config/API.js";
+
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
-const seller = SELLER;
-
 export default function EventDetail() {
 
   const location = useLocation();
   const navigate = useNavigate();
   const { event } = location.state || {};
-  const userId = localStorage.getItem(USER_ID_KEY)
+
+  const [user, setUser] = useState();
+    const api = useAxios();
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await api.get(API.User.GET_USER_INFO)
+            if (response.data.httpStatus === HttpStatus.OK) {
+                setUser(response.data.object)
+            }
+        }
+        fetchData().catch(console.error)
+    }, [])
 
   if (!event) {
     return <div>No event data available</div>;
   }
 
   const handleBuy = (x) => {
-    navigate(BUY_TICKET_PAGE, { state: { ticket: x} });
+    if (user) {
+      navigate(BUY_TICKET_PAGE, { state: { ticket: x} });
+    }
   };
 
   // Get all selling genericTicket by event
@@ -54,7 +69,7 @@ export default function EventDetail() {
       const fetchData = async () => {
         const response = await TicketAPI.getGenericTicketByEvent(event.id);
         if (response.data.httpStatus == HttpStatus.OK) {
-          console.log(response.data.object);
+          //console.log(response.data.object);
           setSellingGenericTicket(response.data.object)
         }
       }
@@ -103,8 +118,11 @@ export default function EventDetail() {
               VÉ ĐANG BÁN
             </MDBCardHeader>
             {
+              !user && <Alert severity="error">Bạn cần đăng nhập để mua vé</Alert>
+            }
+            {
               sellingGenericTicket &&
-              sellingGenericTicket.map((gTicket) => ( userId != gTicket.seller.id &&
+              sellingGenericTicket.map((gTicket) => ( user?.id != gTicket.seller.id &&
                 <MDBCard key={gTicket.id} style={{ marginTop: "2%" }}>
                   <MDBCardBody>
                     <MDBRow className="align-items-center">

@@ -47,8 +47,8 @@ export default function Footer() {
               <MDBCol md="3" lg="4" xl="3" className="mx-auto mb-4">
                 <h6 className="text-uppercase fw-bold mb-4">
                   {/* <MDBIcon icon="ticket-alt" className="me-3" /> */}
-                  <img src="src\assets\logo\LogoTab-Photoroom.png" style={{maxHeight: '20px'}}/>
-                  Resell Ticket
+                  <img src="..\src\assets\logo\LogoTab-Photoroom.png" style={{maxHeight: '20px'}}/>
+                  &nbsp;&nbsp;Resell Ticket
                 </h6>
                 <p>
                   Nền tảng bán lại vé chưa dùng uy tín, an toàn, chất lượng đầu

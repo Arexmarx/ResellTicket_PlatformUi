@@ -22,14 +22,17 @@ import LoginIcon from "@mui/icons-material/Login";
 import * as React from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import {MAIN_COLOR, USER_ID_KEY} from "../../config/Constant"
-import {HOME_PAGE,SIGN_UP_PAGE} from "../../config/Constant"
-import AuthenticationAPI from "../../service/api/AuthenticationAPI";
-import HttpStatus from "../../config/HttpStatus";
+import {MAIN_COLOR} from "../../config/Constant"
+import {SIGN_UP_PAGE} from "../../config/Constant"
+import AuthContext from "../../context/AuthContext";
+
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
 export default function Login() {
+
+  const { loginUser } = React.useContext(AuthContext)
+
   const [showPassword, setShowPassword] = React.useState(false);
   // Inputs
   const [userNameInput, setUserNameInput] = React.useState();
@@ -85,24 +88,35 @@ export default function Login() {
       );
       return;
     }
-    sendLoginRequest().catch(console.error);
+    // sendLoginRequest().catch(console.error);
+    handleLogin(e)
   };
 
-  const sendLoginRequest =  async () => {
-    let authenticationRequest = {
-      username: userNameInput, 
-      password: passwordInput
+  async function handleLogin(e) {
+    e.preventDefault(); // Prevent default form submission
+    try {
+        await loginUser(e, userNameInput, passwordInput); // Await the promise
+    } 
+    catch (error) {
+        setLoginErrorMessage(error); // Set the error message
     }
-    const response = await AuthenticationAPI.login(authenticationRequest);
-    if (response.data.httpStatus == HttpStatus.FORBIDDEN) {
-      setLoginErrorMessage(response.data.message)
+}
+
+  // const sendLoginRequest =  async () => {
+  //   let authenticationRequest = {
+  //     username: userNameInput, 
+  //     password: passwordInput
+  //   }
+  //   const response = await AuthenticationAPI.login(authenticationRequest);
+  //   if (response.data.httpStatus == HttpStatus.FORBIDDEN) {
+  //     setLoginErrorMessage(response.data.message)
       
-    }
-    else {
-      localStorage.setItem(USER_ID_KEY, response.data.object.id)
-      navigate(HOME_PAGE);
-    }
-  }
+  //   }
+  //   else {
+  //     localStorage.setItem(USER_ID_KEY, response.data.object.id)
+  //     navigate(HOME_PAGE);
+  //   }
+  // }
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 

@@ -9,8 +9,9 @@ import PolicyAPI from "../../service/api/PolicyAPI";
 import HttpStatus from "../../config/HttpStatus";
 import CategoryAPI from "../../service/api/CategoryAPI";
 import EventAPI from "../../service/api/EventAPI";
-import { Flag } from "@mui/icons-material";
 import TicketAPI from "../../service/api/TicketAPI";
+import useAxios from "../../utils/useAxios";
+import API from "../../config/API";
 
 export const SidebarOption = {
     PROFILE: 'profile',
@@ -22,6 +23,7 @@ export const SidebarOption = {
 
 export default function AddingTicketPage() {
 
+    const api = useAxios()
     const GENERIC_TICKET_TEMP_KEY = 'generic_ticket_temp';
 
     const [user, setUser] = useState({});
@@ -93,13 +95,12 @@ export default function AddingTicketPage() {
     // Select list event
     useEffect(() => {
         const fetchData = async () => {
-            const response = await EventAPI.getHappeningEvents();
+            const response = await api.get(API.User.GET_USER_INFO)
             if (response.data.httpStatus === HttpStatus.OK) {
-                // console.log(response.data);
-                setEvents(response.data.object)
+                setUser(response.data.object)
             }
         }
-        fetchData();
+        fetchData().catch(console.error)
     }, [])
 
     const handleNameChange = (e) => setGenericName(e.target.value)
@@ -143,17 +144,27 @@ export default function AddingTicketPage() {
             formData.append("ticketRequest", new Blob([JSON.stringify(ticketRequest)], { type: 'application/json' }))
             formData.append('file', file)
 
-            TicketAPI.createTicket(formData).then(
-                response => {
-                    console.log(response.data)
+            // TicketAPI.createTicket(formData).then(
+            //     response => {
+            //         console.log(response.data)
+            //     }
+            // )
+            //     .catch(
+            //         error => {
+            //             console.log(error)
+            //             flag = false;
+            //         }
+            //     )
+            api.post(API.Ticket.CREATE_TICKET, formData).then(
+                response => console.log(response.data)
+            )
+            .catch(
+                error => {
+                    console.log(error); 
+                    flag = false;
                 }
             )
-                .catch(
-                    error => {
-                        console.log(error)
-                        flag = false;
-                    }
-                )
+
         }
 
         if (flag){

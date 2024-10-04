@@ -1,8 +1,18 @@
 import { useState } from 'react';
 import Footer from '../../components/Footer';
+import UserAPI from '../../service/api/UserAPI';
+import HttpStatus from '../../config/HttpStatus';
+import { useNavigate } from 'react-router-dom';
+import { LOGIN_PAGE } from '../../config/Constant';
+import useAxios from '../../utils/useAxios';
+import { Alert, Stack } from '@mui/material';
 
 const VerifyRegisterAccountPage = () => {
+
+    const navigator = useNavigate()
+
     const [otp, setOtp] = useState(new Array(6).fill(''));
+    const [message, setMessage] = useState({ status: false, message: '' })
 
     const handleChange = (element, index) => {
         // Validate only number inputs
@@ -30,21 +40,33 @@ const VerifyRegisterAccountPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Concatenate OTP digits
         const finalOtp = otp.join('');
-        console.log('Entered OTP is:', finalOtp);
 
-        // Validate OTP (Here, add your validation logic)
         if (finalOtp.length === 6) {
-            alert(`OTP submitted: ${finalOtp}`);
-        } else {
-            alert('Please enter all 6 digits of the OTP');
+            const fetchData = async () => {
+                const response = await UserAPI.verifyEmail(finalOtp);
+                if (response.data.httpStatus === HttpStatus.OK) {
+                    setMessage({
+                        status: true, message: response.data.message
+                    })
+                }
+                else {
+                    setMessage({
+                        status: false, message: response.data.message
+                    })
+                }
+            }
+            fetchData().catch(console.error)
+        }
+        else {
+            alert('Yêu cầu nhập đủ 6 số của OTP');
         }
     };
 
     return (
         <div>
             <h1 className='text-center mb-4' style={{ paddingTop: '200px' }}>Nhập mã xác thực</h1>
+            <div className='text-center mt-3 mb-3 text-danger'>Chú ý: Mã xác thực có hiệu lực trong vòng 5 phút!</div>
             <div className='d-flex justify-content-center align-items-center'>
                 <form className='' onSubmit={handleSubmit}>
                     <div >
@@ -64,12 +86,30 @@ const VerifyRegisterAccountPage = () => {
                         }
 
                     </div>
-                    <button style={{ marginLeft: '30%', marginBottom: '300px', marginTop: '10%' }} type="submit" className='btn btn-success'>
-                        Submit OTP
+                    <button onClick={handleSubmit}
+                        style={{
+                            marginLeft: '30%', marginTop: '10%'
+                        }}
+                        type="submit" className='btn btn-success'>
+                        Xác nhận
                     </button>
+                    {
+                        message.message && message.status &&
+                        <Stack sx={{ width: '100%' }} spacing={2}>
+                            <Alert severity="success">{message.message}. <a href={LOGIN_PAGE}>Đăng nhập</a></Alert>
+                        </Stack>
+                    }
+
+                    {
+                        message.message && !message.status &&
+                        <Stack sx={{ width: '100%' }} spacing={2}>
+                            <Alert severity="error">{message.message}</Alert>
+                        </Stack>
+                    }
+                    <div style={{ marginBottom: '300px' }}></div>
                 </form>
             </div>
-            <Footer/>
+            <Footer />
         </div>
     );
 };

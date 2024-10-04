@@ -35,3 +35,13 @@ export function stringAvatar(name) {
 export function formatToVND(amount) {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
 }
+
+/*
+* Author: Nguyen Tien Thuan
+*/
+export function getFirstFiveChars(str) {
+    if (str.length < 5) {
+        return str; 
+    }
+    return str.substring(0, 5); 
+}

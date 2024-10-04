@@ -18,9 +18,9 @@ import LoginIcon from "@mui/icons-material/Login";
 import * as React from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { LOGIN_PAGE } from "../../config/Constant"
+import { EMAIL_VERIFY_PAGE, LOGIN_PAGE } from "../../config/Constant"
 import AuthenticationAPI from "../../service/api/AuthenticationAPI";
-import {MAIN_COLOR} from "../../config/Constant"
+import HttpStatus from "../../config/HttpStatus";
 const isEmail = (email) =>
   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 /**
@@ -43,10 +43,11 @@ export default function SignUp() {
   const [passwordError, setPasswordError] = React.useState(false);
   const [rePasswordError, setRePasswordError] = React.useState(false);
   const [emailError, setEmailError] = React.useState(false);
+  const [successMessage, setSuccessMessage] = React.useState({ status: false, message: '' }); 
+  const [errorMessage, setErrorMessage] = React.useState({ status: false, message: '' })
 
   // Overall Form Validity
   const [formValid, setFormValid] = React.useState();
-  const [success, setSuccess] = React.useState();
 
   const navigate = useNavigate();
   //Validation for on Blur Username
@@ -111,44 +112,45 @@ export default function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSuccess(null);
+    setSuccessMessage({ status: false, message: '' });
     if (userNameError || !userNameInput) {
       setFormValid(
-        "Username is set btw 2 - 15 characters long. Please Re-Enter"
+        "Tên đăng nhập phải từ 5 - 15 ký tự!"
       );
       return;
     }
     if (firstNameError || !firstNameInput) {
       setFormValid(
-        "First Name is set btw 2 - 50 characters long. Please Re-Enter"
+        "Họ và tên từ 2 - 50 ký tự!"
       );
       return;
     }
     if (lastNameError || !lastNameInput) {
       setFormValid(
-        "Last Name is set btw 5 - 50 characters long. Please Re-Enter"
+        "Họ và tên phải từ 2 - 50 ký tự!"
       );
       return;
     }
     if (passwordError || !passwordInput) {
       setFormValid(
-        "Password is set btw 5 - 20 characters long. Please Re-Enter"
+        "Mật khẩu phải từ 5 - 50 ký tự!"
       );
       return;
     }
     if (rePasswordError || !rePasswordInput || rePasswordInput !== passwordInput) {
-      setFormValid("Re-Password is not the same as Password. Please Re-Enter");
+      setFormValid("Mật khẩu nhập lại không hợp lệ!");
       return;
     }
 
     if (emailError || !emailInput) {
-      setFormValid("Email is Invalid. Please Re-Enter");
+      setFormValid("Email không hợp lệ!");
       return;
     }
     
     sendRegisterRequest();
     
   };
+
 
   const sendRegisterRequest = () => {
     let registerRequest = {
@@ -158,15 +160,22 @@ export default function SignUp() {
       firstname: firstNameInput,
       lastname: lastNameInput
     }
-    AuthenticationAPI.register(registerRequest).then(
-      response => {
-        setFormValid(null);
-        setSuccess(response.data.message);
+
+    const fetchData = async () => {
+      const response = await AuthenticationAPI.register(registerRequest);
+      if (response.data.httpStatus === HttpStatus.CREATED) {
+        console.log(response.data);
+        
+        setSuccessMessage({ status: true, message: response.data.message })
+        setErrorMessage({ status: false, message: '' })
       }
-    )
-    .catch(
-      error => console.log(error)
-    );
+      else {
+        setErrorMessage({ status: true, message: response.data.message })
+        setSuccessMessage({ status: false, message: '' })
+      }
+    }
+
+    fetchData().catch(console.error)
   }
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -318,13 +327,25 @@ export default function SignUp() {
               </Alert>
             </Stack>
           )}
-          {success && (
-            <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
-              <Alert severity="success" size="small">
-                {success}
-              </Alert>
-            </Stack>
-          )}
+          {
+            successMessage.message && (
+              <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
+                <Alert severity="success" size="small">
+                  {successMessage.message}
+                  <div>Mã xác thực đã được gửi qua emial. <a href={EMAIL_VERIFY_PAGE}>Xác thực</a></div>
+                </Alert>
+              </Stack>
+            )
+          }
+          {
+            errorMessage.message && (
+              <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
+                <Alert severity="error" size="small">
+                  {errorMessage.message}
+                </Alert>
+              </Stack>
+            )
+          }
           <FormControl sx={{ marginBottom: 0 }}>
             <div className="d-flex justify-content-between align-items-center">
               <div>
