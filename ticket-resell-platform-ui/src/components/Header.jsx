@@ -14,7 +14,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from "react-router-dom";
-import { LOGIN_PAGE, HOME_PAGE, BOUGHT_TICKET_MANEMENT_PAGE, PROFILE_PAGE, MAIN_COLOR, USER_ID_KEY, FONT_MAIN } from "../config/Constant"
+import { LOGIN_PAGE, HOME_PAGE, BOUGHT_TICKET_MANEMENT_PAGE, PROFILE_PAGE, MAIN_COLOR, USER_ID_KEY, FONT_MAIN, SEARCH_PAGE } from "../config/Constant"
 import { Button } from "@mui/material";
 import UserAPI from "../service/api/UserAPI";
 import { stringAvatar } from "../service/StringService";
@@ -99,10 +99,7 @@ function Header() {
 
   const handleSearchKeyDown = (e) => {
     if (e.key === 'Enter') {
-      if (e.target.value === '') {
-        setSearch("Search for the Ticket")
-      }
-      console.log("User Search:", search);
+      navigate(SEARCH_PAGE, {state: {event: e.target.value}})
     }
   }
 

@@ -14,6 +14,7 @@ import {
   MANAGE_BUYER_PAGE,
   ADD_TICKET_PAGE,
   CHANGE_PASSWORD_PAGE,
+  SEARCH_PAGE,
 } from "./config/Constant";
 import HomePage from "./page/public/HomePage";
 import SignUp from "./page/public/SignUpPage";
@@ -30,6 +31,7 @@ import { Global, css } from '@emotion/react';
 import AddingTicketPage from "./page/private/AddingTicketPage";
 import Loader from "./components/Loader";
 import ChangePasswordPage from "./page/private/ChangePasswordPage";
+import SearchPage from "./page/public/SearchPage";
 const GlobalStyles = () => (
   <Global
       styles={css`
@@ -79,7 +81,7 @@ function App() {
           {/* <Route path="/loading" element={ <Loader/> }></Route> */}
 
           <Route path={CHANGE_PASSWORD_PAGE} element={ <ChangePasswordPage/> }></Route>
-          
+          <Route path={SEARCH_PAGE} element = {<SearchPage/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

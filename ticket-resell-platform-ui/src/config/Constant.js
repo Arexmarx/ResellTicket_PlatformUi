@@ -10,7 +10,7 @@ export const CHECK_OUT_PAGE = "/users/checkOut"
 export const MANAGE_BUYER_PAGE ="/users/manageMoney"
 export const ADD_TICKET_PAGE = "/users/myshop/add-ticket"
 export const CHANGE_PASSWORD_PAGE = "/users/password"
-
+export const SEARCH_PAGE = "/users/search"
 // Color
 export const MAIN_COLOR = '#2dc275';
 
