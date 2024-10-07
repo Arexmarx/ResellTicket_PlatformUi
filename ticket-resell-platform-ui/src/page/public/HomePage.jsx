@@ -13,6 +13,7 @@ import SlideShowDetail from "../../components/SlideShowDetail.jsx";
 import { Event } from "../../config/Constant.js";
 import EventAPI from "../../service/api/EventAPI.js";
 import CategoryAPI from "../../service/api/CategoryAPI.js";
+import LoadEffect from "../../components/LoadEffect.jsx";
 
 
 /**
@@ -78,7 +79,7 @@ export default function HomePage() {
 
     const fetchData = async () => {
       const eventEventResponse = await EventAPI.getHappeningEventByCateName('Sự kiện')
-      console.log(eventEventResponse.data.object);
+      //console.log(eventEventResponse.data.object);
       setEventEvents(eventEventResponse.data.object)
     }
 
@@ -109,7 +110,17 @@ export default function HomePage() {
     fetchData().catch(console.error);
   }, [])
 
+  
 
+  useEffect(() => {
+    
+  }, [])
+
+  if (!categories || !musicEvents || !eventEvents || !exhibitionEvents || !otherEvents || !allEvents) {
+    return (
+      <LoadEffect/>
+    )
+  }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -158,7 +169,7 @@ export default function HomePage() {
           </MDBCol>
 
         </MDBRow>
-      <MDBContainer style={{ marginTop: "3%" }}>
+      <MDBContainer style={{ marginTop: "1%" }}>
       </MDBContainer>
 
       <SlideShowMain />

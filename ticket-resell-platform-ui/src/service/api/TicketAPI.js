@@ -9,6 +9,7 @@ const GET_TOTAL_TICKETS_IN_GENERIC_TICKET_API = BASE_GETWAY_API + "/api/tickets/
 
 // Tickets api
 const CREATE_TICKET_API = BASE_GETWAY_API + "/api/tickets/create"
+const GET_ALL_TICKET_OF_SELLER_API = BASE_GETWAY_API + "/api/tickets/get-tickets-of-seller/"
 
 
 
@@ -36,6 +37,10 @@ const TicketAPI = {
                 "Access-Control-Allow-Origin": "*"
             }
         })
+    },
+
+    getAllTicketOfSeller(sellerId) {
+        return axios.get(GET_ALL_TICKET_OF_SELLER_API + sellerId)
     }
 
 }

@@ -1,41 +1,34 @@
 import Footer from "../../components/Footer"
 import Header from "../../components/Header"
 import SideBar from "../../components/SideBar"
-import { ADD_TICKET_PAGE, SidebarOption, USER_ID_KEY } from "../../config/Constant"
+import { SidebarOption } from "../../config/Constant"
 import PolicyCheckBox from "../../components/PolicyCheckBox"
-import React, { useEffect, useState } from "react"
-import UserAPI from "../../service/api/UserAPI"
+import React, { useState } from "react"
 import '../../assets/css/GroupTicketCommandutton.css'
 import DetailSellingTicket from "../../components/DetailSellingTicket"
+import useAxios from "../../utils/useAxios"
+import HttpStatus from "../../config/HttpStatus"
+import API from "../../config/API"
+import LoadEffect from "../../components/LoadEffect"
 
 /*
     Author: Nguyen Tien Thuan
 */
 export default function MyShopPage() {
 
+    const api = useAxios();
     const [user, setUser] = useState({});
 
+
     React.useEffect(() => {
-        let userId = localStorage.getItem(USER_ID_KEY);
-        if (userId) {
-            const fetchData = async () => {
-                const response = await UserAPI.getUserInfo(userId);
+        const fetchData = async () => {
+            const response = await api.get(API.User.GET_USER_INFO)
+            if (response.data.httpStatus === HttpStatus.OK) {
                 setUser(response.data.object)
             }
-            fetchData().catch(console.error);
         }
+        fetchData().catch(console.error)
     }, [])
-
-    const [ticketsOfSeller, setTicketsOfSeller] = useState(null);
-
-    // useEffect(() => {
-        
-    //     const fetchData = async () => {
-    //         const response = await 
-    //     }
-
-    // }, [])
-
 
     const tabs = [
         { id: '1', label: 'Vé đang bán' },
@@ -52,6 +45,12 @@ export default function MyShopPage() {
 
         setActiveTab(tab);
     };
+
+    if (!user) {
+        return (
+            <LoadEffect />
+        )
+    }
 
     return (
         <div>
@@ -84,11 +83,13 @@ export default function MyShopPage() {
                                                     </a>
                                                 ))}
                                             </div>
-                                            <div style={{marginTop:'1%',padding: '0'}}>
-                                                <DetailSellingTicket/>
+
+                                            <div style={{ marginTop: '1%', padding: '0' }}>
+                                                {
+                                                    activeTab.id === tabs[0].id && <DetailSellingTicket user={user} />
+                                                }
                                             </div>
-                                            
-                                            
+
                                         </div>
 
                                     )

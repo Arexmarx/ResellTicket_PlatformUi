@@ -8,16 +8,17 @@ import Menu from "@mui/material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
-import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import MenuItem from "@mui/material/MenuItem";
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from "react-router-dom";
-import { LOGIN_PAGE, HOME_PAGE, BOUGHT_TICKET_MANEMENT_PAGE, PROFILE_PAGE, MAIN_COLOR, USER_ID_KEY, FONT_MAIN, SEARCH_PAGE } from "../config/Constant"
+import { HOME_PAGE, BOUGHT_TICKET_MANEMENT_PAGE, PROFILE_PAGE, MAIN_COLOR, FONT_MAIN, SEARCH_PAGE } from "../config/Constant"
 import { Button } from "@mui/material";
-import UserAPI from "../service/api/UserAPI";
-import { stringAvatar } from "../service/StringService";
+import HttpStatus from "../config/HttpStatus";
+import AuthContext from "../context/AuthContext";
+import useAxios from "../utils/useAxios";
+import API from "../config/API";
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
@@ -66,6 +67,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 function Header() {
+
+  const { logoutUser } = React.useContext(AuthContext)
+
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [search, setSearch] = React.useState("Search for the Ticket");
   const navigate = useNavigate();
@@ -80,8 +84,9 @@ function Header() {
 
   const handleEventUser = (e) => {
     if (e === 'Đăng Xuất') {
-      localStorage.removeItem(USER_ID_KEY);
-      navigate(LOGIN_PAGE);
+      // localStorage.removeItem(USER_ID_KEY);
+      // navigate(LOGIN_PAGE);
+      logoutUser();
       return;
     }
     if (e === 'Vé Đã Mua') {
@@ -97,9 +102,9 @@ function Header() {
     setSearch(e.target.value);
   }
 
-  const handleSearchKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      navigate(SEARCH_PAGE, {state: {event: e.target.value}})
+  const handleSearchKeyDown = (eventName) => {
+    if (eventName.key === 'Enter') {
+      navigate(SEARCH_PAGE, {state: {eventName: eventName.target.value}})
     }
   }
 
@@ -108,28 +113,25 @@ function Header() {
   }
 
   const [user, setUser] = React.useState(null);
+  const api = useAxios();
 
   React.useEffect(() => {
-    let userId = localStorage.getItem(USER_ID_KEY);
-    if (userId) {
-      UserAPI.getUserInfo(userId).then(
-        response => {
-          // console.log(response.data.object);
-          setUser(response.data.object)
-        }
-      )
-      .catch(
-          error => console.log(error)
-      )
+    const fetchData = async () => {
+      const response = await api.get(API.User.GET_USER_INFO)
+      if (response.data.httpStatus === HttpStatus.OK) {
+        setUser(response.data.object)
+      }
     }
+    fetchData().catch(console.error)
   }, [])
+
 
   return (
     <AppBar style={{ backgroundColor: MAIN_COLOR }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <LocalActivityIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <img src="src\assets\logo\LogoTab-Photoroom.png" style={{maxHeight: '40px'}}/>
+          <img src="..\src\assets\logo\LogoTab-Photoroom.png" style={{ maxHeight: '40px' }} />
           <Typography
             variant="h6"
             noWrap
@@ -143,13 +145,13 @@ function Header() {
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
-              marginLeft:'1%'
+              marginLeft: '1%'
             }}
             onClick={handleHomepage}
           >
             Ticket Resell
           </Typography>
-          
+
 
           <Typography
             variant="h5"
@@ -192,10 +194,10 @@ function Header() {
               :
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip className="d-flex align-items-md-center" title="Open settings">
-                  <span className="mx-3">{user.firstname + " " + user.lastname}</span>  
+                  <span className="mx-3">{user.firstname + " " + user.lastname}</span>
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
-                    <Avatar alt="Remy Sharp" src={ !user || !user.avatar ? "/broken-image.jpg" : "data:image/png;base64, "+ user.avatar } />
+                    <Avatar alt="Remy Sharp" src={!user || !user.avatar ? "/broken-image.jpg" : "data:image/png;base64, " + user.avatar} />
                   </IconButton>
                 </Tooltip>
                 <Menu

@@ -1,10 +1,12 @@
 import {
+  MDBBadge,
   MDBBtn,
   MDBCard,
   MDBCardBody,
   MDBCardHeader,
   MDBCol,
   MDBContainer,
+  MDBIcon,
   MDBModal,
   MDBModalBody,
   MDBModalContent,
@@ -18,31 +20,49 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import {
   ADD_TICKET_PAGE,
-  SidebarOption,
-  USER_ID_KEY,
+  SidebarOption
 } from "../config/Constant";
-
-import { TICKET_DATA } from "../test/DataTest";
 import { useState } from "react";
 import { useEffect } from "react";
+import TicketAPI from "../service/api/TicketAPI";
+import HttpStatus from "../config/HttpStatus";
+import { formatDateTime } from "../service/DateService";
+import { formatToVND, getFirstFiveChars } from "../service/StringService";
+import useAxios from "../utils/useAxios";
+import API from "../config/API";
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+
+
 const titleCss = {
   marginBottom: "5px",
   fontSize: "70%",
 };
 
-export default function DetailSellingTicket() {
+// eslint-disable-next-line react/prop-types
+export default function DetailSellingTicket({ user }) {
+
+  const api = useAxios()
   const [tickets, setTickets] = useState([]);
   const [openTicketId, setOpenTicketId] = useState(null);
 
   useEffect(() => {
     // Fetch tickets data
-    setTickets(ADD_TICKET_PAGE);
-  }, []);
+    const fetchData = async () => {
+      const response = await api.get(API.Ticket.GET_ALL_TICKET_OF_SELLER + user.id)
+      if (response.data.httpStatus === HttpStatus.OK) {
+        console.log(response.data.object)
+        setTickets(response.data.object)
+      }
+    }
+    
+    fetchData().catch(console.log)
+  }, [user.id]);
 
   const toggleOpen = (ticketId) => {
     // Toggle collapse for specific ticket by ID
     setOpenTicketId(openTicketId === ticketId ? null : ticketId);
   };
+
 
   return (
     <div>
@@ -55,33 +75,35 @@ export default function DetailSellingTicket() {
           >
             Thêm vé mới
           </a>
-          <MDBRow>
-            {TICKET_DATA.map((x, index) => (
+          <MDBRow style={{ marginLeft: '1%', marginRight: '1%' }}>
+            { tickets && 
+            tickets.map((x, index) => (
               <MDBRow
+                className="shadow-sm p-3 mb-5 bg-body rounded"
                 key={index}
-                style={{ marginBottom: "2", marginTop: "2%" }}
+
                 center
               >
                 <MDBCol md="1">
                   <MDBRow style={titleCss}>Số Seri</MDBRow>
-                  <MDBRow>{x.ticketSerial}</MDBRow>
+                  <MDBRow>{getFirstFiveChars(x.ticketSerial)}*****</MDBRow>
                 </MDBCol>
-                <MDBCol md="2">
+                <MDBCol md="2" style={{ marginRight: '2%' }}>
                   <MDBRow style={titleCss}>Tên vé</MDBRow>
                   <MDBRow>{x.genericTicketObject.ticketName}</MDBRow>
                 </MDBCol>
-                <MDBCol md="2">
+                {/* <MDBCol md="2">
                   <MDBRow style={titleCss}>Ghi chú</MDBRow>
                   <MDBRow>{x.note}</MDBRow>
-                </MDBCol>
-                <MDBCol md="1">
+                </MDBCol> */}
+                <MDBCol md="2">
                   <MDBRow style={titleCss}>Ngày hết hạn</MDBRow>
-                  <MDBRow>{x.genericTicketObject.expiredDate}</MDBRow>
+                  <MDBRow>{formatDateTime(x.genericTicketObject.expiredDateTime)}</MDBRow>
                 </MDBCol>
                 <MDBCol md="1">
                   <MDBRow style={titleCss}>Thể loại vé</MDBRow>
                   <MDBRow>
-                    {x.genericTicketObject.isPaper ? "Vé giấy" : "Vé online"}
+                    {x.genericTicketObject.isPaper ? "Giấy" : "Online"}
                   </MDBRow>
                 </MDBCol>
                 <MDBCol md="1">
@@ -90,11 +112,33 @@ export default function DetailSellingTicket() {
                 </MDBCol>
                 <MDBCol md="1">
                   <MDBRow style={titleCss}>Kiểm duyệt</MDBRow>
-                  <MDBRow>{x.IsCheck ? "Rồi" : "Chưa"}</MDBRow>
+                  <MDBRow>
+                    {
+                      x.isChecked ? 
+                      <MDBBadge style={{width: 'auto'}} color='success' light>Đã duyệt</MDBBadge>  
+                      : 
+                      <MDBBadge style={{width: 'auto'}} color='danger' light>Chờ duyệt</MDBBadge>  
+                    }
+                  </MDBRow>
                 </MDBCol>
                 <MDBCol md="1">
-                  <MDBRow style={titleCss}>Đã mua</MDBRow>
-                  <MDBRow>{x.IsBought ? "Rồi" : "Chưa"}</MDBRow>
+                  <MDBRow style={titleCss}>Hợp lệ</MDBRow>
+                  <MDBRow>
+                    {
+                      x.isValid ? 
+                      <MDBBadge style={{width: 'auto'}} color='success' light><MDBIcon fas icon="check" /></MDBBadge>  
+                      : 
+                      <MDBBadge style={{width: 'auto'}} color='danger' light><MDBIcon fas icon="times" /></MDBBadge>  
+                    }
+                  </MDBRow>
+                </MDBCol>
+                <MDBCol md="1">
+                  <MDBRow style={titleCss}>Đã bán</MDBRow>
+                  <MDBRow>
+                    {
+                      x.IsBought ? "Rồi" : "Chưa"
+                    }
+                  </MDBRow>
                 </MDBCol>
                 
                 <MDBCol md="1">
@@ -105,7 +149,6 @@ export default function DetailSellingTicket() {
 
                 <MDBModal
                   open={openTicketId === x.ticketSerial}
-                  
                 >
                   <MDBModalDialog centered={true} size="lg">
                     <MDBModalContent>
@@ -115,13 +158,13 @@ export default function DetailSellingTicket() {
                           {/* Left side: Ticket information */}
                           <MDBCol md="7">
                             <MDBTypography tag="h6">Số Seri:</MDBTypography>
-                            <p>{x.ticketSerial}</p>
+                            <p>{getFirstFiveChars(x.ticketSerial)}*****</p>
 
                             <MDBTypography tag="h6">Tên vé:</MDBTypography>
                             <p>{x.genericTicketObject.ticketName}</p>
 
                             <MDBTypography tag="h6">Giá vé:</MDBTypography>
-                            <p>{x.genericTicketObject.price} VND</p>
+                            <p>{formatToVND(x.genericTicketObject.price)}</p>
 
                             <MDBTypography tag="h6">Giảm giá:</MDBTypography>
                             <p>{x.genericTicketObject.salePercent}%</p>
@@ -129,7 +172,7 @@ export default function DetailSellingTicket() {
                             <MDBTypography tag="h6">
                               Ngày hết hạn:
                             </MDBTypography>
-                            <p>{x.genericTicketObject.expiredDate}</p>
+                            <p>{formatDateTime(x.genericTicketObject.expiredDateTime)}</p>
 
                             <MDBTypography tag="h6">Khu vực:</MDBTypography>
                             <p>{x.genericTicketObject.area}</p>
@@ -158,7 +201,7 @@ export default function DetailSellingTicket() {
                           {/* Right side: Ticket image */}
                           <MDBCol md="5" className="text-center">
                             <img
-                              src={x.image}
+                              src={"data:image/png;base64, " + x.image}
                               alt="Ticket"
                               className="img-fluid"
                               style={{

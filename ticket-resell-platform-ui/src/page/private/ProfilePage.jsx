@@ -1,28 +1,40 @@
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
 import SideBar from '../../components/SideBar'
-import { SidebarOption, USER_ID_KEY } from '../../config/Constant'
+import { SidebarOption} from '../../config/Constant'
 import ProfileInfoBox from '../../components/ProfileInfoBox'
 import React from 'react'
-import UserAPI from '../../service/api/UserAPI'
+import HttpStatus from '../../config/HttpStatus'
+import LoadEffect from '../../components/LoadEffect'
+import useAxios from '../../utils/useAxios'
+import API from '../../config/API'
 
 /*
     Author: Nguyen Tien Thuan
 */
 export default function ProfilePage() {
 
-    const [user, setUser] = React.useState({});
+    const [user, setUser] = React.useState();
+    const api = useAxios();
+
 
     React.useEffect(() => {
-        let userId = localStorage.getItem(USER_ID_KEY);
-        if (userId) {
-            const fetchData = async () => {
-                const response = await UserAPI.getUserInfo(userId);
+        const fetchData = async () => {
+            const response = await api.get(API.User.GET_USER_INFO)
+            if (response.data.httpStatus === HttpStatus.OK) {
                 setUser(response.data.object)
             }
-            fetchData().catch(console.error);
         }
+        fetchData().catch(console.error)
     }, [])
+
+
+    if (!user) {
+        return (
+            <LoadEffect />
+        )
+    }
+
 
     return (
         <div>

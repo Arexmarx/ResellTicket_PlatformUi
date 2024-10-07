@@ -3,10 +3,13 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { useState, useEffect } from 'react';
 import UserAPI from '../service/api/UserAPI';
 import { USER_ID_KEY } from '../config/Constant';
+import useAxios from '../utils/useAxios';
+import API from '../config/API';
 
 // eslint-disable-next-line react/prop-types
 export default function ProfileInfoBox({ user }) {
 
+    const api = useAxios()
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
@@ -31,8 +34,6 @@ export default function ProfileInfoBox({ user }) {
 
     useEffect(() => {
         if (user) {
-            console.log(user.phone);
-            
             // eslint-disable-next-line react/prop-types
             setFirstname(user.firstname);
             // eslint-disable-next-line react/prop-types
@@ -135,9 +136,9 @@ export default function ProfileInfoBox({ user }) {
                 email: email,
                 phone: phone? phone : ''
             };
-            console.log(updateInfoRequest);
+            //console.log(updateInfoRequest);
 
-            const response = await UserAPI.updateInfo(localStorage.getItem(USER_ID_KEY), updateInfoRequest);
+            const response = await api.put(API.User.UPDATE_USER_INFO + user.id, updateInfoRequest);
             
             if (response.status === 200) {
                 setUpdateSuccessMessage(response.data.message);
@@ -161,21 +162,11 @@ export default function ProfileInfoBox({ user }) {
             const file = await fetch(preview).then(res => res.blob()); 
             const formData = new FormData();
             formData.append('image', file); 
-
-            UserAPI.updateAvatar(localStorage.getItem(USER_ID_KEY), formData).then(
-                response => {
-                    if (response.status === 200) {
-                        setUpdateSuccessMessage(response.data.message);
-                    }
-                }
-            )
-            .catch(
-                error => {
-                    console.log(error);
-                }
-            );
             
-            
+            const response = await api.post(API.User.UPDATE_USER_AVATAR + user.id , formData)
+            if (response.status === 200) {
+                setUpdateSuccessMessage(response.data.message);
+            }
         }
     };
 

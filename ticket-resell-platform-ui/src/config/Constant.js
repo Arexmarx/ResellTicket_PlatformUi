@@ -1,3 +1,4 @@
+// UI URL
 export const DEFAULT_PAGE = "/"
 export const SIGN_UP_PAGE = "/signUp"
 export const LOGIN_PAGE = "/login"
@@ -11,9 +12,14 @@ export const MANAGE_BUYER_PAGE ="/users/manageMoney"
 export const ADD_TICKET_PAGE = "/users/myshop/add-ticket"
 export const CHANGE_PASSWORD_PAGE = "/users/password"
 export const SEARCH_PAGE = "/users/search"
+export const EMAIL_VERIFY_PAGE = "/signUp/verify"
+export const EVENT_DETAIL_PAGE = "/eventDetail"
+export const UNAUTHORIZED_PAGE = "/unauthorized"
+
 // Color
 export const MAIN_COLOR = '#2dc275';
 
+// Side bar options
 export const SidebarOption = {
     PROFILE: 'profile',
     BOUGHT_TICKET: 'boughtTicket',
@@ -22,7 +28,8 @@ export const SidebarOption = {
     INFORM: 'inform',
     CHANGE_PASS: 'changePassword'
 }
-export const EVENT_DETAIL_PAGE = "/eventDetail"
+
+// Fixed supported categories
 export const Event = {
     MUSIC: "Âm Nhạc",
     EXHIBITION: "Triển Lãm",
@@ -32,6 +39,7 @@ export const Event = {
 
 // Local storage key
 export const USER_ID_KEY = "user_id"
+export const AUTH_TOKENS_KEY = 'authTokens'
 
 // Ticket type
 export const TicketTypes = [

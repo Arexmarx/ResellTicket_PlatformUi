@@ -4,29 +4,31 @@ import GroupTicketCommandButton from "../../components/GroupTicketCommandButton"
 import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
 import TicketInfoRowBox from "../../components/TicketInfoRowBox";
-import { SidebarOption, USER_ID_KEY } from "../../config/Constant";
+import { SidebarOption } from "../../config/Constant";
 import { BOUGHT_TICKET_DATA } from "../../test/DataTest";
 import RatingInfoRowBox from "../../components/RatingInfoRowBox";
 import { useEffect, useState } from "react";
-import UserAPI from "../../service/api/UserAPI";
+import API from "../../config/API";
+import HttpStatus from "../../config/HttpStatus";
+import useAxios from "../../utils/useAxios";
 
 /*
     Author: Nguyen Tien Thuan
 */
 export default function BoughtTicketManagementPage() {
-  const tickets = BOUGHT_TICKET_DATA;
 
+  const tickets = BOUGHT_TICKET_DATA;
   const [user, setUser] = useState({});
+  const api = useAxios();
 
   useEffect(() => {
-    let userId = localStorage.getItem(USER_ID_KEY);
-    if (userId) {
-      const fetchData = async () => {
-        const response = await UserAPI.getUserInfo(userId);
+    const fetchData = async () => {
+      const response = await api.get(API.User.GET_USER_INFO)
+      if (response.data.httpStatus === HttpStatus.OK) {
         setUser(response.data.object)
       }
-      fetchData().catch(console.error);
     }
+    fetchData().catch(console.error)
   }, [])
 
   return (
