@@ -1,13 +1,15 @@
 import { MDBBtn, MDBCheckbox, MDBModal, MDBModalBody, MDBModalContent, MDBModalDialog, MDBModalFooter, MDBModalHeader, MDBModalTitle } from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
-import UserAPI from "../service/api/UserAPI";
-import { USER_ID_KEY } from "../config/Constant";
 import HttpStatus from "../config/HttpStatus";
 import PolicyAPI from "../service/api/PolicyAPI";
+import useAxios from "../utils/useAxios";
+import API from "../config/API";
+import LoadEffect from "./LoadEffect";
 
 
-export default function PolicyCheckBox() {
+export default function PolicyCheckBox({ user }) {
 
+    const api = useAxios()
     const [basicModal, setBasicModal] = useState(false);
 
     const [checkbox, setCheckBox] = useState(false);
@@ -17,19 +19,18 @@ export default function PolicyCheckBox() {
     const handleCheckBox = () => setCheckBox(!checkbox);
 
     const handleAgreePolicy = async () => {
-        const response = await UserAPI.updateIsSeller(localStorage.getItem(USER_ID_KEY));
+        const response = await api.put(API.User.UPDATE_USER_ISSELLER + user?.id)
         if (response.data.httpStatus === HttpStatus.OK)
             location.reload();
     }
 
-    const [policy, setPolicy] = useState({});
+    const [policy, setPolicy] = useState();
 
     useEffect(() => {
 
         const fetchData = async () => {
             const response = await PolicyAPI.getSellingPolicy();
             if (response.data.httpStatus === HttpStatus.OK) {
-                // console.log(response.data);
                 setPolicy(response.data.object)
             }
         }
@@ -38,6 +39,11 @@ export default function PolicyCheckBox() {
     }, [])
 
 
+    if(!policy) {
+        return(
+            <LoadEffect/>
+        )
+    }
 
     return (
         <div>

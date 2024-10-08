@@ -16,8 +16,6 @@ import {
   MDBRow,
   MDBTypography,
 } from "mdb-react-ui-kit";
-import React from "react";
-import { useLocation } from "react-router-dom";
 import {
   ADD_TICKET_PAGE,
   SidebarOption
@@ -31,6 +29,7 @@ import { formatToVND, getFirstFiveChars } from "../service/StringService";
 import useAxios from "../utils/useAxios";
 import API from "../config/API";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import LoadEffect from "./LoadEffect";
 
 
 const titleCss = {
@@ -45,10 +44,14 @@ export default function DetailSellingTicket({ user }) {
   const [tickets, setTickets] = useState([]);
   const [openTicketId, setOpenTicketId] = useState(null);
 
+  //console.log(user);
+  
+
   useEffect(() => {
     // Fetch tickets data
     const fetchData = async () => {
-      const response = await api.get(API.Ticket.GET_ALL_TICKET_OF_SELLER + user.id)
+      const response = await api.get(API.Ticket.GET_ALL_TICKET_OF_SELLER + user?.id)
+      //console.log(response.data)
       if (response.data.httpStatus === HttpStatus.OK) {
         console.log(response.data.object)
         setTickets(response.data.object)
@@ -62,6 +65,12 @@ export default function DetailSellingTicket({ user }) {
     // Toggle collapse for specific ticket by ID
     setOpenTicketId(openTicketId === ticketId ? null : ticketId);
   };
+
+  if (!tickets) {
+    return (
+      <LoadEffect/>
+    )
+  }
 
 
   return (

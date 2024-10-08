@@ -100,23 +100,8 @@ export default function Login() {
     catch (error) {
         setLoginErrorMessage(error); // Set the error message
     }
-}
+  }
 
-  // const sendLoginRequest =  async () => {
-  //   let authenticationRequest = {
-  //     username: userNameInput, 
-  //     password: passwordInput
-  //   }
-  //   const response = await AuthenticationAPI.login(authenticationRequest);
-  //   if (response.data.httpStatus == HttpStatus.FORBIDDEN) {
-  //     setLoginErrorMessage(response.data.message)
-      
-  //   }
-  //   else {
-  //     localStorage.setItem(USER_ID_KEY, response.data.object.id)
-  //     navigate(HOME_PAGE);
-  //   }
-  // }
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 

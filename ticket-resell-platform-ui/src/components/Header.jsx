@@ -131,7 +131,7 @@ function Header() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <LocalActivityIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <img src="..\src\assets\logo\LogoTab-Photoroom.png" style={{ maxHeight: '40px' }} />
+          <img src="..\..\src\assets\logo\LogoTab-Photoroom.png" style={{ maxHeight: '40px' }} />
           <Typography
             variant="h6"
             noWrap

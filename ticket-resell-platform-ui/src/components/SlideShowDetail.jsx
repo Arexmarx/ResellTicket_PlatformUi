@@ -4,7 +4,6 @@ import { MDBCarousel, MDBCarouselItem, MDBContainer, MDBRow, MDBCol, MDBCard, MD
 import { MDBTypography } from 'mdb-react-ui-kit';
 import { useNavigate } from "react-router-dom";
 import { EVENT_DETAIL_PAGE } from "../config/Constant";
-import { ITEMS } from '../test/DataTest.js'
 import { formatDateTime } from '../service/DateService.js';
 /**
  * Author: Phan Nguyễn Mạnh Cường

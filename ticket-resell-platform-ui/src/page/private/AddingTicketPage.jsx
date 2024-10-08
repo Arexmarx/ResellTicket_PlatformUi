@@ -12,6 +12,7 @@ import EventAPI from "../../service/api/EventAPI";
 import TicketAPI from "../../service/api/TicketAPI";
 import useAxios from "../../utils/useAxios";
 import API from "../../config/API";
+import LoadEffect from "../../components/LoadEffect";
 
 export const SidebarOption = {
     PROFILE: 'profile',
@@ -56,14 +57,11 @@ export default function AddingTicketPage() {
 
     // Select user
     useEffect(() => {
-        let userId = localStorage.getItem(USER_ID_KEY);
-        if (userId) {
-            const fetchData = async () => {
-                const response = await UserAPI.getUserInfo(userId);
-                setUser(response.data.object)
-            }
-            fetchData().catch(console.error);
+        const fetchData = async () => {
+            const response = await api.get(API.User.GET_USER_INFO)
+            setUser(response.data.object)
         }
+        fetchData().catch(console.error);
     }, [])
 
     // Select policy 
@@ -75,7 +73,7 @@ export default function AddingTicketPage() {
                 setPolicy(response.data.object)
             }
         }
-        fetchData();
+        fetchData().catch(console.error);
     }, [])
 
 
@@ -89,15 +87,15 @@ export default function AddingTicketPage() {
                 setGenericCate(response.data.object[0].id)
             }
         }
-        fetchData();
+        fetchData().catch(console.error);
     }, [])
 
     // Select list event
     useEffect(() => {
         const fetchData = async () => {
-            const response = await api.get(API.User.GET_USER_INFO)
+            const response = await EventAPI.getHappeningEvents()
             if (response.data.httpStatus === HttpStatus.OK) {
-                setUser(response.data.object)
+                setEvents(response.data.object)
             }
         }
         fetchData().catch(console.error)
@@ -130,9 +128,7 @@ export default function AddingTicketPage() {
     const handleSaveAllTickets = async () => {
         let flag = true;
         for (let i = 0; i < ticketDetails.length; i++) {
-            // const file = await fetch(ticketDetails[i].inputFile).then(res => res.blob()); 
-            // const formData = new FormData();
-            // formData.append('file', file);
+
             const ticketRequest = {
                 ticketSerial: ticketDetails[i].serial,
                 note: ticketDetails[i].description,
@@ -144,17 +140,6 @@ export default function AddingTicketPage() {
             formData.append("ticketRequest", new Blob([JSON.stringify(ticketRequest)], { type: 'application/json' }))
             formData.append('file', file)
 
-            // TicketAPI.createTicket(formData).then(
-            //     response => {
-            //         console.log(response.data)
-            //     }
-            // )
-            //     .catch(
-            //         error => {
-            //             console.log(error)
-            //             flag = false;
-            //         }
-            //     )
             api.post(API.Ticket.CREATE_TICKET, formData).then(
                 response => console.log(response.data)
             )
@@ -170,7 +155,7 @@ export default function AddingTicketPage() {
         if (flag){
             setSaveAllMessageTicket({ 
                 status: flag, 
-                message: 'Đã lưu '+ticketDetails.length+ ' thành công! Vui lòng chờ hệ thống kiểm duyệt vé!'
+                message: 'Đã lưu '+ticketDetails.length+ 'vé thành công! Vui lòng chờ hệ thống kiểm duyệt vé!'
             })
         }
         else {
@@ -205,12 +190,13 @@ export default function AddingTicketPage() {
             sellerId: user.id
         }
 
-        console.log(genericTicketRequest);
+        //console.log(genericTicketRequest);
 
         if (genericName && genericPrice && genericExpiredDate) {
             const fetchData = async () => {
-                const response = await TicketAPI.createGenericTicket(genericTicketRequest)
-                if (response.data.httpStatus === HttpStatus.OK) {
+                const response = await api.post(API.GenericTicket.CREATE_GENERIC_TICKET, genericTicketRequest)
+                //console.log(response.data.httpStatus)
+                if (response.data.httpStatus === HttpStatus.CREATED) {
                     setShowDetailForm(true);
                     setShowUpdateButton(true);
                     localStorage.setItem(GENERIC_TICKET_TEMP_KEY, response.data.object.id)
@@ -251,11 +237,11 @@ export default function AddingTicketPage() {
             eventId: genericEvent,
             sellerId: user.id
         }
-        console.log(genericTicketRequest);
+        //console.log(genericTicketRequest);
 
         if (genericName && genericPrice && genericExpiredDate) {
             const fetchData = async () => {
-                const response = await TicketAPI.updateGenericTicket(localStorage.getItem(GENERIC_TICKET_TEMP_KEY) ,genericTicketRequest)
+                const response = await api.put(API.GenericTicket.UPDATE_ALL_FIELDS_GENERIC_TICKET, genericTicketRequest)
                 if (response.data.httpStatus === HttpStatus.OK) {
                     setUpdateGenericTicketMessage({
                         status: true,
@@ -275,6 +261,12 @@ export default function AddingTicketPage() {
             })
         }
     }
+
+        // if (!user || !events || !categories) {
+        //     return (
+        //         <LoadEffect/>
+        //     )
+        // }
 
     return (
         <div>
