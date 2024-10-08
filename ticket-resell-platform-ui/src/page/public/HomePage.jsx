@@ -169,7 +169,7 @@ export default function HomePage() {
           </MDBCol>
 
         </MDBRow>
-      <MDBContainer style={{ marginTop: "3%" }}>
+      <MDBContainer style={{ marginTop: "1%" }}>
       </MDBContainer>
 
       <SlideShowMain />

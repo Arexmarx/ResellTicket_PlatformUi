@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MDBCarousel, MDBCarouselItem, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBIcon } from 'mdb-react-ui-kit';
 import { MDBTypography } from 'mdb-react-ui-kit';
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,7 @@ export default function SlideShowDetail({ Category, Events }) {
   const items = Events;
   const [activeItem, setActiveItem] = useState(1);
   const itemsPerSlide = items.length > 4 ? 4 : items.length;
+  const intervalTime = 3000;
 
   const handlePrev = () => {
     setActiveItem((prevItem) => (prevItem === 1 ? items.length : prevItem - 1));
@@ -40,6 +41,14 @@ export default function SlideShowDetail({ Category, Events }) {
   const handleClick = (item) => {
     navigate(EVENT_DETAIL_PAGE, { state: { event: item } });
   }
+
+  //Auto-cycle
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNext();
+    },intervalTime)
+    return () => clearInterval(interval); // Clean up interval on unmount
+  },[]);
 
   return (
     items ? 

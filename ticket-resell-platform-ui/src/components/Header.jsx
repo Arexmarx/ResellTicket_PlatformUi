@@ -13,7 +13,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from "react-router-dom";
-import { HOME_PAGE, BOUGHT_TICKET_MANEMENT_PAGE, PROFILE_PAGE, MAIN_COLOR, FONT_MAIN } from "../config/Constant"
+import { HOME_PAGE, BOUGHT_TICKET_MANEMENT_PAGE, PROFILE_PAGE, MAIN_COLOR, FONT_MAIN, SEARCH_PAGE } from "../config/Constant"
 import { Button } from "@mui/material";
 import HttpStatus from "../config/HttpStatus";
 import AuthContext from "../context/AuthContext";
@@ -102,12 +102,9 @@ function Header() {
     setSearch(e.target.value);
   }
 
-  const handleSearchKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      if (e.target.value === '') {
-        setSearch("Search for the Ticket")
-      }
-      console.log("User Search:", search);
+  const handleSearchKeyDown = (eventName) => {
+    if (eventName.key === 'Enter') {
+      navigate(SEARCH_PAGE, {state: {eventName: eventName.target.value}})
     }
   }
 

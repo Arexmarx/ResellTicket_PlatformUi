@@ -9,6 +9,7 @@ import {
   OutlinedInput,
   IconButton,
   InputAdornment,
+  CircularProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
@@ -18,8 +19,11 @@ import LoginIcon from "@mui/icons-material/Login";
 import * as React from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { EMAIL_VERIFY_PAGE, LOGIN_PAGE } from "../../config/Constant"
+import { LOGIN_PAGE } from "../../config/Constant";
 import AuthenticationAPI from "../../service/api/AuthenticationAPI";
+import { MAIN_COLOR } from "../../config/Constant";
+import { green } from '@mui/material/colors';
+import { EMAIL_VERIFY_PAGE} from "../../config/Constant"
 import HttpStatus from "../../config/HttpStatus";
 const isEmail = (email) =>
   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
@@ -50,6 +54,25 @@ export default function SignUp() {
   const [formValid, setFormValid] = React.useState();
 
   const navigate = useNavigate();
+
+  //loading
+  const [loading, setLoading] = React.useState(false);
+  const [successSignUp, setSuccessSignUp] = React.useState(false);
+  const timer = React.useRef(undefined);
+  const buttonSx = {
+    ...(successSignUp && {
+      bgcolor: green[500],
+      "&:hover": {
+        bgcolor: green[700],
+      },
+    }),
+  };
+  React.useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
+
   //Validation for on Blur Username
   const handleUsername = () => {
     if (
@@ -64,20 +87,28 @@ export default function SignUp() {
   };
   //Validation for Blur FirstName
   const handleFirstName = () => {
-    if (!firstNameInput || firstNameInput.length < 2 || firstNameInput.length > 50) {
+    if (
+      !firstNameInput ||
+      firstNameInput.length < 2 ||
+      firstNameInput.length > 50
+    ) {
       setFirstNameError(true);
       return;
     }
     setFirstNameError(false);
-  }
+  };
   //Validation for Blur FirstName
   const handleLastName = () => {
-    if (!lastNameInput || lastNameInput.length < 2 || lastNameInput.length > 50) {
+    if (
+      !lastNameInput ||
+      lastNameInput.length < 2 ||
+      lastNameInput.length > 50
+    ) {
       setLastNameError(true);
       return;
     }
     setLastNameError(false);
-  }
+  };
   //Validation for on Blur Password
   const handlePassword = () => {
     if (
@@ -92,12 +123,11 @@ export default function SignUp() {
   };
   //Validation for Blur Re-Password
   const handleRePassword = () => {
-      if (!rePasswordInput || rePasswordInput !== passwordInput ) {
-        setRePasswordError(true);
-        
-      } else{
-        setRePasswordError(false);
-      }
+    if (!rePasswordInput || rePasswordInput !== passwordInput) {
+      setRePasswordError(true);
+    } else {
+      setRePasswordError(false);
+    }
     // setRePasswordError(false);
   };
   //Validation for on Blur Email
@@ -146,8 +176,17 @@ export default function SignUp() {
       setFormValid("Email không hợp lệ!");
       return;
     }
-    
-    sendRegisterRequest();
+
+    if (!loading) {
+      setSuccessSignUp(false);
+      setLoading(true);
+      timer.current = setTimeout(() => {
+        setSuccessSignUp(true);
+        setLoading(false);
+        sendRegisterRequest();
+      }, 5000);
+    }
+
     
   };
 
@@ -312,13 +351,27 @@ export default function SignUp() {
           <FormControl sx={{ marginBottom: 3 }}>
             <Button
               onClick={handleSubmit}
+              disabled={loading}
               variant="contained"
               startIcon={<LoginIcon />}
               fullWidth
-              sx={{ mt: 1, backgroundColor: "#28a745" }}
+              sx={{ mt: 1, ...buttonSx, backgroundColor: MAIN_COLOR}}
             >
               Đăng Ký
             </Button>
+            {loading && (
+              <CircularProgress
+                size={24}
+                sx={{
+                  color: green[500],
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  marginTop: "-12px",
+                  marginLeft: "-12px",
+                }}
+              />
+            )}
           </FormControl>
           {formValid && (
             <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>

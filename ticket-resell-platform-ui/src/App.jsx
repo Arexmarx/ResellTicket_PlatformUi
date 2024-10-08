@@ -14,6 +14,7 @@ import {
   MANAGE_BUYER_PAGE,
   ADD_TICKET_PAGE,
   CHANGE_PASSWORD_PAGE,
+  SEARCH_PAGE,
   EMAIL_VERIFY_PAGE,
   UNAUTHORIZED_PAGE,
 } from "./config/Constant";
@@ -31,6 +32,7 @@ import ManageBuyerPage from "./page/private/ManageBuyerMoney";
 import { Global, css } from '@emotion/react';
 import AddingTicketPage from "./page/private/AddingTicketPage";
 import ChangePasswordPage from "./page/private/ChangePasswordPage";
+import SearchPage from "./page/public/SearchPage";
 import VerifyRegisterAccountPage from "./page/private/VerifyRegisterAccountPage";
 import UnAuthorizedPage from "./page/error/UnAuthorizedPage";
 import { AuthProvider } from "./context/AuthContext";
@@ -83,6 +85,9 @@ function App() {
 
             {/* <Route path="/loading" element={ <Loader/> }></Route> */}
 
+          <Route path={CHANGE_PASSWORD_PAGE} element={ <ChangePasswordPage/> }></Route>
+          <Route path={SEARCH_PAGE} element = {<SearchPage/>}></Route>
+        
             <Route path={CHANGE_PASSWORD_PAGE} element={<ChangePasswordPage />}></Route>
 
             <Route path={EMAIL_VERIFY_PAGE} element={<VerifyRegisterAccountPage />}></Route>

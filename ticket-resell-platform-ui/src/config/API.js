@@ -36,6 +36,7 @@ const API =  {
     Event: {
         GET_HEAPPENING_EVENT: "/api/events/get-happening-events",
         GET_HEAPPENING_EVENT_BY_CATE_NAME: "/api/events/get-happening-events/"
+        
     },
 
     Category: {

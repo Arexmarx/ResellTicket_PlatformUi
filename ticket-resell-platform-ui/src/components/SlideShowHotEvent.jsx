@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MDBCarousel, MDBCarouselItem, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBIcon } from 'mdb-react-ui-kit';
 import { MDBTypography } from 'mdb-react-ui-kit';
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ export default function SlideShowHotEvent() {
 
   const [activeItem, setActiveItem] = useState(1);
   const itemsPerSlide = 6;
+  const intervalTime = 3000;
 
   const handlePrev = () => {
     setActiveItem((prevItem) => (prevItem === 1 ? items.length : prevItem - 1));
@@ -37,6 +38,15 @@ export default function SlideShowHotEvent() {
   const handleClick  = (item) => {
     navigate(EVENT_DETAIL_PAGE,{ state: { event: item } });
   }
+
+  //Auto-cyle
+  useEffect(() =>{
+    const interval = setInterval(() =>{
+      handleNext();
+    },intervalTime)
+
+    return () => clearInterval(interval); // Clean up interval on unmount
+  },[]);
 
   return (
     <MDBContainer className="my-5 position-relative">
