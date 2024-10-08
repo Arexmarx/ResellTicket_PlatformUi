@@ -56,7 +56,7 @@ export const AuthProvider = ({children}) => {
 
     let logoutUser = () => {
         setAuthTokens(null)
-        //setUser(null)
+        setUser(null)
         localStorage.removeItem(AUTH_TOKENS_KEY)
         navigator(LOGIN_PAGE)
         window.location.reload();

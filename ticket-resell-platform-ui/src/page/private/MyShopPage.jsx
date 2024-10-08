@@ -68,7 +68,7 @@ export default function MyShopPage() {
                     <div className='col-md-10'>
                         <div className='row'>
                             {
-                                !user.isSeller ? <PolicyCheckBox /> :
+                                !user.isSeller ? <PolicyCheckBox user={user}/> :
                                     (
                                         <div>
                                             <div className="tab-menu" style={{ width: '98%' }}>

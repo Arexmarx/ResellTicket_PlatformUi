@@ -1,6 +1,4 @@
 import { Backdrop, CircularProgress } from '@mui/material'
-import { useContext } from 'react'
-import AuthContext from '../context/AuthContext'
 
 export default function LoadEffect() {
 
