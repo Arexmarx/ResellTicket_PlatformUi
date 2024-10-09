@@ -41,6 +41,10 @@ const API =  {
 
     Category: {
         GET_USING_CATEGORIES_API: "/api/categories/get-using-cate"
+    },
+
+    PaymentMethod: {
+        GET_NOT_DELETED_PAYMENT_METHOD: "/api/tickets/get/not-deleted-payment-method"
     }
 
 }

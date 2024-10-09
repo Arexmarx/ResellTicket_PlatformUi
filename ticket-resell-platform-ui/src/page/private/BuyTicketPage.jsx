@@ -19,6 +19,8 @@ import { formatToVND } from "../../service/StringService.js";
 import { Avatar } from "@mui/material";
 import TicketAPI from "../../service/api/TicketAPI.js";
 import HttpStatus from "../../config/HttpStatus.js";
+import useAxios from "../../utils/useAxios.jsx";
+import API from "../../config/API.js";
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
@@ -28,9 +30,46 @@ export default function BuyTicketPage() {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1); // Khởi tạo số lượng là 1
   const [numberOfTickets, setNumberOfTickets] = useState()
+  const [paymentMethods, setPaymentMethods] = useState([])
 
-  console.log(ticket);
+  //console.log(ticket);
   // console.log(event);
+  const api = useAxios()
+  const [user, setUser] = useState()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await api.get(API.User.GET_USER_INFO)
+      if (response.data.httpStatus === HttpStatus.OK) {
+        //console.log(response.data.object);
+        setUser(response.data.object)
+      }
+    }
+    fetchData().catch(console.error)
+  }, [])
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await TicketAPI.getTotalTicketsInGenericTicket(ticket.id)
+      if (response.data.httpStatus == HttpStatus.OK) {
+        setNumberOfTickets(response.data.object)
+      }
+    }
+    fetchData().catch(console.log)
+  }, [ticket.id])
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await api.get(API.PaymentMethod.GET_NOT_DELETED_PAYMENT_METHOD)
+      if (response.data.object) {
+        // console.log("Payements: ",response.data.object);
+        setPaymentMethods(response.data.object)
+      }
+    }
+    fetchData().catch(console.log)
+  },[])
   
 
   if (!ticket) {
@@ -38,7 +77,21 @@ export default function BuyTicketPage() {
   }
 
   const handleBuy = (x) => {
-    navigate(CHECK_OUT_PAGE, { state: { ticket: x, quantity: quantity } });
+    // const orderTicket = {
+    //   genericTicketId: ticket.id,
+    //   buyerId: user.id,
+    //   quantity: quantity,
+
+    // }
+    const finalPrice = ticket.price - ( ticket.price * (ticket.salePercent/100) )
+    if (user?.balance >= finalPrice) {
+      console.log("Ok mua");
+      
+    }
+    else {
+      console.log("Ko mua dc");
+    }
+    //navigate(CHECK_OUT_PAGE, { state: { ticket: x, quantity: quantity } });
   };
 
   const handleQuantityChange = (delta) => {
@@ -48,18 +101,6 @@ export default function BuyTicketPage() {
     });
   };
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-
-    const fetchData = async () => {
-      const response = await TicketAPI.getTotalTicketsInGenericTicket(ticket.id)
-      if (response.data.httpStatus == HttpStatus.OK) {
-        setNumberOfTickets(response.data.object)
-      }
-    }
-
-    fetchData().catch(console.log)
-  }, [ticket.id])
 
   return (
     <div>
@@ -82,8 +123,26 @@ export default function BuyTicketPage() {
                 <MDBCardText><strong>Loại vé:</strong> {ticket.isPaper ? "Giấy" : "Online"}</MDBCardText>
                 <MDBCardText><strong>Khu vực vé:</strong> {ticket.area}</MDBCardText>
                 <MDBCardText><strong>Mô tả:</strong> {ticket.description}</MDBCardText>
-                <MDBCardText><strong>Giá vé:</strong> <span className="text-danger">{formatToVND(ticket.price)}</span></MDBCardText>
+                <MDBCardText><strong>Khuyến mãi:</strong> {ticket.salePercent}%</MDBCardText>
+                <MDBCardText>
+                  {
+                    ticket.salePercent > 0 ? 
+                    <>
+                      <strong>Giá vé:&nbsp;</strong> 
+                      <span className="text-danger"><del>{formatToVND(ticket.price)}</del></span>&nbsp;&nbsp;
+                      <span className="text-danger">{formatToVND(ticket.price - (ticket.price * (ticket.salePercent / 100)))}</span>
+                    </>
+                    :
+                    <>
+                      <strong>Giá vé:</strong> <span className="text-danger">{formatToVND(ticket.price)}</span>
+                    </>
+                  }
+
+                </MDBCardText>
                 <MDBCardText><strong>Số lượng hiện có: </strong> {numberOfTickets ? numberOfTickets : '0' }</MDBCardText>
+                <MDBCardText>
+                  <strong>Phương thức thanh toán:</strong> { ticket.isPaper ? 'Thanh toán trực tiếp với người bán' : 'Số dư hệ thống' }  
+                </MDBCardText>
                 <hr />
                 <div  style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
                   <MDBBtn
