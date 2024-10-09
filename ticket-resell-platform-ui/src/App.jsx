@@ -17,6 +17,7 @@ import {
   SEARCH_PAGE,
   EMAIL_VERIFY_PAGE,
   UNAUTHORIZED_PAGE,
+  HANDEL_PAYMENT_PAGE,
 } from "./config/Constant";
 import HomePage from "./page/public/HomePage";
 import SignUp from "./page/public/SignUpPage";
@@ -36,6 +37,7 @@ import SearchPage from "./page/public/SearchPage";
 import VerifyRegisterAccountPage from "./page/private/VerifyRegisterAccountPage";
 import UnAuthorizedPage from "./page/error/UnAuthorizedPage";
 import { AuthProvider } from "./context/AuthContext";
+import HandlePaymentPage from "./page/private/HandlePaymentPage";
 const GlobalStyles = () => (
   <Global
     styles={css`
@@ -85,14 +87,17 @@ function App() {
 
             {/* <Route path="/loading" element={ <Loader/> }></Route> */}
 
-          <Route path={CHANGE_PASSWORD_PAGE} element={ <ChangePasswordPage/> }></Route>
-          <Route path={SEARCH_PAGE} element = {<SearchPage/>}></Route>
+            <Route path={CHANGE_PASSWORD_PAGE} element={ <ChangePasswordPage/> }></Route>
+
+            <Route path={SEARCH_PAGE} element = {<SearchPage/>}></Route>
         
             <Route path={CHANGE_PASSWORD_PAGE} element={<ChangePasswordPage />}></Route>
 
             <Route path={EMAIL_VERIFY_PAGE} element={<VerifyRegisterAccountPage />}></Route>
 
             <Route path={UNAUTHORIZED_PAGE} element={<UnAuthorizedPage />}></Route>
+            <Route path={HANDEL_PAYMENT_PAGE} element={<HandlePaymentPage />}></Route>
+
 
           </Routes>
         </AuthProvider>

@@ -14,6 +14,7 @@ const API =  {
         UPDATE_USER_AVATAR: "/api/users/profile/update/avatar/",
         UPDATE_USER_ISSELLER: "/api/users/update/seller/agree/",
         VERIFY_ACCOUNT_BY_OPT: "/api/users/register/verify-email"
+        
     },
 
     Ticket: {
@@ -41,8 +42,12 @@ const API =  {
 
     Category: {
         GET_USING_CATEGORIES_API: "/api/categories/get-using-cate"
-    }
+    },
 
+    Payment: {
+        DEPOSITED_USER_API: "/api/payments/request",
+        PAGE_BACK_DEPOSITED_API: "/api/payments/vn-pay-callback"
+    }
 }
 
 export default API

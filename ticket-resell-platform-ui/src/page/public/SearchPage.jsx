@@ -48,6 +48,7 @@ export default function SearchPage() {
           Kết quả tìm kiếm của : {eventName}
         </MDBTypography>
         <MDBRow style={{ marginTop: "5%" }}>
+          
           {event &&
             event.length > 0 &&
             event.map((eventItem, index) => (

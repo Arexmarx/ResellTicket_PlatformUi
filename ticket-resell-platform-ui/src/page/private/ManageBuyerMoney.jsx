@@ -24,6 +24,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Stack } from "@mui/material";
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
@@ -33,15 +35,67 @@ export default function ManageBuyerMoney() {
 
   const [money, setMoney] = React.useState("");
 
+  const [link, setLink] = React.useState();
+
   const handleChange = (event) => {
     setMoney(event.target.value);
   };
+
+  const location = useLocation();
+  const { paymentResponse } = location.state || {};
+  const [successMessage, setSuccessMessage] = React.useState({
+    status: false,
+    message: "",
+  });
+  const [errorMessage, setErrorMessage] = React.useState({
+    status: false,
+    message: "",
+  });
+
+  console.log(paymentResponse)
+  useEffect(() => {
+    if (paymentResponse) {
+      if (paymentResponse?.object) {
+        setSuccessMessage({ status: true, message: paymentResponse.message });
+        setErrorMessage({ status: false, message: '' });
+      } else {
+        setErrorMessage({ status: true, message: 'Nạp Không thành công' });
+        setSuccessMessage({ status: false, message: '' });
+      }
+    }
+  }, [paymentResponse]);
+
+  const handleDeposite = () => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get(API.Payment.DEPOSITED_USER_API, {
+          params: {
+            amount: money,
+            orderInfo: "DEPOSIT",
+            customerCode: user?.customerCode,
+          },
+        });
+        if (response.data.httpStatus === HttpStatus.OK) {
+          console.log(response.data);
+          setLink(response.data.object);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (!link) fetchData(); // Only call fetchData here without recursion
+  };
+
+  useEffect(() => {
+    if (link) window.location.href = link;
+  }, [link]);
 
   React.useEffect(() => {
     const fetchData = async () => {
       const response = await api.get(API.User.GET_USER_INFO);
       if (response.data.httpStatus === HttpStatus.OK) {
-        console.log(response.data);
+        console.log(response.data.object);
         setUser(response.data.object);
       }
     };
@@ -162,15 +216,35 @@ export default function ManageBuyerMoney() {
 
                     <MDBBtn
                       style={{ backgroundColor: MAIN_COLOR, width: "100%" }}
-                      
+                      onClick={handleDeposite}
                     >
                       Nạp tiền
                     </MDBBtn>
+                    {successMessage.message && (
+                      <Stack
+                        sx={{ width: "100%", paddingTop: "10px" }}
+                        spacing={2}
+                      >
+                        <Alert severity="success" size="small">
+                          {successMessage.message}
+                          <div></div>
+                        </Alert>
+                      </Stack>
+                    )}
+                    {errorMessage.message && (
+                      <Stack
+                        sx={{ width: "100%", paddingTop: "10px" }}
+                        spacing={2}
+                      >
+                        <Alert severity="error" size="small">
+                          {errorMessage.message}
+                        </Alert>
+                      </Stack>
+                    )}
                   </MDBCardBody>
                 </MDBCard>
               </MDBCol>
               <MDBCol>
-                
                 <MDBCardHeader style={{ fontSize: "20px" }}>
                   Bảng tỉ lệ quy đổi
                 </MDBCardHeader>
