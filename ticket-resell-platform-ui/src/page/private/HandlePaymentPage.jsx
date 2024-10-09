@@ -23,6 +23,7 @@ export default function HandlePaymentPage() {
     const vnp_OrderInfo = queryParams.get("vnp_OrderInfo");
     const vnp_PayDate = queryParams.get("vnp_PayDate");
     const vnp_TxnRef = queryParams.get("vnp_TxnRef");
+    const vnp_TransactionNo = queryParams.get("vnp_TransactionNo");
 
     // Log the values (for debugging)
     console.log("Amount:", vnp_Amount);
@@ -46,6 +47,7 @@ export default function HandlePaymentPage() {
               vnp_OrderInfo: vnp_OrderInfo,
               vnp_PayDate: vnp_PayDate,
               vnp_TxnRef: vnp_TxnRef,
+              vnp_TransactionNo: vnp_TransactionNo,
             },
           }
         );
