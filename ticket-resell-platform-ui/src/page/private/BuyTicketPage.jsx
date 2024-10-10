@@ -16,7 +16,7 @@ import { MAIN_COLOR, CHECK_OUT_PAGE } from "../../config/Constant.js";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { formatToVND } from "../../service/StringService.js";
-import { Avatar } from "@mui/material";
+import { Alert, Avatar } from "@mui/material";
 import TicketAPI from "../../service/api/TicketAPI.js";
 import HttpStatus from "../../config/HttpStatus.js";
 import useAxios from "../../utils/useAxios.jsx";
@@ -31,6 +31,7 @@ export default function BuyTicketPage() {
   const [quantity, setQuantity] = useState(1); // Khởi tạo số lượng là 1
   const [numberOfTickets, setNumberOfTickets] = useState()
   const [paymentMethods, setPaymentMethods] = useState([])
+  const [orderMessage, setOrderMessage] = useState({ status: false, message: '' })
 
   //console.log(ticket);
   // console.log(event);
@@ -69,24 +70,35 @@ export default function BuyTicketPage() {
       }
     }
     fetchData().catch(console.log)
-  },[])
-  
+  }, [])
+
 
   if (!ticket) {
     return <div>No event data available</div>;
   }
 
-  const handleBuy = (x) => {
-    // const orderTicket = {
-    //   genericTicketId: ticket.id,
-    //   buyerId: user.id,
-    //   quantity: quantity,
-
-    // }
-    const finalPrice = ticket.price - ( ticket.price * (ticket.salePercent/100) )
+  const handleBuy = async () => {
+    const finalPrice = ticket.price - (ticket.price * (ticket.salePercent / 100))
     if (user?.balance >= finalPrice) {
-      console.log("Ok mua");
-      
+      //console.log("Ok mua");
+      const orderTicketRequest = {
+        genericTicketId: ticket.id,
+        buyerId: user.id,
+        quantity: quantity,
+        paymentMethodId: ticket.isPaper ? 2 : 1,
+        totalPrice: quantity * (ticket.price - (ticket.price * (ticket.salePercent / 100)))
+      }
+      //console.log(orderTicketRequest);
+      const response = await api.post(API.GenericTicket.ORDER_GENERIC_TICKET, orderTicketRequest)
+      if (response.data.httpStatus === HttpStatus.OK) {
+        //console.log(response.data.message);
+        setOrderMessage({ status: true, message: response.data.message })
+      }
+      else {
+        //console.log(response)
+        //console.log(response.data.message);
+        setOrderMessage({ status: false, message: response.data.message })
+      }
     }
     else {
       console.log("Ko mua dc");
@@ -97,7 +109,7 @@ export default function BuyTicketPage() {
   const handleQuantityChange = (delta) => {
     setQuantity((prevQuantity) => {
       const newQuantity = prevQuantity + delta;
-      return newQuantity < 1 ? 1 : ( newQuantity > numberOfTickets ? numberOfTickets : newQuantity ); // Đảm bảo số lượng không nhỏ hơn 1
+      return newQuantity < 1 ? 1 : (newQuantity > numberOfTickets ? numberOfTickets : newQuantity); // Đảm bảo số lượng không nhỏ hơn 1
     });
   };
 
@@ -111,12 +123,12 @@ export default function BuyTicketPage() {
             <MDBCard>
               <MDBCardBody>
                 <MDBCardTitle>
-                    <div className="d-flex align-items-center">
-                      <Avatar alt="Seller" src={ticket.seller.avatar ? "data:image/png;base64, " + ticket.seller.avatar : "broken-image.jpg" }  />
-                      <MDBCol className="mx-3">
-                            {ticket.seller.firstname} {ticket.seller.lastname}
-                      </MDBCol>
-                    </div>
+                  <div className="d-flex align-items-center">
+                    <Avatar alt="Seller" src={ticket.seller.avatar ? "data:image/png;base64, " + ticket.seller.avatar : "broken-image.jpg"} />
+                    <MDBCol className="mx-3">
+                      {ticket.seller.firstname} {ticket.seller.lastname}
+                    </MDBCol>
+                  </div>
                 </MDBCardTitle>
                 <hr />
                 <MDBCardTitle><strong>{ticket.ticketName}</strong></MDBCardTitle>
@@ -126,30 +138,30 @@ export default function BuyTicketPage() {
                 <MDBCardText><strong>Khuyến mãi:</strong> {ticket.salePercent}%</MDBCardText>
                 <MDBCardText>
                   {
-                    ticket.salePercent > 0 ? 
-                    <>
-                      <strong>Giá vé:&nbsp;</strong> 
-                      <span className="text-danger"><del>{formatToVND(ticket.price)}</del></span>&nbsp;&nbsp;
-                      <span className="text-danger">{formatToVND(ticket.price - (ticket.price * (ticket.salePercent / 100)))}</span>
-                    </>
-                    :
-                    <>
-                      <strong>Giá vé:</strong> <span className="text-danger">{formatToVND(ticket.price)}</span>
-                    </>
+                    ticket.salePercent > 0 ?
+                      <>
+                        <strong>Giá vé:&nbsp;</strong>
+                        <span className="text-danger"><del>{formatToVND(ticket.price)}</del></span>&nbsp;&nbsp;
+                        <span className="text-danger">{formatToVND(ticket.price - (ticket.price * (ticket.salePercent / 100)))}</span>
+                      </>
+                      :
+                      <>
+                        <strong>Giá vé:</strong> <span className="text-danger">{formatToVND(ticket.price)}</span>
+                      </>
                   }
 
                 </MDBCardText>
-                <MDBCardText><strong>Số lượng hiện có: </strong> {numberOfTickets ? numberOfTickets : '0' }</MDBCardText>
+                <MDBCardText><strong>Số lượng hiện có: </strong> {numberOfTickets ? numberOfTickets : '0'}</MDBCardText>
                 <MDBCardText>
-                  <strong>Phương thức thanh toán:</strong> { ticket.isPaper ? 'Thanh toán trực tiếp với người bán' : 'Số dư hệ thống' }  
+                  <strong>Phương thức thanh toán:</strong> {ticket.isPaper ? 'Thanh toán trực tiếp với người bán' : 'Số dư hệ thống'}
                 </MDBCardText>
                 <hr />
-                <div  style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
+                <div style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
                   <MDBBtn
                     color="danger"
                     outline
                     onClick={() => handleQuantityChange(-1)}
-                    style={{ marginRight: "10px"}}
+                    style={{ marginRight: "10px" }}
                   >
                     -
                   </MDBBtn>
@@ -168,11 +180,22 @@ export default function BuyTicketPage() {
                     +
                   </MDBBtn>
                 </div>
-
+                {
+                  orderMessage.status && orderMessage.message &&
+                  <div className="mb-3">
+                    <Alert severity="success">{orderMessage.message}</Alert>
+                  </div>
+                }
+                {
+                  !orderMessage.status && orderMessage.message &&
+                  <div className="mb-3">
+                    <Alert severity="error">{orderMessage.message}</Alert>
+                  </div>
+                }
                 <MDBBtn
                   style={{ backgroundColor: MAIN_COLOR }}
                   onClick={() => handleBuy(ticket)}
-                  disabled={ numberOfTickets ? false : true }
+                  disabled={numberOfTickets ? false : true}
                 >
                   Mua
                 </MDBBtn>

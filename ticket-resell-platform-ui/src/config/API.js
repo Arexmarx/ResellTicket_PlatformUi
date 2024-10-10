@@ -14,6 +14,7 @@ const API =  {
         UPDATE_USER_AVATAR: "/api/users/profile/update/avatar/",
         UPDATE_USER_ISSELLER: "/api/users/update/seller/agree/",
         VERIFY_ACCOUNT_BY_OPT: "/api/users/register/verify-email"
+        
     },
 
     Ticket: {
@@ -26,7 +27,7 @@ const API =  {
         CREATE_GENERIC_TICKET: "/api/tickets/generic/create",
         UPDATE_ALL_FIELDS_GENERIC_TICKET: "/api/tickets/generic/update-all/",
         GET_GENERIC_TICKET_BY_EVENT: "/api/tickets/generic/get-by-event/",
-        
+        ORDER_GENERIC_TICKET: "/api/tickets/generic/order"
     },
     
     Policy: {
@@ -45,8 +46,12 @@ const API =  {
 
     PaymentMethod: {
         GET_NOT_DELETED_PAYMENT_METHOD: "/api/tickets/get/not-deleted-payment-method"
-    }
+    },
 
+    Payment: {
+        DEPOSITED_USER_API: "/api/payments/request",
+        PAGE_BACK_DEPOSITED_API: "/api/payments/vn-pay-callback"
+    }
 }
 
 export default API
