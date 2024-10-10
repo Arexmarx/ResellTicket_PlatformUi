@@ -44,8 +44,8 @@ export const AUTH_TOKENS_KEY = 'authTokens'
 
 // Ticket type
 export const TicketTypes = [
-    { value: 0 , name: 'Online' },
-    { value: 1 , name: 'Giấy' }
+    { value: false , name: 'Online' },
+    { value: true , name: 'Giấy' }
 ]
 
 // Font main
