@@ -11,8 +11,8 @@ import {
   MDBCardText,
   MDBBtn,
 } from "mdb-react-ui-kit";
-import { useNavigate } from "react-router-dom";
-import { MAIN_COLOR, CHECK_OUT_PAGE } from "../../config/Constant.js";
+
+import { MAIN_COLOR } from "../../config/Constant.js";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { formatToVND } from "../../service/StringService.js";
@@ -24,17 +24,18 @@ import API from "../../config/API.js";
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
+
+
+
 export default function BuyTicketPage() {
   const location = useLocation();
   const { ticket } = location.state || {};
-  const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1); // Khởi tạo số lượng là 1
   const [numberOfTickets, setNumberOfTickets] = useState()
   const [paymentMethods, setPaymentMethods] = useState([])
   const [orderMessage, setOrderMessage] = useState({ status: false, message: '' })
 
-  //console.log(ticket);
-  // console.log(event);
+
   const api = useAxios()
   const [user, setUser] = useState()
 
@@ -42,7 +43,6 @@ export default function BuyTicketPage() {
     const fetchData = async () => {
       const response = await api.get(API.User.GET_USER_INFO)
       if (response.data.httpStatus === HttpStatus.OK) {
-        //console.log(response.data.object);
         setUser(response.data.object)
       }
     }
@@ -65,7 +65,6 @@ export default function BuyTicketPage() {
     const fetchData = async () => {
       const response = await api.get(API.PaymentMethod.GET_NOT_DELETED_PAYMENT_METHOD)
       if (response.data.object) {
-        // console.log("Payements: ",response.data.object);
         setPaymentMethods(response.data.object)
       }
     }
@@ -80,7 +79,6 @@ export default function BuyTicketPage() {
   const handleBuy = async () => {
     const finalPrice = ticket.price - (ticket.price * (ticket.salePercent / 100))
     if (user?.balance >= finalPrice) {
-      //console.log("Ok mua");
       const orderTicketRequest = {
         genericTicketId: ticket.id,
         buyerId: user.id,
@@ -88,20 +86,16 @@ export default function BuyTicketPage() {
         paymentMethodId: ticket.isPaper ? 2 : 1,
         totalPrice: quantity * (ticket.price - (ticket.price * (ticket.salePercent / 100)))
       }
-      //console.log(orderTicketRequest);
       const response = await api.post(API.GenericTicket.ORDER_GENERIC_TICKET, orderTicketRequest)
       if (response.data.httpStatus === HttpStatus.OK) {
-        //console.log(response.data.message);
         setOrderMessage({ status: true, message: response.data.message })
       }
       else {
-        //console.log(response)
-        //console.log(response.data.message);
         setOrderMessage({ status: false, message: response.data.message })
       }
     }
     else {
-      console.log("Ko mua dc");
+      setOrderMessage({ status: false, message: 'Bạn không đủ số dư để mua!' })
     }
     //navigate(CHECK_OUT_PAGE, { state: { ticket: x, quantity: quantity } });
   };
@@ -160,7 +154,9 @@ export default function BuyTicketPage() {
                   <MDBBtn
                     color="danger"
                     outline
-                    onClick={() => handleQuantityChange(-1)}
+                    onClick={() => {
+                      handleQuantityChange(-1)
+                    }}
                     style={{ marginRight: "10px" }}
                   >
                     -
@@ -174,7 +170,9 @@ export default function BuyTicketPage() {
                   <MDBBtn
                     color="success"
                     outline
-                    onClick={() => handleQuantityChange(1)}
+                    onClick={() => {
+                      handleQuantityChange(1)
+                    }}
                     style={{ marginLeft: "10px" }}
                   >
                     +
@@ -211,9 +209,9 @@ export default function BuyTicketPage() {
                 position="top"
                 style={{
                   cursor: 'pointer',
-                  borderRadius: '15px', // Add rounded corners
-                  border: '2px solid #ddd', // Add a border
-                  boxShadow: '0 4px 8px rgba(0,0,0,0.1)', // Optional: add a subtle shadow
+                  borderRadius: '15px', 
+                  border: '2px solid #ddd', 
+                  boxShadow: '0 4px 8px rgba(0,0,0,0.1)', 
                 }}
               />
             </MDBCard>
