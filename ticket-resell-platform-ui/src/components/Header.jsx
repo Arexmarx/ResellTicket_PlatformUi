@@ -178,6 +178,7 @@ function Header() {
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
+                name="search_field"
                 placeholder={search}
                 inputProps={{ 'aria-label': 'search' }}
                 onChange={handleSearchInput}
