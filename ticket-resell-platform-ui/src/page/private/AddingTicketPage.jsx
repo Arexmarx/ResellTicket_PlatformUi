@@ -135,10 +135,10 @@ export default function AddingTicketPage() {
                 genericTicketId: localStorage.getItem(GENERIC_TICKET_TEMP_KEY)
             }
 
-            const file = await fetch(ticketDetails[i].image).then(res => res.blob());
+            //const file = await fetch(ticketDetails[i].image).then(res => res.blob());
             const formData = new FormData();
             formData.append("ticketRequest", new Blob([JSON.stringify(ticketRequest)], { type: 'application/json' }))
-            formData.append('file', file)
+            formData.append('file', ticketDetails[i].image)
 
             api.post(API.Ticket.CREATE_TICKET, formData).then(
                 response => console.log(response.data)

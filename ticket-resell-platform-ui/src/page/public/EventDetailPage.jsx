@@ -35,18 +35,18 @@ export default function EventDetail() {
   const { event } = location.state || {};
 
   const [user, setUser] = useState();
-    const api = useAxios();
+  const api = useAxios();
 
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await api.get(API.User.GET_USER_INFO)
-            if (response.data.httpStatus === HttpStatus.OK) {
-                setUser(response.data.object)
-            }
-        }
-        fetchData().catch(console.error)
-    }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await api.get(API.User.GET_USER_INFO)
+      if (response.data.httpStatus === HttpStatus.OK) {
+        setUser(response.data.object)
+      }
+    }
+    fetchData().catch(console.error)
+  }, [])
 
   if (!event) {
     return <div>No event data available</div>;
@@ -54,29 +54,29 @@ export default function EventDetail() {
 
   const handleBuy = (x) => {
     if (user) {
-      navigate(BUY_TICKET_PAGE, { state: { ticket: x} });
+      navigate(BUY_TICKET_PAGE, { state: { ticket: x } });
     }
   };
 
   // Get all selling genericTicket by event
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [sellingGenericTicket, setSellingGenericTicket] = useState(null);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [sellingGenericTicket, setSellingGenericTicket] = useState(null);
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
-      
-      const fetchData = async () => {
-        const response = await TicketAPI.getGenericTicketByEvent(event.id);
-        if (response.data.httpStatus == HttpStatus.OK) {
-          //console.log(response.data.object);
-          setSellingGenericTicket(response.data.object)
-        }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+
+    const fetchData = async () => {
+      const response = await TicketAPI.getGenericTicketByEvent(event.id);
+      if (response.data.httpStatus == HttpStatus.OK) {
+        //console.log(response.data.object);
+        setSellingGenericTicket(response.data.object)
       }
+    }
 
-      fetchData().catch(console.log)
-    }, [event.id])
-  
+    fetchData().catch(console.log)
+  }, [event.id])
+
 
   return (
     <div >
@@ -122,32 +122,40 @@ export default function EventDetail() {
             }
             {
               sellingGenericTicket &&
-              sellingGenericTicket.map((gTicket) => ( user?.id != gTicket.seller.id &&
+              sellingGenericTicket.map((gTicket) => (user?.id != gTicket.seller.id &&
                 <MDBCard key={gTicket.id} style={{ marginTop: "2%" }}>
                   <MDBCardBody>
                     <MDBRow className="align-items-center">
                       <MDBCol size="auto">
-                        <Avatar alt="Seller" src={gTicket.seller.avatar ? "data:image/png;base64, " + gTicket.seller.avatar : "broken-image.jpg" }  /> 
+
                         {/* src="broken-image.jpg" */}
                         {/* "data:image/png;base64, " + gTicket.seller.image */}
                       </MDBCol>
-                      <MDBCol>
-                        <div>Người Bán: {gTicket.seller.firstname} {gTicket.seller.lastname}</div>
+                      <MDBCol style={{ marginRight: '1%' }}>
+                        <div className="d-flex justify-content-center">
+                          <Avatar 
+                            sx={{ width: 42, height: 42 }} alt="Seller" 
+                            src={gTicket.seller.avatar ? "data:image/png;base64, " + gTicket.seller.avatar : "broken-image.jpg"} 
+                          />
+                        </div>
+                        <div className="d-flex justify-content-center">
+                          <div>{gTicket.seller.firstname} {gTicket.seller.lastname}</div>
+                        </div>
                       </MDBCol>
-                      <MDBCol>
-                        <div>Tên vé: {gTicket.ticketName}</div>
+                      <MDBCol size={4}>
+                        <div> {gTicket.ticketName}</div>
                       </MDBCol>
-                      <MDBCol>
+                      <MDBCol size={2}>
                         <div>Loại vé: {gTicket.isPaper ? "Giấy" : "Online"}</div>
                       </MDBCol>
-                      <MDBCol>
+                      <MDBCol size={2}>
                         <div>Khu vực: {gTicket.area}</div>
                       </MDBCol>
                       {/* <MDBCol>
                         <div>Mô tả: {gTicket.description}</div>
                       </MDBCol> */}
-                      <MDBCol>
-                        <div>Giá bán: {formatToVND(gTicket.price)}</div>
+                      <MDBCol size={1}>
+                        <div>{formatToVND(gTicket.price)}</div>
                       </MDBCol>
                       <MDBCol size="auto">
                         <MDBBtn

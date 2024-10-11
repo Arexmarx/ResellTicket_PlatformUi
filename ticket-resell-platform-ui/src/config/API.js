@@ -27,7 +27,8 @@ const API =  {
         CREATE_GENERIC_TICKET: "/api/tickets/generic/create",
         UPDATE_ALL_FIELDS_GENERIC_TICKET: "/api/tickets/generic/update-all/",
         GET_GENERIC_TICKET_BY_EVENT: "/api/tickets/generic/get-by-event/",
-        
+        ORDER_GENERIC_TICKET: "/api/tickets/generic/order",
+        GET_PROCESSING_ORDER_TICKET: "/api/tickets/generic/get-processing-order-ticket/"
     },
     
     Policy: {
@@ -42,6 +43,10 @@ const API =  {
 
     Category: {
         GET_USING_CATEGORIES_API: "/api/categories/get-using-cate"
+    },
+
+    PaymentMethod: {
+        GET_NOT_DELETED_PAYMENT_METHOD: "/api/tickets/get/not-deleted-payment-method"
     },
 
     Payment: {

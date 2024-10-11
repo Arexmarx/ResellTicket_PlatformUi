@@ -10,6 +10,7 @@ import useAxios from "../../utils/useAxios"
 import HttpStatus from "../../config/HttpStatus"
 import API from "../../config/API"
 import LoadEffect from "../../components/LoadEffect"
+import OrderTicketInfo from "../../components/OrderTicketInfo"
 
 /*
     Author: Nguyen Tien Thuan
@@ -88,10 +89,12 @@ export default function MyShopPage() {
                                                 {
                                                     activeTab.id === tabs[0].id && <DetailSellingTicket user={user} />
                                                 }
+                                                {
+                                                    activeTab.id === tabs[1].id && <OrderTicketInfo user={user}/>
+                                                }
                                             </div>
 
                                         </div>
-
                                     )
                             }
                         </div>

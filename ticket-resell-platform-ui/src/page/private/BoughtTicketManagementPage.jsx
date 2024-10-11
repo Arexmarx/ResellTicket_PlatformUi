@@ -11,25 +11,63 @@ import { useEffect, useState } from "react";
 import API from "../../config/API";
 import HttpStatus from "../../config/HttpStatus";
 import useAxios from "../../utils/useAxios";
+import LoadEffect from "../../components/LoadEffect";
 
 /*
     Author: Nguyen Tien Thuan
 */
 export default function BoughtTicketManagementPage() {
 
-  const tickets = BOUGHT_TICKET_DATA;
+  const [tickets, setTickets] = useState([])
   const [user, setUser] = useState({});
   const api = useAxios();
+  const api2 = useAxios();
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await api.get(API.User.GET_USER_INFO)
       if (response.data.httpStatus === HttpStatus.OK) {
+        //console.log(response.data.object)
         setUser(response.data.object)
       }
     }
     fetchData().catch(console.error)
   }, [])
+
+
+  useEffect(() => {
+    if (user.id) {
+      const fetchData = async () => {
+        const response = await api2.get(API.GenericTicket.GET_PROCESSING_ORDER_TICKET + user.id)
+        //console.log("Response"+response);
+        
+        if (response.data.httpStatus === HttpStatus.OK) {
+          //console.log(response.data.object)
+          setTickets(response.data.object)
+        }
+      }
+      fetchData().catch(console.error)
+    }
+  }, [user])
+
+  const tabs = [
+    { id: '1', label: 'Đang xử lý' },
+    { id: '2', label: 'Đang giao' },
+    { id: '3', label: 'Chờ giao hàng' },
+    { id: '4', label: 'Hoàn thành' },
+    { id: '5', label: 'Đã hủy' },
+    { id: '6', label: 'Đánh giá' }
+  ];
+  const [activeTab, setActiveTab] = useState(tabs[0]);
+  const handleTabClick = (tab) => { setActiveTab(tab); };
+
+
+  if (!user && !tickets) {
+    return (
+      <LoadEffect/>
+    )
+  }
+
 
   return (
     <div>
@@ -45,11 +83,25 @@ export default function BoughtTicketManagementPage() {
           {/* <div className='col-md-1' ></div> */}
           <div className="col-md-10">
             <div className="row">
-              <GroupTicketCommandButton />
+              {/* <GroupTicketCommandButton /> */}
+              <div className="tab-menu" style={{ width: '98%' }}>
+                {
+                  tabs.map((tab) => (
+                    <a
+                      key={tab.id}
+                      href="#"
+                      className={activeTab.id === tab.id ? 'active' : ''}
+                      onClick={() => handleTabClick(tab)}
+                    >
+                      {tab.label} {tab.count && <span>({tab.count})</span>}
+                    </a>
+                  ))
+                }
+              </div>
             </div>
             <Divider />
             <div className="container-fluid">
-              {
+              {/* {
                 tickets.map((ticket, index) => (
                   <TicketInfoRowBox key={index} ticket={ticket} />
                 ))
@@ -58,6 +110,18 @@ export default function BoughtTicketManagementPage() {
                 tickets.map((ticket, index) => (
                   <RatingInfoRowBox key={index} ticket={ticket} user={user} />
                 ))
+              } */}
+              {
+                activeTab.id === tabs[0].id && tickets.length > 0 ?
+                (
+                  tickets.map((item, index) => (
+                    <TicketInfoRowBox key={index} item={item} />
+                  ))
+                )
+                : ''
+              }
+              {
+
               }
             </div>
           </div>
