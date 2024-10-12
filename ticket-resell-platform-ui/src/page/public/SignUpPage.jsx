@@ -245,6 +245,7 @@ export default function SignUp() {
         <FormGroup sx={{ margin: 5, minWidth: 450 }}>
           <FormControl sx={{ marginBottom: 3 }}>
             <TextField
+              name="username_input_filed"
               label={"Tên người dùng"}
               id="margin-none-1"
               fullWidth
@@ -256,6 +257,7 @@ export default function SignUp() {
           </FormControl>
           <FormControl sx={{ marginBottom: 3 }}>
             <TextField
+             name="lastname_input_filed"
               label={"Tên"}
               id="margin-none-1"
               fullWidth
@@ -267,6 +269,7 @@ export default function SignUp() {
           </FormControl>
           <FormControl sx={{ marginBottom: 3 }}>
             <TextField
+              name="firstname_input_filed"
               label={"Họ"}
               id="margin-none-1"
               fullWidth
@@ -278,6 +281,7 @@ export default function SignUp() {
           </FormControl>
           <FormControl sx={{ marginBottom: 3 }}>
             <TextField
+             name="email_input_filed"
               label={"Email"}
               id="margin-none-2"
               fullWidth
@@ -296,6 +300,7 @@ export default function SignUp() {
               Mật Khẩu
             </InputLabel>
             <OutlinedInput
+               name="password_input_filed"
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
               value={passwordInput}
@@ -326,6 +331,7 @@ export default function SignUp() {
               Nhập lại mật khẩu
             </InputLabel>
             <OutlinedInput
+             name="re_password_input_filed"
               id="outlined-adornment-re-password"
               type={showPassword ? "text" : "password"}
               value={rePasswordInput}
@@ -350,6 +356,7 @@ export default function SignUp() {
           </FormControl>
           <FormControl sx={{ marginBottom: 3 }}>
             <Button
+               name="click_sign_up_button"
               onClick={handleSubmit}
               disabled={loading}
               variant="contained"
@@ -404,6 +411,7 @@ export default function SignUp() {
               <div>
                 Đã có tài khoản ?{" "}
                 <Link
+                  name="click_sign_in_button"
                   component="button"
                   onClick={() => navigate(LOGIN_PAGE)}
                   sx={{ color: "#28a745" }}

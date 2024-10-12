@@ -18,6 +18,7 @@ import {
   EMAIL_VERIFY_PAGE,
   UNAUTHORIZED_PAGE,
   HANDEL_PAYMENT_PAGE,
+  VIEW_HISTORY_DEPOSITED_PAGE,
 } from "./config/Constant";
 import HomePage from "./page/public/HomePage";
 import SignUp from "./page/public/SignUpPage";
@@ -38,6 +39,7 @@ import VerifyRegisterAccountPage from "./page/private/VerifyRegisterAccountPage"
 import UnAuthorizedPage from "./page/error/UnAuthorizedPage";
 import { AuthProvider } from "./context/AuthContext";
 import HandlePaymentPage from "./page/private/HandlePaymentPage";
+import ViewHistoryDeposited from "./page/private/ViewHistoryDeposited";
 const GlobalStyles = () => (
   <Global
     styles={css`
@@ -96,7 +98,10 @@ function App() {
             <Route path={EMAIL_VERIFY_PAGE} element={<VerifyRegisterAccountPage />}></Route>
 
             <Route path={UNAUTHORIZED_PAGE} element={<UnAuthorizedPage />}></Route>
+
             <Route path={HANDEL_PAYMENT_PAGE} element={<HandlePaymentPage />}></Route>
+
+            <Route path={VIEW_HISTORY_DEPOSITED_PAGE} element={<ViewHistoryDeposited />}></Route>
 
 
           </Routes>

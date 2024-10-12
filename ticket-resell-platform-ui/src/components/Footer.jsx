@@ -58,39 +58,34 @@ export default function Footer() {
 
               <MDBCol md="3" lg="2" xl="2" className="mx-auto mb-4">
                 <h6 className="text-uppercase fw-bold mb-4">
-                  Chính sách của chúng tôi
+                  Chính sách
                 </h6>
                 <p>
                   <a href="#!" className="text-reset">
-                    Pricing
+                    Chính sách cho người mua
                   </a>
                 </p>
                 <p>
                   <a href="#!" className="text-reset">
-                    Settings
+                  Chính sách cho người bán
                   </a>
                 </p>
                 <p>
                   <a href="#!" className="text-reset">
-                    Orders
-                  </a>
-                </p>
-                <p>
-                  <a href="#!" className="text-reset">
-                    Help
+                    Chính sách chung
                   </a>
                 </p>
               </MDBCol>
 
               <MDBCol md="4" lg="3" xl="3" className="mx-auto mb-md-0 mb-4">
-                <h6 className="text-uppercase fw-bold mb-4">Contact</h6>
+                <h6 className="text-uppercase fw-bold mb-4">Liên hệ</h6>
                 <p>
                   <MDBIcon icon="home" className="me-2" />
-                  New York, NY 10012, US
+                  Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh
                 </p>
                 <p>
                   <MDBIcon icon="envelope" className="me-3" />
-                  info@example.com
+                  resellticket.swp@gmail.com
                 </p>
                 <p>
                   <MDBIcon icon="phone" className="me-3" /> + 01 234 567 88

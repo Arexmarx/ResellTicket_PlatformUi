@@ -11,7 +11,11 @@ import {
   MDBCard,
   MDBCardBody,
 } from "mdb-react-ui-kit";
-import { FONT_MAIN, MAIN_COLOR } from "../../config/Constant.js";
+import {
+  FONT_MAIN,
+  MAIN_COLOR,
+  VIEW_HISTORY_DEPOSITED_PAGE,
+} from "../../config/Constant.js";
 import { SidebarOption } from "../../config/Constant";
 import SideBar from "../../components/SideBar";
 import Alert from "@mui/material/Alert";
@@ -25,7 +29,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Stack } from "@mui/material";
+import { Stack, TextField } from "@mui/material";
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
@@ -37,6 +41,7 @@ export default function ManageBuyerMoney() {
 
   const [link, setLink] = React.useState();
 
+  const navigate = useNavigate();
   const handleChange = (event) => {
     setMoney(event.target.value);
   };
@@ -52,15 +57,15 @@ export default function ManageBuyerMoney() {
     message: "",
   });
 
-  console.log(paymentResponse)
+  console.log(paymentResponse);
   useEffect(() => {
     if (paymentResponse) {
       if (paymentResponse?.object) {
         setSuccessMessage({ status: true, message: paymentResponse.message });
-        setErrorMessage({ status: false, message: '' });
+        setErrorMessage({ status: false, message: "" });
       } else {
-        setErrorMessage({ status: true, message: 'Nạp Không thành công' });
-        setSuccessMessage({ status: false, message: '' });
+        setErrorMessage({ status: true, message: "Nạp Không thành công" });
+        setSuccessMessage({ status: false, message: "" });
       }
     }
   }, [paymentResponse]);
@@ -87,6 +92,14 @@ export default function ManageBuyerMoney() {
     if (!link) fetchData(); // Only call fetchData here without recursion
   };
 
+  const handleCustomAmountChange = (event) => {
+    const input = event.target.value;
+    if (!isNaN(input) && Number(input) >= 0) {
+        setMoney(input);
+      
+    }
+  };
+
   useEffect(() => {
     if (link) window.location.href = link;
   }, [link]);
@@ -102,6 +115,9 @@ export default function ManageBuyerMoney() {
     fetchData().catch(console.error);
   }, []);
 
+  const handleViewDeposited = () => {
+    navigate(VIEW_HISTORY_DEPOSITED_PAGE);
+  };
   return (
     <div>
       <Header />
@@ -111,7 +127,10 @@ export default function ManageBuyerMoney() {
             <SideBar user={user} sideBarOption={SidebarOption.BALANCE} />
           </MDBCol>
           <MDBCol md="10">
-            <MDBBtn style={{ backgroundColor: MAIN_COLOR, marginRight: "2%" }}>
+            <MDBBtn
+              style={{ backgroundColor: MAIN_COLOR, marginRight: "2%" }}
+              onClick={handleViewDeposited}
+            >
               Lịch sử nạp tiền
             </MDBBtn>
             <MDBBtn style={{ backgroundColor: MAIN_COLOR }}>
@@ -181,13 +200,13 @@ export default function ManageBuyerMoney() {
 
                     <FormControl fullWidth style={{ marginBottom: "1rem" }}>
                       <InputLabel id="select-money-label">
-                        Nhập số tiền của bạn
+                        Chọn số tiền của bạn
                       </InputLabel>
                       <Select
                         labelId="select-money-label"
                         id="select-money"
                         value={money}
-                        label="Nhập số tiền của bạn"
+                        label="Chọn số tiền của bạn"
                         onChange={handleChange}
                       >
                         <MenuItem value={10000}>{formatToVND(10000)}</MenuItem>
@@ -212,6 +231,15 @@ export default function ManageBuyerMoney() {
                           {formatToVND(10000000)}
                         </MenuItem>
                       </Select>
+                      <TextField
+                        fullWidth
+                        label="Hoặc nhập số tiền mong muốn"
+                        variant="outlined"
+                        value={money}
+                        onChange={handleCustomAmountChange}
+                        style={{ marginBottom: "1rem" ,marginTop:'2%'}}
+
+                      />
                     </FormControl>
 
                     <MDBBtn

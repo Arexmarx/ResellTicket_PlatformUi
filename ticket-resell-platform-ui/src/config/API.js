@@ -53,7 +53,8 @@ const API =  {
 
     Payment: {
         DEPOSITED_USER_API: "/api/payments/request",
-        PAGE_BACK_DEPOSITED_API: "/api/payments/vn-pay-callback"
+        PAGE_BACK_DEPOSITED_API: "/api/payments/vn-pay-callback",
+        VIEW_DEPOSITED_HISTORY_API:"/api/transactions/get-trans-deposit/"
     }
 }
 

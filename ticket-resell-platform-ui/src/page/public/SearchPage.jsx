@@ -20,6 +20,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 
 export default function SearchPage() {
   const location = useLocation();
@@ -28,7 +29,6 @@ export default function SearchPage() {
 
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
-  const [date, setDate] =  useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,6 +68,21 @@ export default function SearchPage() {
     navigate(EVENT_DETAIL_PAGE, { state: { event: item } });
   };
 
+  const handleSearchDate = (findDate) => {
+    if (events.length > 0) {
+      const selectedDate = dayjs(findDate).format("YYYY-MM-DD");
+  
+      setFilteredEvents(
+        events.filter((eventItem) => {
+          const eventDate = dayjs(eventItem.startDate).format("YYYY-MM-DD");
+          return eventDate === selectedDate;
+        })
+      );
+    } else {
+      console.log("No events to filter.");
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -78,13 +93,12 @@ export default function SearchPage() {
         <MDBRow>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={["DatePicker"]}>
-              <DatePicker 
-              label="Chọn ngày bắt đầu sự kiện" 
-              onChange={(newValue) => setDate(newValue)}
+              <DatePicker
+                label="Chọn ngày bắt đầu sự kiện"
+                onChange={(date) => handleSearchDate(date)}
               />
             </DemoContainer>
           </LocalizationProvider>
-          
         </MDBRow>
         <MDBRow style={{ marginTop: "3%" }}>
           {filteredEvents.length > 0 ? (

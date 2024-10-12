@@ -16,6 +16,7 @@ export const EMAIL_VERIFY_PAGE = "/signUp/verify"
 export const EVENT_DETAIL_PAGE = "/eventDetail"
 export const UNAUTHORIZED_PAGE = "/unauthorized"
 export const HANDEL_PAYMENT_PAGE = "/payments/loading"
+export const VIEW_HISTORY_DEPOSITED_PAGE = "/users/history-deposited"
 
 // Color
 export const MAIN_COLOR = '#2dc275';
