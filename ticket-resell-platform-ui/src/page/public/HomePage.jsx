@@ -221,7 +221,3 @@ export default function HomePage() {
     </div>
   );
 }
-
-// (cate.name == 'Ca nhạc') ? musicEvents :
-//               (cate.name == 'Sự kiện') ? eventEvents :
-//               (cate.name == 'Triển lãm') ? exhibitionEvents :

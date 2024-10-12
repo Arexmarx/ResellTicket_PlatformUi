@@ -52,8 +52,8 @@ export default function BoughtTicketManagementPage() {
 
   const tabs = [
     { id: '1', label: 'Đang xử lý' },
-    { id: '2', label: 'Đang giao' },
-    { id: '3', label: 'Chờ giao hàng' },
+    { id: '2', label: 'Đang chuẩn bị' },
+    { id: '3', label: 'Đang giao hàng' },
     { id: '4', label: 'Hoàn thành' },
     { id: '5', label: 'Đã hủy' },
     { id: '6', label: 'Đánh giá' }

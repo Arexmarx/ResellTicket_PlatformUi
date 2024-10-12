@@ -20,7 +20,8 @@ const API =  {
     Ticket: {
         GET_TOTAL_TICKETS_IN_GENERIC_TICKET: "/api/tickets/generic/get-total-ticket/",
         CREATE_TICKET: "/api/tickets/create",
-        GET_ALL_TICKET_OF_SELLER: "/api/tickets/get-tickets-of-seller/"
+        GET_ALL_TICKET_OF_SELLER: "/api/tickets/get-tickets-of-seller/",
+        ACCEPT_SELLING_TICKET_REQUEST: "/api/tickets/accept/selling-request"
     },
 
     GenericTicket: {
@@ -28,7 +29,8 @@ const API =  {
         UPDATE_ALL_FIELDS_GENERIC_TICKET: "/api/tickets/generic/update-all/",
         GET_GENERIC_TICKET_BY_EVENT: "/api/tickets/generic/get-by-event/",
         ORDER_GENERIC_TICKET: "/api/tickets/generic/order",
-        GET_PROCESSING_ORDER_TICKET: "/api/tickets/generic/get-processing-order-ticket/"
+        GET_PROCESSING_ORDER_TICKET: "/api/tickets/generic/get-processing-order-ticket/",
+        GET_REQUEST_ORDER_TICKET: "/api/tickets/generic/get-all-request-order-ticket/"
     },
     
     Policy: {

@@ -10,9 +10,9 @@ import LoadEffect from "./LoadEffect";
 export default function PolicyCheckBox({ user }) {
 
     const api = useAxios()
+    const [checkbox, setCheckBox] = useState(false);
     const [basicModal, setBasicModal] = useState(false);
 
-    const [checkbox, setCheckBox] = useState(false);
 
     const toggleOpen = () => setBasicModal(!basicModal);
 

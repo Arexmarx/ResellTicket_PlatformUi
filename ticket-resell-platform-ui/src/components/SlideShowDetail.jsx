@@ -21,7 +21,7 @@ import { formatDateTime } from "../service/DateService.js";
  * Author: Phan Nguyễn Mạnh Cường
  */
 export default function SlideShowDetail({ Category, Events }) {
-  // console.log("event: ",Events);
+  //console.log("event: ",Events);
 
   const items = Events;
   const [activeItem, setActiveItem] = useState(1);
@@ -136,7 +136,6 @@ export default function SlideShowDetail({ Category, Events }) {
         onClick={handleNext}
       />
     </MDBContainer>
-  ) : (
-    ""
-  );
+  ) : ''
+  ;
 }

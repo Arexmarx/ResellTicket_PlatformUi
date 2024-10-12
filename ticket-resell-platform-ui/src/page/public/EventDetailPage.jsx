@@ -16,7 +16,7 @@ import { BUY_TICKET_PAGE } from "../../config/Constant.js";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer.jsx";
 import Header from "../../components/Header.jsx";
-import { Alert, Avatar, Typography } from "@mui/material";
+import { Alert, Avatar } from "@mui/material";
 import { MAIN_COLOR } from "../../config/Constant.js";
 import { formatDateTime } from "../../service/DateService.js";
 import TicketAPI from "../../service/api/TicketAPI.js";
@@ -142,7 +142,7 @@ export default function EventDetail() {
                           <div>{gTicket.seller.firstname} {gTicket.seller.lastname}</div>
                         </div>
                       </MDBCol>
-                      <MDBCol size={4}>
+                      <MDBCol size={3}>
                         <div> {gTicket.ticketName}</div>
                       </MDBCol>
                       <MDBCol size={2}>
@@ -154,11 +154,19 @@ export default function EventDetail() {
                       {/* <MDBCol>
                         <div>Mô tả: {gTicket.description}</div>
                       </MDBCol> */}
-                      <MDBCol size={1}>
-                        <div>{formatToVND(gTicket.price)}</div>
+                      <MDBCol size={2}>
+                        <div>
+                          {gTicket.salePercent > 0 ?
+                            <span>
+                              <del className="text-danger">{formatToVND(gTicket.price)}</del>
+                            </span>
+                            : null
+                          }
+                          {formatToVND(gTicket.price - (gTicket.price * (gTicket.salePercent / 100)))}
+                        </div>
                       </MDBCol>
                       <MDBCol size="auto">
-                        <MDBBtn
+                        <MDBBtn disabled={user == null}
                           style={{ backgroundColor: MAIN_COLOR }}
                           onClick={() => handleBuy(gTicket)}
                         >

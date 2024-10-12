@@ -11,6 +11,7 @@ import HttpStatus from "../../config/HttpStatus"
 import API from "../../config/API"
 import LoadEffect from "../../components/LoadEffect"
 import OrderTicketInfo from "../../components/OrderTicketInfo"
+import BoughtTicketBox from "../../components/BoughtTicketBox"
 
 /*
     Author: Nguyen Tien Thuan
@@ -91,6 +92,9 @@ export default function MyShopPage() {
                                                 }
                                                 {
                                                     activeTab.id === tabs[1].id && <OrderTicketInfo user={user}/>
+                                                }
+                                                {
+                                                    activeTab.id === tabs[2].id && <BoughtTicketBox user={user}/>
                                                 }
                                             </div>
 
