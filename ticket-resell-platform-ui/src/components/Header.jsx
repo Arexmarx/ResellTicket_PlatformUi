@@ -19,6 +19,11 @@ import HttpStatus from "../config/HttpStatus";
 import AuthContext from "../context/AuthContext";
 import useAxios from "../utils/useAxios";
 import API from "../config/API";
+import { formatToVND } from "../service/StringService";
+import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LocalActivityIcon from '@mui/icons-material/LocalActivity';
+import LogoutIcon from '@mui/icons-material/Logout';
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
@@ -71,7 +76,7 @@ function Header() {
   const { logoutUser } = React.useContext(AuthContext)
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [search, setSearch] = React.useState("Search for the Ticket");
+  const [search, setSearch] = React.useState("Nhập tên sự kiện");
   const navigate = useNavigate();
 
   const handleOpenUserMenu = (event) => {
@@ -195,7 +200,13 @@ function Header() {
               :
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip className="d-flex align-items-md-center" title="Open settings">
-                  <span className="mx-3">{user.firstname + " " + user.lastname}</span>
+                  
+                  <span>
+                    <div className="mx-3" style={{ fontSize:'110%' }}><strong>{user.firstname + " " + user.lastname}</strong></div>
+                    <div className="mx-3" style={{ fontSize:'90%', fontWeight:500 }}>
+                      <LocalAtmIcon/> {formatToVND(user.balance)}
+                    </div>
+                  </span>
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
                     <Avatar alt="Remy Sharp" src={!user || !user.avatar ? "/broken-image.jpg" : "data:image/png;base64, " + user.avatar} />
@@ -225,7 +236,23 @@ function Header() {
                         handleCloseUserMenu();
                       }}
                     >
-                      <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                      {/* "Quản lý tài khoản", "Vé Đã Mua", "Đăng Xuất" */}
+                      <Typography sx={{ textAlign: 'center' }}>
+
+                        {
+                          setting == settings[0] && <AccountCircleIcon/>
+                        }
+                        {
+                          setting == settings[1] && <LocalActivityIcon/>
+                        }
+                        {
+                          setting == settings[2] && <LogoutIcon/>
+                        }
+                        &nbsp;&nbsp;
+                        {
+                          setting
+                        }
+                      </Typography>
                     </MenuItem>
                   ))}
                 </Menu>

@@ -12,6 +12,7 @@ import API from "../../config/API";
 import HttpStatus from "../../config/HttpStatus";
 import useAxios from "../../utils/useAxios";
 import LoadEffect from "../../components/LoadEffect";
+import BoughtTicketBox from "../../components/BoughtTicketBox";
 
 /*
     Author: Nguyen Tien Thuan
@@ -111,6 +112,7 @@ export default function BoughtTicketManagementPage() {
                   <RatingInfoRowBox key={index} ticket={ticket} user={user} />
                 ))
               } */}
+
               {
                 activeTab.id === tabs[0].id && tickets.length > 0 ?
                 (
@@ -121,8 +123,9 @@ export default function BoughtTicketManagementPage() {
                 : ''
               }
               {
-
+                activeTab.id === tabs[3].id && <BoughtTicketBox user={user}/>
               }
+
             </div>
           </div>
         </div>

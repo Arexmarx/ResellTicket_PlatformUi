@@ -11,7 +11,8 @@ import HttpStatus from "../../config/HttpStatus"
 import API from "../../config/API"
 import LoadEffect from "../../components/LoadEffect"
 import OrderTicketInfo from "../../components/OrderTicketInfo"
-import BoughtTicketBox from "../../components/BoughtTicketBox"
+import CanceledTicketBox from "../../components/CanceledTicketBox"
+import SoldTicketBox from "../../components/SoldTicketBox"
 
 /*
     Author: Nguyen Tien Thuan
@@ -77,7 +78,6 @@ export default function MyShopPage() {
                                                 {tabs.map((tab) => (
                                                     <a
                                                         key={tab.id}
-                                                        href="#"
                                                         className={activeTab.id === tab.id ? 'active' : ''}
                                                         onClick={() => handleTabClick(tab)}
                                                     >
@@ -94,7 +94,10 @@ export default function MyShopPage() {
                                                     activeTab.id === tabs[1].id && <OrderTicketInfo user={user}/>
                                                 }
                                                 {
-                                                    activeTab.id === tabs[2].id && <BoughtTicketBox user={user}/>
+                                                    activeTab.id === tabs[2].id && <SoldTicketBox user={user}/>
+                                                }
+                                                {
+                                                    activeTab.id === tabs[4].id && <CanceledTicketBox user={user}/>
                                                 }
                                             </div>
 

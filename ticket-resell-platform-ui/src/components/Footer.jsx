@@ -16,7 +16,7 @@ export default function Footer() {
       <div style={{backgroundColor: 'rgb(57, 63, 78)', color:'rgb(206 206 206)'}}>
         <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
           <div className="me-5 d-none d-lg-block">
-            <span>Hãy liên hệ với chúng tôi qua mạng xã hội:</span>
+            <span>Hãy liên hệ với chúng tôi qua mạng xã hội</span>
           </div>
 
           <div>
@@ -81,17 +81,17 @@ export default function Footer() {
                 <h6 className="text-uppercase fw-bold mb-4">Liên hệ</h6>
                 <p>
                   <MDBIcon icon="home" className="me-2" />
-                  Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh
+                  E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh
                 </p>
                 <p>
                   <MDBIcon icon="envelope" className="me-3" />
                   resellticket.swp@gmail.com
                 </p>
                 <p>
-                  <MDBIcon icon="phone" className="me-3" /> + 01 234 567 88
+                  <MDBIcon icon="phone" className="me-3" /> +84 65.5656.92
                 </p>
                 <p>
-                  <MDBIcon icon="print" className="me-3" /> + 01 234 567 89
+                  <MDBIcon icon="print" className="me-3" /> + 01.234.567.89
                 </p>
               </MDBCol>
             </MDBRow>

@@ -56,3 +56,10 @@ export const FONT_MAIN = "Quicksand"
 
 // Http Gateway Base Api
 export const BASE_GETWAY_API = "http://localhost:8090"
+
+// Ticket Process constant
+export const TicketProcess = {
+    SELLING: "SELLING",
+    SUCCESS: "SUCCESS",
+    REJECTED: "REJECTED"
+}

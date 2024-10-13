@@ -45,20 +45,24 @@ export default function OrderTicketInfo({ user }) {
     }
 
     const [acceptResponseMessage, setAcceptResponseMessage] = useState({ status: false, message:'' })
+    const [denyResponseMessage, setDenyResponseMessage] = useState({ status: false, message:'' })
+    
 
     // Accept to sell ticket api
     const acceptSellingRequest = async (item) => {
         const acceptOrDenySellingRequest = {
+            orderNo: item.orderNo,  
             buyerId: item.buyer.id,
+            sellerId: user.id ,
             genericTicketId: item.genericTicket.id,
             quantity: item.quantity,
             totalPrice: item.totalPrice,
             isAccepted: true,
             note: ''
         }
-        console.log(acceptOrDenySellingRequest);
+        //console.log(acceptOrDenySellingRequest);
         const response = await api.post(API.Ticket.ACCEPT_SELLING_TICKET_REQUEST, acceptOrDenySellingRequest)
-        if (response.data.httpStatus === HttpStatus.OK) {
+        if (response.status === HttpStatus.OK) {
             console.log(response.data)
             setAcceptResponseMessage({ status: true, message: response.data.message })
         }
@@ -75,17 +79,31 @@ export default function OrderTicketInfo({ user }) {
     }
     const [denyNoteMessage, setDenyNoteMessage] = useState({ status: false, message:'' })
 
-    const denySellingRequest = (item) => {
+    const denySellingRequest = async (item) => {
+        console.log("Item: ",item );
         if (denyNote) {
             const acceptOrDenySellingRequest = {
+                orderNo: item.orderNo,  
                 buyerId: item.buyer.id,
+                sellerId: user.id,
                 genericTicketId: item.genericTicket.id,
                 quantity: item.quantity,
                 totalPrice: item.totalPrice,
-                isAccepted: true,
+                isAccepted: false,
                 note: denyNote
             }
             console.log(acceptOrDenySellingRequest);
+            const response = await api.post(API.Ticket.DENY_SELLING_TICKET_REQUEST, acceptOrDenySellingRequest)
+            if (response.data.httpStatus === HttpStatus.OK) {
+                setDenyNoteMessage({ status: true, message: '' })
+                console.log(response.data.message)
+                setDenyResponseMessage({ status: true, message: response.data.message })
+            }
+            else {
+                console.log(response.data.message);
+                
+                setDenyResponseMessage({ status: false, message: response.data.message })
+            }
         }
         else {
             setDenyNoteMessage({ status: false, message: 'Lý do từ chối không được để trống!' })
@@ -107,7 +125,7 @@ export default function OrderTicketInfo({ user }) {
                 (
                     requestOrders.map(
                         (item, index) =>
-                        (<div key={index} className="row shadow-sm p-3 mb-5 bg-body rounded mx-2">
+                        ( item.isAccepted === false &&  item.note =='' &&  <div key={index} className="row shadow-sm p-3 mb-5 bg-body rounded mx-2">
                             <div className="row d-flex align-content-center">
                                 <div className="col-md-1 d-flex justify-content-center align-items-center">
                                     <Avatar src={item.buyer.avatar ? "data:image/png;base64, " + item.buyer.avatar : "broken-image.jpg"} />
@@ -207,15 +225,25 @@ export default function OrderTicketInfo({ user }) {
                                                 <div className="mt-3 mb-3">Tổng tiền: <strong>{formatToVND(item.totalPrice)}</strong></div>
                                                 <div>
                                                     {
+                                                        acceptResponseMessage.message &&
+                                                        acceptResponseMessage.status &&
+                                                        <Alert severity="success">{acceptResponseMessage.message}</Alert>
+                                                    }
+                                                    {
+                                                        acceptResponseMessage.message &&
+                                                        !acceptResponseMessage.status &&
+                                                        <Alert severity="success">{acceptResponseMessage.message}</Alert>
+                                                    }
+                                                    {/* {
                                                         acceptResponseMessage.message?
                                                         (
                                                             acceptResponseMessage.status && <Alert severity="success">{acceptResponseMessage.message}</Alert>
                                                         )
                                                         :
                                                         (
-                                                            !acceptResponseMessage.status && <Alert severity="error">{acceptResponseMessage.message}</Alert>
+                                                            !acceptResponseMessage.status ? <Alert severity="error">{acceptResponseMessage.message}</Alert> : null
                                                         )
-                                                    }
+                                                    } */}
                                                 </div>
                                             </MDBModalBody>
 
@@ -252,6 +280,28 @@ export default function OrderTicketInfo({ user }) {
                                                         <Alert severity="error">{denyNoteMessage.message}</Alert>
                                                     </div>
                                                 }
+                                                <div>
+                                                    {
+                                                        denyResponseMessage.message &&
+                                                        denyResponseMessage.status &&
+                                                        <Alert severity="success">{denyResponseMessage.message}</Alert>
+                                                    }
+                                                    {
+                                                        denyResponseMessage.message &&
+                                                        !denyResponseMessage.status &&
+                                                        <Alert severity="success">{denyResponseMessage.message}</Alert>
+                                                    }
+                                                    {/* {
+                                                        acceptResponseMessage.message?
+                                                        (
+                                                            acceptResponseMessage.status && <Alert severity="success">{acceptResponseMessage.message}</Alert>
+                                                        )
+                                                        :
+                                                        (
+                                                            !acceptResponseMessage.status && <Alert severity="error">{acceptResponseMessage.message}</Alert>
+                                                        )
+                                                    } */}
+                                                </div>
                                             </MDBModalBody>
 
                                             <MDBModalFooter>

@@ -23,7 +23,10 @@ const API =  {
         GET_TOTAL_TICKETS_IN_GENERIC_TICKET: "/api/tickets/generic/get-total-ticket/",
         CREATE_TICKET: "/api/tickets/create",
         GET_ALL_TICKET_OF_SELLER: "/api/tickets/get-tickets-of-seller/",
-        ACCEPT_SELLING_TICKET_REQUEST: "/api/tickets/accept/selling-request"
+        ACCEPT_SELLING_TICKET_REQUEST: "/api/tickets/accept/selling-request",
+        DENY_SELLING_TICKET_REQUEST: "/api/tickets/deny/selling-request",
+        GET_ALL_BOUGHT_TICKET: "/api/tickets/get-all-bought-tickets/",
+        GET_ALL_BOUGHT_TICKET_BY_BUYER: "/api/tickets/get-all-bought-tickets-of-buyer/",
     },
 
     GenericTicket: {
@@ -41,8 +44,9 @@ const API =  {
 
     Event: {
         GET_HEAPPENING_EVENT: "/api/events/get-happening-events",
-        GET_HEAPPENING_EVENT_BY_CATE_NAME: "/api/events/get-happening-events/"
-        
+        GET_HEAPPENING_EVENT_BY_CATE_NAME: "/api/events/get-happening-events/",
+        GET_HAPPENING_EVENT_BY_HASHTAG_HOT: "/api/events/get-happening-events/hot-event",
+        GET_HAPPENING_EVENT_BY_HASHTAG_SEPECIAL: "/api/events/get-happening-events/special-event"
     },
 
     Category: {

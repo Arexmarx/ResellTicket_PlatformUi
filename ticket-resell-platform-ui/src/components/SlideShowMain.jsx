@@ -15,12 +15,28 @@ import {
 } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import { EVENT_DETAIL_PAGE } from "../config/Constant";
-import { ITEMS } from "../test/DataTest.js";
+import axios from "axios";
+import API from "../config/API";
+import LoadEffect from "./LoadEffect";
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
 export default function SlideShowMain() {
-  const items = ITEMS;
+
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      axios.get(API.GATEWAY + API.Event.GET_HAPPENING_EVENT_BY_HASHTAG_HOT).then(
+        response => {
+          // console.log(response.data.object)
+          setItems(response.data.object)
+        }
+      );
+    }
+    fetchData().catch(console.error)
+  }, [])
+
 
   const [activeItem, setActiveItem] = useState(1);
   const itemsPerSlide = 1;
@@ -60,8 +76,16 @@ export default function SlideShowMain() {
     return () => clearInterval(interval); // Clean up interval on unmount
   }, []);
 
+  if (!items) {
+    return (
+      <LoadEffect />
+    )
+  }
+
+
   return (
-    <MDBContainer className="my-5 position-relative">
+    items.length > 0 &&
+    <MDBContainer style={{cursor: 'pointer'}} className="my-5 position-relative">
       <MDBCarousel showControls={false} showIndicators={false} fade>
         <MDBCarouselItem className="active">
           <MDBRow className="justify-content-center">
@@ -69,21 +93,30 @@ export default function SlideShowMain() {
               <MDBCol key={item.id} md="11" className="mb-6">
                 <MDBCard onClick={() => handleClick(item)}>
                   <MDBCardImage
-                    src={item.image}
+                    src={"data:image/png;base64, " + item.image}
                     alt={item.title}
                     position="top"
                     style={{
                       borderRadius: "15px", // Add rounded corners
-                      border: "2px solid #ddd",
-                      maxHeight: '70%'
+                      // border: "2px solid #ddd",  
+                      maxHeight: '600px'
                     }}
                   />
-                  <MDBCardOverlay>
-                    <MDBCardTitle>{item.title}</MDBCardTitle>
+                  {/* <MDBCardOverlay>
+                    <MDBCardTitle>{item.name}</MDBCardTitle>
                     <MDBCardText>{item.description}</MDBCardText>
                     <MDBCardText>Ngày bắt đầu: {item.startDate}</MDBCardText>
                     <MDBCardText>Ngày kết thúc: {item.endDate}</MDBCardText>
-                  </MDBCardOverlay>
+                  </MDBCardOverlay> */}
+                  {/* <div className="position-absolute bottom-0 text-light w-100"
+                    style={{
+                      backgroundColor: 'rgba(0, 0, 0, 0.5)',  
+                      borderRadius: "0 0 15px 15px"
+                    }} >
+                    <div className="mx-3">
+                      <MDBCardTitle>{item.name}</MDBCardTitle>  
+                    </div>
+                  </div> */}
                 </MDBCard>
               </MDBCol>
             ))}

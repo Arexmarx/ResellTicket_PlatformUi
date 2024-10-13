@@ -4,14 +4,30 @@ import { MDBTypography } from 'mdb-react-ui-kit';
 import { useNavigate } from "react-router-dom";
 import {EVENT_DETAIL_PAGE} from "../config/Constant";
 import { ITEMS } from '../test/DataTest.js'
+import API from '../config/API.js';
+import axios from 'axios';
+import LoadEffect from './LoadEffect.jsx';
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
 export default function SlideShowHotEvent() {
-  const items = ITEMS
+  
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      axios.get(API.GATEWAY + API.Event.GET_HAPPENING_EVENT_BY_HASHTAG_SEPECIAL).then(
+        response => {
+          console.log(response.data.object)
+          setItems(response.data.object)
+        }
+      );
+    }
+    fetchData().catch(console.error)
+  }, [])
 
   const [activeItem, setActiveItem] = useState(1);
-  const itemsPerSlide = 6;
+  const itemsPerSlide = items.length < 6 ? items.length : 6;
   const intervalTime = 3000;
 
   const handlePrev = () => {
@@ -48,7 +64,14 @@ export default function SlideShowHotEvent() {
     return () => clearInterval(interval); // Clean up interval on unmount
   },[]);
 
+  if (!items) {
+    return (
+      <LoadEffect />
+    )
+  }
+
   return (
+    items.length > 0 && 
     <MDBContainer className="my-5 position-relative">
       <MDBTypography variant='h4' className='mb-4' color='black'>Sự kiện đặc biệt</MDBTypography>
       <MDBCarousel showControls={false} showIndicators={false} fade>
@@ -59,8 +82,7 @@ export default function SlideShowHotEvent() {
                 <MDBCard className="h-100">
                   <div style={{ position: 'relative', paddingTop: '150%' }}>
                     <MDBCardImage 
-                      src={item.image} 
-                      alt={item.title} 
+                      src={"data:image/png;base64, " + item.image}
                       position='top' 
                       onClick={() => handleClick(item)}
                       style={{

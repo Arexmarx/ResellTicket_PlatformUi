@@ -115,7 +115,7 @@ export default function AddingTicketPage() {
 
     const handleCateChange = (e) => setGenericCate(e.target.value)
 
-    const handleTicketTypeChange = (e) => setGenericType(e.target.value)
+    const handleTicketTypeChange = (value) => setGenericType(value)
 
     const handleEventChange = (e) => setGenericEvent(e.target.value)
 
@@ -128,18 +128,16 @@ export default function AddingTicketPage() {
     const handleSaveAllTickets = async () => {
         let flag = true;
         for (let i = 0; i < ticketDetails.length; i++) {
-
             const ticketRequest = {
                 ticketSerial: ticketDetails[i].serial,
                 note: ticketDetails[i].description,
                 genericTicketId: localStorage.getItem(GENERIC_TICKET_TEMP_KEY)
             }
-
             //const file = await fetch(ticketDetails[i].image).then(res => res.blob());
             const formData = new FormData();
             formData.append("ticketRequest", new Blob([JSON.stringify(ticketRequest)], { type: 'application/json' }))
             formData.append('file', ticketDetails[i].image)
-
+            
             api.post(API.Ticket.CREATE_TICKET, formData).then(
                 response => console.log(response.data)
             )
@@ -149,13 +147,12 @@ export default function AddingTicketPage() {
                     flag = false;
                 }
             )
-
         }
 
         if (flag){
             setSaveAllMessageTicket({ 
                 status: flag, 
-                message: 'Đã lưu '+ticketDetails.length+ 'vé thành công! Vui lòng chờ hệ thống kiểm duyệt vé!'
+                message: 'Đã lưu '+ticketDetails.length+ ' vé thành công! Vui lòng chờ hệ thống kiểm duyệt vé!'
             })
         }
         else {
@@ -190,7 +187,7 @@ export default function AddingTicketPage() {
             sellerId: user.id
         }
 
-        //console.log(genericTicketRequest);
+        console.log(genericTicketRequest);
 
         if (genericName && genericPrice && genericExpiredDate) {
             const fetchData = async () => {
@@ -339,10 +336,10 @@ export default function AddingTicketPage() {
                                             <div className="form-label">Loại vé<span className="text-danger">*</span></div>
                                             <div className="form-check">
                                                 <input value={TicketTypes[0].value}
-                                                    onChange={handleTicketTypeChange}
+                                                    onChange={() => handleTicketTypeChange(TicketTypes[0].value)}
                                                     className="form-check-input" id="online-ticket"
                                                     type="radio" name="type-ticket"
-                                                    checked={genericType == TicketTypes[0].value} // Update checked condition
+                                                    checked={genericType === TicketTypes[0].value} // Update checked condition
                                                 />
                                                 <label className="form-check-label" htmlFor="online-ticket">
                                                     Online
@@ -350,10 +347,10 @@ export default function AddingTicketPage() {
                                             </div>
                                             <div className="form-check">
                                                 <input value={TicketTypes[1].value}
-                                                    onChange={handleTicketTypeChange}
+                                                    onChange={() => handleTicketTypeChange(TicketTypes[1].value)}
                                                     className="form-check-input"
                                                     type="radio" name="type-ticket" id="offline-ticket"
-                                                    checked={genericType == TicketTypes[1].value} // Update checked condition
+                                                    checked={genericType === TicketTypes[1].value} // Update checked condition
                                                 />
                                                 <label className="form-check-label" htmlFor="offline-ticket">
                                                     Giấy
@@ -456,7 +453,7 @@ export default function AddingTicketPage() {
                                                         onChange={(e) => setCurrentTicket({ ...currentTicket, image: e.target.files[0] })}
                                                     />
                                                 </div>
-                                                <div className="mb-3">
+                                                {/* <div className="mb-3">
                                                     <label className="form-label">Mô tả</label>
                                                     <input
                                                         type="text"
@@ -464,7 +461,7 @@ export default function AddingTicketPage() {
                                                         value={currentTicket.description}
                                                         onChange={(e) => setCurrentTicket({ ...currentTicket, description: e.target.value })}
                                                     />
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </div>
                                         <button className="btn btn-success">Thêm vé</button>
@@ -483,7 +480,7 @@ export default function AddingTicketPage() {
                                         <p style={{ marginRight: '5%' }}>Ticket {index + 1}</p>
                                         <p style={{ marginRight: '5%' }}>Mã serial: {ticket.serial}</p>
                                         <p style={{ marginRight: '5%' }}>Hình ảnh: {ticket.image ? ticket.image.name : 'No image uploaded'}</p>
-                                        <p style={{ marginRight: '5%' }}>Mô tả: {ticket.description}</p>
+                                        {/* <p style={{ marginRight: '5%' }}>Mô tả: {ticket.description}</p> */}
                                         <button className="btn btn-danger"
                                             onClick={() => {
                                                 setTicketDetails(ticketDetails.filter((_, i) => i !== index)); // Remove ticket by index

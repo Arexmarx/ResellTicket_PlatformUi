@@ -82,6 +82,7 @@ export default function ViewHistoryDeposited() {
                     <th scope="col">#</th>
                     <th scope="col">Mã giao dịch</th>
                     <th scope="col">Số tiền</th>
+                    <th scope="col">Loại giao dịch</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Ngày giao dịch</th>
                   </tr>
@@ -92,6 +93,7 @@ export default function ViewHistoryDeposited() {
                       <th scope="row">{index + 1}</th>
                       <td>{historyDeposited.transactionNo}</td>
                       <td>{formatToVND(historyDeposited.amount)}</td>
+                      <td>{historyDeposited.type}</td>
                       <td>{historyDeposited.isDone ? "Thành công" : "Thất bại"}</td>
                       <td>{formatDateTime(historyDeposited.transDate)}</td>
                     </tr>

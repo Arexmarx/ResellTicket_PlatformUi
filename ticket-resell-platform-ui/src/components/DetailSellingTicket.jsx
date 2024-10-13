@@ -18,7 +18,8 @@ import {
 } from "mdb-react-ui-kit";
 import {
   ADD_TICKET_PAGE,
-  SidebarOption
+  SidebarOption,
+  TicketProcess
 } from "../config/Constant";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -87,6 +88,7 @@ export default function DetailSellingTicket({ user }) {
           <MDBRow style={{ marginLeft: '1%', marginRight: '1%' }}>
             { tickets && 
             tickets.map((x, index) => (
+              x.process != TicketProcess.SUCCESS && x.process != TicketProcess.REJECTED && 
               <MDBRow
                 className="shadow-sm p-3 mb-5 bg-body rounded"
                 key={index}
@@ -117,7 +119,10 @@ export default function DetailSellingTicket({ user }) {
                 </MDBCol>
                 <MDBCol md="1">
                   <MDBRow style={titleCss}>Trạng thái</MDBRow>
-                  <MDBRow>{x.process}</MDBRow>
+                  <MDBRow>
+                    {x.process === TicketProcess.SELLING ? "Đang bán" : "Không xác định"}
+
+                  </MDBRow>
                 </MDBCol>
                 <MDBCol md="1">
                   <MDBRow style={titleCss}>Kiểm duyệt</MDBRow>
@@ -145,7 +150,7 @@ export default function DetailSellingTicket({ user }) {
                   <MDBRow style={titleCss}>Đã bán</MDBRow>
                   <MDBRow>
                     {
-                      x.IsBought ? "Rồi" : "Chưa"
+                      x.isBought ? "Rồi" : "Chưa"
                     }
                   </MDBRow>
                 </MDBCol>
@@ -188,7 +193,7 @@ export default function DetailSellingTicket({ user }) {
 
                             <MDBTypography tag="h6">Loại vé:</MDBTypography>
                             <p>
-                              {x.genericTicketObject.isPaperL
+                              {x.genericTicketObject.isPaper
                                 ? "Vé giấy"
                                 : "Vé online"}
                             </p>
