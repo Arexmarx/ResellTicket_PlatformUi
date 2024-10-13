@@ -17,7 +17,9 @@ export const EVENT_DETAIL_PAGE = "/eventDetail"
 export const UNAUTHORIZED_PAGE = "/unauthorized"
 export const HANDEL_PAYMENT_PAGE = "/payments/loading"
 export const VIEW_HISTORY_DEPOSITED_PAGE = "/users/history-deposited"
-
+export const FORGET_PASSWORD_PAGE = "/forget-password"
+export const VERIFY_FORGET_PASSWORD_PAGE ="/verify-forget-password"
+export const RETURN_PASSWORD_PAGE ="/return-password"
 // Color
 export const MAIN_COLOR = '#2dc275';
 

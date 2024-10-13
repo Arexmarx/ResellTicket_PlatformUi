@@ -19,6 +19,9 @@ import {
   UNAUTHORIZED_PAGE,
   HANDEL_PAYMENT_PAGE,
   VIEW_HISTORY_DEPOSITED_PAGE,
+  FORGET_PASSWORD_PAGE,
+  VERIFY_FORGET_PASSWORD_PAGE,
+  RETURN_PASSWORD_PAGE,
 } from "./config/Constant";
 import HomePage from "./page/public/HomePage";
 import SignUp from "./page/public/SignUpPage";
@@ -40,6 +43,9 @@ import UnAuthorizedPage from "./page/error/UnAuthorizedPage";
 import { AuthProvider } from "./context/AuthContext";
 import HandlePaymentPage from "./page/private/HandlePaymentPage";
 import ViewHistoryDeposited from "./page/private/ViewHistoryDeposited";
+import ForgetPasswordPage from "./page/public/ForgetPasswordPage";
+import VerifyForgetPasswordPage from "./page/public/VerifyForgetPasswordPage";
+import ReturnPasswordPage from "./page/public/ReturnPasswordPage";
 const GlobalStyles = () => (
   <Global
     styles={css`
@@ -102,7 +108,12 @@ function App() {
             <Route path={HANDEL_PAYMENT_PAGE} element={<HandlePaymentPage />}></Route>
 
             <Route path={VIEW_HISTORY_DEPOSITED_PAGE} element={<ViewHistoryDeposited />}></Route>
+            
+            <Route path={FORGET_PASSWORD_PAGE} element={<ForgetPasswordPage/>}></Route>
 
+            <Route path={VERIFY_FORGET_PASSWORD_PAGE} element={<VerifyForgetPasswordPage/>}></Route>
+
+            <Route path={RETURN_PASSWORD_PAGE} element={<ReturnPasswordPage/>}></Route>
 
           </Routes>
         </AuthProvider>

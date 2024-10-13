@@ -187,7 +187,6 @@ export default function SignUp() {
       }, 5000);
     }
 
-    
   };
 
 

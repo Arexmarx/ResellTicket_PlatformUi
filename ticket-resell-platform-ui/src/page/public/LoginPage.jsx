@@ -22,15 +22,16 @@ import LoginIcon from "@mui/icons-material/Login";
 import * as React from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import {MAIN_COLOR} from "../../config/Constant"
+import {FORGET_PASSWORD_PAGE, MAIN_COLOR} from "../../config/Constant"
 import {SIGN_UP_PAGE} from "../../config/Constant"
 import AuthContext from "../../context/AuthContext";
+import { MDBCardLink } from "mdb-react-ui-kit";
 
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
 export default function Login() {
-
+  const navigate = useNavigate();
   const { loginUser } = React.useContext(AuthContext)
 
   const [showPassword, setShowPassword] = React.useState(false);
@@ -47,7 +48,6 @@ export default function Login() {
   const [success, setSuccess] = React.useState();
   const [loginErrorMessage, setLoginErrorMessage] = React.useState(null);
 
-  const navigate = useNavigate();
   //Validation for on Blur Username
   const handleUsername = () => {
     if (
@@ -112,6 +112,10 @@ export default function Login() {
   const handleMouseUpPassword = (event) => {
     event.preventDefault();
   };
+
+  const handleForget =() => {
+    navigate(FORGET_PASSWORD_PAGE);
+  }
 
   return (
     <div
@@ -213,6 +217,8 @@ export default function Login() {
               </div>
             </div>
           </FormControl>
+          <Link component="button" style={{color: MAIN_COLOR, textAlign:'right'}} onClick={handleForget}>Quên mật khẩu ?</Link>
+          
         </FormGroup>
         <hr />
         <div className="d-flex justify-content-center mb-5 mx-5">

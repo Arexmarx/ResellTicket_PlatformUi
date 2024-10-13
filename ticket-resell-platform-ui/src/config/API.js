@@ -13,8 +13,10 @@ const API =  {
         UPDATE_USER_INFO: "/api/users/update/",
         UPDATE_USER_AVATAR: "/api/users/profile/update/avatar/",
         UPDATE_USER_ISSELLER: "/api/users/update/seller/agree/",
-        VERIFY_ACCOUNT_BY_OPT: "/api/users/register/verify-email"
-        
+        VERIFY_ACCOUNT_BY_OPT: "/api/users/register/verify-email",
+        CHECK_EMAIL: "/api/users/reset-password",
+        SEND_PASSWORD_OTP: "/api/users/reset-password/verify-reset-otp",
+        SET_NEW_PASSWORD: "/api/users/reset-password/new-pass"
     },
 
     Ticket: {
