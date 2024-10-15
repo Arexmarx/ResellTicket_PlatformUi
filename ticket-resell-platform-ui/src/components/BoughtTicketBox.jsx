@@ -234,12 +234,16 @@ export default function BoughtTicketBox({ user }) {
                       <MDBCol md="1">
                         <MDBRow style={titleCss}>Tải ảnh vé</MDBRow>
                         <MDBRow>
-                          <MDBIcon
-                            fas
-                            icon="arrow-down"
-                            size="lg"
-                            style={{ marginTop: "3%" }}
-                          />
+                          <a download={x.genericTicketObject.ticketName + '.PNG'}
+                            href={ 'data:image/png;base64, ' + x.image}
+                          >
+                            <MDBIcon
+                              fas
+                              icon="arrow-down"
+                              size="lg"
+                              style={{ marginTop: "3%" }}
+                            />
+                          </a>
                         </MDBRow>
                       </MDBCol>
                       <MDBCol md="1">
