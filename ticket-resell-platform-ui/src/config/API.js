@@ -61,6 +61,14 @@ const API =  {
         DEPOSITED_USER_API: "/api/payments/request",
         PAGE_BACK_DEPOSITED_API: "/api/payments/vn-pay-callback",
         VIEW_DEPOSITED_HISTORY_API:"/api/transactions/get-trans-deposit/"
+    },
+
+    Report:{
+        CREATE_REPORT_API: "/api/reports/create"
+    },
+
+    ReportType : {
+        GET_ALL_REPORT_TYPE: "/api/report-type/get-all"
     }
 }
 

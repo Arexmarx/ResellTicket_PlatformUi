@@ -28,7 +28,7 @@ import {
 } from "../config/Constant";
 import { formatDateTime } from "../service/DateService";
 import { formatToVND, getFirstFiveChars } from "../service/StringService";
-import { Avatar } from "@mui/material";
+import { Alert, Avatar, Stack } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -47,20 +47,99 @@ export default function BoughtTicketBox({ user }) {
   const [openReport, setOpenReport] = useState(null);
   const [typeReport, setTypeReport] = useState("");
 
+  const [contentReport, setContentReport] = useState(null);
+  const [imageReport, setImageReport] = useState(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
+  const [TicketId, setTicketId] = useState(null);
+  const [staffId, setStaffId] = useState(null);
+
+  const [reportType, setReportType] = useState([]);
+
+  const [successMessage, setSuccessMessage] = useState({
+    status: false,
+    message: "",
+  });
+  const [errorMessage, setErrorMessage] = useState({
+    status: false,
+    message: "",
+  });
+
   useEffect(() => {
     if (user) {
       const fetchData = async () => {
-        const reponse = await api.get(
+        const response = await api.get(
           API.Ticket.GET_ALL_BOUGHT_TICKET_BY_BUYER + user?.id
         );
-        if (reponse.data.httpStatus === HttpStatus.OK) {
-          console.log(reponse.data.object);
-          setBoughtTickets(reponse.data.object);
+        if (response.data.httpStatus === HttpStatus.OK) {
+          console.log(response.data.object);
+          setBoughtTickets(response.data.object);
         }
       };
       fetchData().catch(console.error);
     }
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get(API.ReportType.GET_ALL_REPORT_TYPE);
+
+        if (response.data.httpStatus === HttpStatus.OK) {
+          console.log(response.data.object);
+          setReportType(response.data.object); // Set only the object field
+        }
+      } catch (error) {
+        console.error("Error fetching report types:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setImageReport(file);
+
+    // Generate preview URL
+    if (file) {
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreviewUrl(previewUrl);
+    }
+  };
+
+  const handleSubmitReport = async () => {
+    let reportFraudRequest = {
+      content: contentReport,
+      reportTypeId: typeReport,
+      ticketId: TicketId,
+      accuserId: user.id,
+      staffId: staffId,
+    };
+
+    const file = await fetch(imageReport).then((res) => res.blob());
+    const formData = new FormData();
+    formData.append(
+      "reportFraudRequest",
+      new Blob([JSON.stringify(reportFraudRequest)], {
+        type: "application/json",
+      })
+    );
+    formData.append("proofFile", file);
+    api
+      .post(API.Report.CREATE_REPORT_API, formData)
+      .then((response) => {
+        if (response.data.httpStatus === HttpStatus.CREATED) {
+          setSuccessMessage({ status: true, message: "Báo cáo thành công" });
+          setErrorMessage({ status: false, message: "" });
+        } else {
+          setErrorMessage({ status: true, message: "Báo cáo đã tồn tại" });
+          setSuccessMessage({ status: false, message: "" });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   if (!user || !boughtTickets) {
     return <LoadEffect />;
@@ -71,8 +150,12 @@ export default function BoughtTicketBox({ user }) {
     setOpenTicketId(openTicketId === ticketId ? null : ticketId);
   };
 
-  const toggleOpenReport = (id) => {
-    setOpenReport(openReport === id ? null : id);
+  const toggleOpenReport = (x) => {
+    setTicketId(x.ticketId);
+    setStaffId(x.verifyStaffId);
+    setOpenReport(openReport === x.ticketId ? null : x.ticketId);
+
+    console.log(reportType);
   };
 
   const handleChange = (event) => {
@@ -151,7 +234,12 @@ export default function BoughtTicketBox({ user }) {
                       <MDBCol md="1">
                         <MDBRow style={titleCss}>Tải ảnh vé</MDBRow>
                         <MDBRow>
-                            <MDBIcon fas icon="arrow-down" size="lg" style={{marginTop: '3%'}}/>
+                          <MDBIcon
+                            fas
+                            icon="arrow-down"
+                            size="lg"
+                            style={{ marginTop: "3%" }}
+                          />
                         </MDBRow>
                       </MDBCol>
                       <MDBCol md="1">
@@ -171,11 +259,7 @@ export default function BoughtTicketBox({ user }) {
                           color="danger"
                           style={{ borderColor: "fbf9f9" }}
                           size="sm"
-                          onClick={() =>
-                            toggleOpenReport(
-                              x.genericTicketObject.genericTicketId
-                            )
-                          }
+                          onClick={() => toggleOpenReport(x)}
                           disabled={(() => {
                             const currentDate = new Date();
                             const expiredDate = new Date(
@@ -191,11 +275,7 @@ export default function BoughtTicketBox({ user }) {
                         </MDBBtn>
                       </MDBCol>
 
-                      <MDBModal
-                        open={
-                          openReport === x.genericTicketObject.genericTicketId
-                        }
-                      >
+                      <MDBModal open={openReport === x.ticketId}>
                         <MDBModalDialog centered={true} size="lg">
                           <MDBModalContent>
                             <MDBModalHeader>Báo cáo vé</MDBModalHeader>
@@ -279,15 +359,14 @@ export default function BoughtTicketBox({ user }) {
                                       label="chọn thể loại báo cáo"
                                       onChange={handleChange}
                                     >
-                                      <MenuItem value={"FakeTicket"}>
-                                        Báo cáo vé giả
-                                      </MenuItem>
-                                      <MenuItem value={"ExpiredTicket"}>
-                                        Báo cáo vé hết hạn
-                                      </MenuItem>
-                                      <MenuItem value={"BrokenTicket"}>
-                                        Báo cáo vé hỏng
-                                      </MenuItem>
+                                      {reportType.map((reportType, index) => (
+                                        <MenuItem
+                                          value={reportType.id}
+                                          key={index}
+                                        >
+                                          {reportType.name}
+                                        </MenuItem>
+                                      ))}
                                     </Select>
                                   </FormControl>
                                 </MDBCol>
@@ -303,17 +382,33 @@ export default function BoughtTicketBox({ user }) {
                                     Tải ảnh vé lên
                                     <VisuallyHiddenInput
                                       type="file"
-                                      onChange={(event) =>
-                                        console.log(event.target.files)
-                                      }
+                                      onChange={handleImageChange}
                                       multiple
                                     />
                                   </Button>
                                 </MDBCol>
+                                {/* Image Preview */}
+                                {imagePreviewUrl && (
+                                  <MDBCol md="8" className="text-center">
+                                    <img
+                                      src={imagePreviewUrl}
+                                      alt="Ticket Preview"
+                                      className="img-fluid"
+                                      style={{
+                                        maxHeight: "200px",
+                                        borderRadius: "10px",
+                                        marginTop: "15px",
+                                      }}
+                                    />
+                                  </MDBCol>
+                                )}
                                 <MDBCol md="12" style={{ marginTop: "2%" }}>
                                   <MDBTextArea
                                     label="Nhập chi tiết nội dung báo cáo"
                                     rows="4"
+                                    onChange={(content) =>
+                                      setContentReport(content.target.value)
+                                    }
                                   ></MDBTextArea>
                                 </MDBCol>
                               </MDBRow>
@@ -325,7 +420,33 @@ export default function BoughtTicketBox({ user }) {
                               >
                                 Đóng
                               </MDBBtn>
+                              <MDBBtn
+                                color="success"
+                                onClick={handleSubmitReport}
+                              >
+                                Nộp báo cáo
+                              </MDBBtn>
                             </MDBModalFooter>
+                            {successMessage.message && (
+                              <Stack
+                                sx={{ width: "100%", paddingTop: "10px" }}
+                                spacing={2}
+                              >
+                                <Alert severity="success" size="small">
+                                  {successMessage.message}
+                                </Alert>
+                              </Stack>
+                            )}
+                            {errorMessage.message && (
+                              <Stack
+                                sx={{ width: "100%", paddingTop: "10px" }}
+                                spacing={2}
+                              >
+                                <Alert severity="error" size="small">
+                                  {errorMessage.message}
+                                </Alert>
+                              </Stack>
+                            )}
                           </MDBModalContent>
                         </MDBModalDialog>
                       </MDBModal>
