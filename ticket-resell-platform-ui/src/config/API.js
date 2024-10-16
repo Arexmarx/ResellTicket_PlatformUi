@@ -5,7 +5,8 @@ const API =  {
 
     Authentication: {
         REGISTER_USER: "/api/users/register",
-        AUTHENTICATION_USER: "/api/users/authenticate"
+        AUTHENTICATION_USER: "/api/users/authenticate",
+        OAUTH2_AUTHENTICATION_USER: "/api/users/oauth2/authenticate"
     },
 
     User: {

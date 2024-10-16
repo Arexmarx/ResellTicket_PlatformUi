@@ -1,12 +1,9 @@
 import { Divider } from "@mui/material";
 import Footer from "../../components/Footer";
-import GroupTicketCommandButton from "../../components/GroupTicketCommandButton";
 import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
 import TicketInfoRowBox from "../../components/TicketInfoRowBox";
 import { SidebarOption } from "../../config/Constant";
-import { BOUGHT_TICKET_DATA } from "../../test/DataTest";
-import RatingInfoRowBox from "../../components/RatingInfoRowBox";
 import { useEffect, useState } from "react";
 import API from "../../config/API";
 import HttpStatus from "../../config/HttpStatus";

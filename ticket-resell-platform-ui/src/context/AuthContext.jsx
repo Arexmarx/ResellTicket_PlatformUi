@@ -3,8 +3,9 @@ import { createContext, useState, useEffect } from 'react'
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { AUTH_TOKENS_KEY, HOME_PAGE, LOGIN_PAGE } from '../config/Constant';
+import { AUTH_TOKENS_KEY, HOME_PAGE, LOGIN_PAGE, SIGN_UP_PAGE } from '../config/Constant';
 import HttpStatus from '../config/HttpStatus';
+import API from '../config/API';
 
 const AUTHENTICATION_API = 'http://localhost:8090/api/users/authenticate'
 const AuthContext = createContext()
@@ -30,16 +31,13 @@ export const AuthProvider = ({children}) => {
 
     let loginUser = async (e, username, password)=> {
         e.preventDefault()
-
         const authenticationRequest = {
             // username: e.target.username.value,
             // password: e.target.password.value
             username: username,
             password: password
         }
-
         const response = await axios.post(AUTHENTICATION_API, authenticationRequest)
-        
         if(response.status === 200){
             if (response.data.httpStatus !== HttpStatus.OK) throw (response.data.message)
             setAuthTokens(response.data.object)
@@ -47,6 +45,28 @@ export const AuthProvider = ({children}) => {
 
             localStorage.setItem('authTokens', JSON.stringify(response.data.object))
             navigator(HOME_PAGE)
+        }
+        else {
+            alert('Something went wrong!')
+        }
+    }
+
+    let oauth2LoginUser = async (email) => {
+        //console.log(oauth2Data);
+        const oAuth2AuthRequest = {
+            email: email
+        }
+        const response = await axios.post(API.GATEWAY + API.Authentication.OAUTH2_AUTHENTICATION_USER, oAuth2AuthRequest)
+        if (response.status === 200) {
+            if (response.data.httpStatus === HttpStatus.FORBIDDEN) {
+                // navigator(SIGN_UP_PAGE,  { state: { oauth2Data: oauth2Data } })
+                throw "Error";
+            }
+            else {
+                setAuthTokens(response.data.object)
+                localStorage.setItem('authTokens', JSON.stringify(response.data.object))
+                navigator(HOME_PAGE)
+            }
         }
         else {
             alert('Something went wrong!')
@@ -69,6 +89,7 @@ export const AuthProvider = ({children}) => {
         setUser:setUser,
         loginUser:loginUser,
         logoutUser:logoutUser,
+        oauth2LoginUser: oauth2LoginUser,
     }
 
 

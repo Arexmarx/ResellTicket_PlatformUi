@@ -22,6 +22,8 @@ import {
   FORGET_PASSWORD_PAGE,
   VERIFY_FORGET_PASSWORD_PAGE,
   RETURN_PASSWORD_PAGE,
+  PERSONAL_PAGE,
+  LOGIN_GOOGLE_HANDLER_PAGE,
 } from "./config/Constant";
 import HomePage from "./page/public/HomePage";
 import SignUp from "./page/public/SignUpPage";
@@ -46,6 +48,8 @@ import ViewHistoryDeposited from "./page/private/ViewHistoryDeposited";
 import ForgetPasswordPage from "./page/public/ForgetPasswordPage";
 import VerifyForgetPasswordPage from "./page/public/VerifyForgetPasswordPage";
 import ReturnPasswordPage from "./page/public/ReturnPasswordPage";
+import PersonalPage from "./page/private/PersonalPage";
+import LoginGoogleHandler from "./page/public/LoginGoogleHandler";
 const GlobalStyles = () => (
   <Global
     styles={css`
@@ -114,6 +118,10 @@ function App() {
             <Route path={VERIFY_FORGET_PASSWORD_PAGE} element={<VerifyForgetPasswordPage/>}></Route>
 
             <Route path={RETURN_PASSWORD_PAGE} element={<ReturnPasswordPage/>}></Route>
+
+            <Route path={PERSONAL_PAGE} element={<PersonalPage/>}></Route>
+
+            <Route path={LOGIN_GOOGLE_HANDLER_PAGE} element={ <LoginGoogleHandler/> }></Route>
 
           </Routes>
         </AuthProvider>

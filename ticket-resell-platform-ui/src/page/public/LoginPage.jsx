@@ -25,7 +25,10 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {FORGET_PASSWORD_PAGE, MAIN_COLOR} from "../../config/Constant"
 import {SIGN_UP_PAGE} from "../../config/Constant"
 import AuthContext from "../../context/AuthContext";
-import { MDBCardLink } from "mdb-react-ui-kit";
+
+const handleLoginGoogle = () => {
+  window.location.href = "http://localhost:8080/oauth2/authorization/google";
+}
 
 /**
  * Author: Phan Nguyễn Mạnh Cường
@@ -142,6 +145,7 @@ export default function Login() {
               onChange={(e) => setUserNameInput(e.target.value)}
               error={userNameError}
               onBlur={handleUsername}
+              name="username-input"
             />
           </FormControl>
           <FormControl sx={{ marginBottom: 3 }}>
@@ -172,6 +176,7 @@ export default function Login() {
                 </InputAdornment>
               }
               label="Password"
+              name="password-input"
             />
           </FormControl>
           {
@@ -184,6 +189,7 @@ export default function Login() {
               startIcon={<LoginIcon />}
               fullWidth
               sx={{ mt: 1, backgroundColor: MAIN_COLOR }}
+              name="login-btn"
             >
               Đăng nhập
             </Button>
@@ -222,14 +228,17 @@ export default function Login() {
         </FormGroup>
         <hr />
         <div className="d-flex justify-content-center mb-5 mx-5">
+
           <Button
             fullWidth={true}
             variant="outlined"
             startIcon={<SvgIcon component={GoogleIcon} />}
             sx={{ mt: 1, color: MAIN_COLOR , borderColor: MAIN_COLOR}}
+            onClick={handleLoginGoogle}
           >
             Đăng nhập bằng Google
           </Button>
+
         </div>
       </Card>
     </div>

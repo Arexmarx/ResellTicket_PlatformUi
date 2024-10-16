@@ -11,7 +11,7 @@ import {
   InputAdornment,
   CircularProgress,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -30,15 +30,22 @@ const isEmail = (email) =>
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
+
 export default function SignUp() {
+
+  // State from Login google handler
+  const location = useLocation();
+  const { oauth2Data } = location.state || {};
+  console.log(oauth2Data);
+
   const [showPassword, setShowPassword] = React.useState(false);
   // Inputs
   const [userNameInput, setUserNameInput] = React.useState();
-  const [firstNameInput, setFirstNameInput] = React.useState();
-  const [lastNameInput, setLastNameInput] = React.useState();
+  const [firstNameInput, setFirstNameInput] = React.useState(oauth2Data?.family_name);
+  const [lastNameInput, setLastNameInput] = React.useState(oauth2Data?.given_name);
   const [passwordInput, setPasswordInput] = React.useState();
   const [rePasswordInput, setRePasswordInput] = React.useState();
-  const [emailInput, setEmailInput] = React.useState();
+  const [emailInput, setEmailInput] = React.useState(oauth2Data?.email);
 
   //Inputs Error
   const [userNameError, setUserNameError] = React.useState(false);
@@ -52,9 +59,9 @@ export default function SignUp() {
 
   // Overall Form Validity
   const [formValid, setFormValid] = React.useState();
-
   const navigate = useNavigate();
-
+  
+  
   //loading
   const [loading, setLoading] = React.useState(false);
   const [successSignUp, setSuccessSignUp] = React.useState(false);

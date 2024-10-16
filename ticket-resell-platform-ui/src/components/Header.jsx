@@ -236,7 +236,6 @@ function Header() {
                         handleCloseUserMenu();
                       }}
                     >
-                      {/* "Quản lý tài khoản", "Vé Đã Mua", "Đăng Xuất" */}
                       <Typography sx={{ textAlign: 'center' }}>
 
                         {

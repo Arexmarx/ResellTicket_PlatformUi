@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Avatar, Box } from "@mui/material";
 import LoadEffect from "./LoadEffect";
 import useAxios from "../utils/useAxios";
@@ -13,7 +14,6 @@ const titleCss = {
     marginBottom: "5px",
 };
 
-// eslint-disable-next-line react/prop-types
 export default function SoldTicketBox({ user }) {
 
     const api = useAxios();

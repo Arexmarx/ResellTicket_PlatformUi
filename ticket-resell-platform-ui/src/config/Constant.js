@@ -20,6 +20,9 @@ export const VIEW_HISTORY_DEPOSITED_PAGE = "/users/history-deposited"
 export const FORGET_PASSWORD_PAGE = "/forget-password"
 export const VERIFY_FORGET_PASSWORD_PAGE ="/verify-forget-password"
 export const RETURN_PASSWORD_PAGE ="/return-password"
+export const PERSONAL_PAGE = "/users/personal-page"
+export const LOGIN_GOOGLE_HANDLER_PAGE = "/oauth2/processing"
+
 // Color
 export const MAIN_COLOR = '#2dc275';
 
