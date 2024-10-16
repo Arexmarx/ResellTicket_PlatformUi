@@ -20,12 +20,7 @@ import {
   MDBTextArea,
   MDBTypography,
 } from "mdb-react-ui-kit";
-import {
-  ADD_TICKET_PAGE,
-  MAIN_COLOR,
-  SidebarOption,
-  TicketProcess,
-} from "../config/Constant";
+import { MAIN_COLOR, TicketProcess } from "../config/Constant";
 import { formatDateTime } from "../service/DateService";
 import { formatToVND, getFirstFiveChars } from "../service/StringService";
 import { Alert, Avatar, Stack } from "@mui/material";
@@ -116,7 +111,8 @@ export default function BoughtTicketBox({ user }) {
       staffId: staffId,
     };
 
-    const file = await fetch(imageReport).then((res) => res.blob());
+    // const file = await fetch(imageReport).then((res) => res.blob());
+    const file = imageReport;
     const formData = new FormData();
     formData.append(
       "reportFraudRequest",
@@ -137,6 +133,8 @@ export default function BoughtTicketBox({ user }) {
         }
       })
       .catch((error) => {
+        setErrorMessage({ status: true, message: "Báo cáo lỗi vui lòng thử lại" });
+        setSuccessMessage({ status: false, message: "" });
         console.log(error);
       });
   };
@@ -234,8 +232,9 @@ export default function BoughtTicketBox({ user }) {
                       <MDBCol md="1">
                         <MDBRow style={titleCss}>Tải ảnh vé</MDBRow>
                         <MDBRow>
-                          <a download={x.genericTicketObject.ticketName + '.PNG'}
-                            href={ 'data:image/png;base64, ' + x.image}
+                          <a
+                            download={x.genericTicketObject.ticketName + ".PNG"}
+                            href={"data:image/png;base64, " + x.image}
                           >
                             <MDBIcon
                               fas
