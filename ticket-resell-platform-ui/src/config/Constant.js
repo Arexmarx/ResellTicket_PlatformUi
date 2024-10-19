@@ -11,6 +11,7 @@ export const CHECK_OUT_PAGE = "/users/checkOut"
 export const MANAGE_BUYER_PAGE ="/users/manageMoney"
 export const ADD_TICKET_PAGE = "/users/myshop/add-ticket"
 export const CHANGE_PASSWORD_PAGE = "/users/password"
+export const NOTIFICATION_PAGE = "/users/notification"
 export const SEARCH_PAGE = "/users/search"
 export const EMAIL_VERIFY_PAGE = "/signUp/verify"
 export const EVENT_DETAIL_PAGE = "/eventDetail"
@@ -32,7 +33,7 @@ export const SidebarOption = {
     BOUGHT_TICKET: 'boughtTicket',
     MY_SHOP: 'myShop',
     BALANCE: 'balance',
-    INFORM: 'inform',
+    NOTIFICATION: 'notification',
     CHANGE_PASS: 'changePassword'
 }
 

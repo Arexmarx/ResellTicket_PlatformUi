@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Avatar, Box, Divider } from "@mui/material";
-import { formatToVND, stringAvatar } from "../service/StringService";
+import { formatToVND } from "../service/StringService";
 import {
   MDBBtn,
   MDBModal,
@@ -14,8 +14,8 @@ import {
   MDBCollapse,
   MDBRow,
   MDBContainer,
+  MDBBadge,
 } from "mdb-react-ui-kit";
-import Rating from "@mui/material/Rating";
 import { useState } from "react";
 import LoadEffect from "./LoadEffect";
 import { formatDateTime } from "../service/DateService";
@@ -28,17 +28,14 @@ const titleCss = {
  * Author: Nguyen Tien Thuan
  */
 export default function TicketInfoRowBox({ item }) {
-  const [basicModal, setBasicModal] = useState(false);
-  const [ratingModal, setRatingModal] = useState(false);
-  const [value, setValue] = useState(0);
-  const [ratingDetail, setRatingDetail] = useState();
 
-  const toggleOpen = () => setBasicModal(!basicModal);
-  const toggleOpenRating = () => setRatingModal(!ratingModal);
+  const [basicModal, setBasicModal] = useState(false);
+  const [confirmCancelModal, setConfirmCancalModal] = useState(false)
+
 
   if (!item) {
     return (
-      <LoadEffect/>
+      <LoadEffect />
     )
   }
 
@@ -47,13 +44,13 @@ export default function TicketInfoRowBox({ item }) {
       <div className="row mt-3 shadow-sm p-3 mb-5 bg-body rounded">
         <div className="row d-flex align-content-center ">
           <div className="col-md-1 d-flex justify-content-center align-items-center">
-            <Avatar src={item.genericTicket.seller.avatar ? "data:image/png;base64, " + item.genericTicket.seller.avatar : "broken-image.jpg"}  />
+            <Avatar src={item.genericTicket.seller.avatar ? "data:image/png;base64, " + item.genericTicket.seller.avatar : "broken-image.jpg"} />
           </div>
           <div className="col-md-2">
             <div style={titleCss} className="row">
               Người bán
             </div>
-            <div className="row">{item.genericTicket.seller.firstname +" " + item.genericTicket.seller.lastname}</div>
+            <div className="row">{item.genericTicket.seller.firstname + " " + item.genericTicket.seller.lastname}</div>
           </div>
           <div className="col-md-2">
             <div style={titleCss} className="row">
@@ -71,7 +68,7 @@ export default function TicketInfoRowBox({ item }) {
             <div style={titleCss} className="row">
               Loại vé
             </div>
-            <div className="row">{item.genericTicket.isPaper ? 'Giấy': 'Online'}</div>
+            <div className="row">{item.genericTicket.isPaper ? 'Giấy' : 'Online'}</div>
           </div>
           <div className="col-md-2">
             <div style={titleCss} className="row">
@@ -123,7 +120,7 @@ export default function TicketInfoRowBox({ item }) {
             >
               Chi tiết
             </MDBBtn> */}
-            <MDBBtn style={{ marginRight: 5 }} outline color="danger">
+            <MDBBtn onClick={() => setConfirmCancalModal(!confirmCancelModal)} style={{ marginRight: 5 }} outline color="danger">
               Hủy đơn hàng
             </MDBBtn>
           </div>
@@ -133,22 +130,47 @@ export default function TicketInfoRowBox({ item }) {
         open={basicModal}
         onClose={() => setBasicModal(false)}
       >
-          <MDBContainer fluid>
-            <MDBRow>
-              { 
-                item.orderDetail ?
-                  item.orderDetail.map((detail) => (
-                    <div key={detail.serial}>
-                      <p>Mã số vé: {detail.serial}</p>
-                      <p>Ngày hết hạn: {detail.expireDate}</p>
-                      <img src={detail.image} alt="" />
-                    </div>
-                  ))
-                  : ''
+        <MDBContainer fluid>
+          <MDBRow>
+            {
+              item.orderDetail ?
+                item.orderDetail.map((detail) => (
+                  <div key={detail.serial}>
+                    <p>Mã số vé: {detail.serial}</p>
+                    <p>Ngày hết hạn: {detail.expireDate}</p>
+                    <img src={detail.image} alt="" />
+                  </div>
+                ))
+                : ''
             }
-            </MDBRow>
-          </MDBContainer>
+          </MDBRow>
+        </MDBContainer>
       </MDBCollapse>
+
+      <MDBModal open={confirmCancelModal} onClose={() => setConfirmCancalModal(false)}>
+        <MDBModalDialog centered={true} size="lg">
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Xác nhận hủy đơn hàng</MDBModalTitle>
+              <MDBBtn className='btn-close' color='none' onClick={() => setConfirmCancalModal(false)}></MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>
+              <div className="mt-2">Tên vé: <strong>{item.genericTicket.ticketName}</strong></div>
+              <div className="mt-2">Tổng tiền: <strong>{formatToVND(item.totalPrice)}</strong></div>
+              <div className="mt-2">Số lượng:&nbsp;
+                <MDBBadge pill color='success' light>
+                  x{item.quantity}
+                </MDBBadge>
+              </div>
+            </MDBModalBody>
+            <MDBModalFooter>
+              <button className="btn btn-danger">Hủy đơn</button>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+
+
       {/* <MDBModal open={ratingModal} onClose={() => setRatingModal(false)}>
         <MDBModalDialog centered={true} size="lg">
           <MDBModalContent>

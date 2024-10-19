@@ -80,6 +80,7 @@ export default function MyShopPage() {
                                                         key={tab.id}
                                                         className={activeTab.id === tab.id ? 'active' : ''}
                                                         onClick={() => handleTabClick(tab)}
+                                                        style={{cursor: 'pointer'}}
                                                     >
                                                         {tab.label} {tab.count && <span>({tab.count})</span>}
                                                     </a>

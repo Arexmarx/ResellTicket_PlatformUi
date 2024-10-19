@@ -1,15 +1,17 @@
 import { Avatar, Box, Button, TextField } from '@mui/material'
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { useState, useEffect } from 'react';
-import UserAPI from '../service/api/UserAPI';
-import { USER_ID_KEY } from '../config/Constant';
 import useAxios from '../utils/useAxios';
 import API from '../config/API';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // eslint-disable-next-line react/prop-types
 export default function ProfileInfoBox({ user }) {
 
     const api = useAxios()
+    const successNotification = (str) => toast.success(str)
+
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
@@ -142,6 +144,7 @@ export default function ProfileInfoBox({ user }) {
             
             if (response.status === 200) {
                 setUpdateSuccessMessage(response.data.message);
+                successNotification(response.data.message)
             } 
         }
     };
@@ -166,12 +169,14 @@ export default function ProfileInfoBox({ user }) {
             const response = await api.post(API.User.UPDATE_USER_AVATAR + user.id , formData)
             if (response.status === 200) {
                 setUpdateSuccessMessage(response.data.message);
+                successNotification(response.data.message)
             }
         }
     };
 
     return (
         <div className='col-md-10'>
+            <ToastContainer/>
             <div className='row'>
                 <div className='d-flex justify-content-center mb-3'>
                     <Box sx={{ position: 'relative', display: 'inline-block' }}>
@@ -271,9 +276,9 @@ export default function ProfileInfoBox({ user }) {
                 </div>
             </div>
             <div className='row d-flex justify-content-center mt-3 mb-3'>
-                {
+                {/* {
                     updateSuccessMessage && <div className='mt-1 mb-1 text-success'>{updateSuccessMessage}</div>
-                }
+                } */}
             </div>
             <div className='row d-flex justify-content-center mt-5 mb-3'>
                 <div className='d-flex justify-content-center' style={{ width: '40%' }}>

@@ -19,3 +19,18 @@ export function formatDateTime(dateTimeString) {
     // Combine date and time into the desired format
     return `${formattedDate} ${formattedTime}`;
 }
+
+export function getYear(dateString) {
+    const date = new Date(dateString);
+    return date.getUTCFullYear();
+}
+
+export function getMonth(dateString) {
+    const date = new Date(dateString);
+    return date.getUTCMonth() + 1; 
+}
+
+export function getDay(dateString) {
+    const date = new Date(dateString);
+    return date.getUTCDate();
+}

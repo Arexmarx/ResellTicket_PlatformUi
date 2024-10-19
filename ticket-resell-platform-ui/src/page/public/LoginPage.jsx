@@ -37,7 +37,6 @@ const handleLoginGoogle = () => {
  */
 export default function Login() {
 
-  const notify = (str) => toast(str);
   const errorNotification = (str) => toast.error(str)
 
   const navigate = useNavigate();
@@ -110,7 +109,7 @@ export default function Login() {
     } 
     catch (error) {
         setLoginErrorMessage(error); // Set the error message
-        notify(error)
+        errorNotification(error)
     }
   }
 
@@ -215,13 +214,15 @@ export default function Login() {
               </Alert>
             </Stack>
           )} */}
-          {success && (
-            <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
-              <Alert severity="success" size="small">
-                {success}
-              </Alert>
-            </Stack>
-          )}
+          {/* {
+            success && (
+              <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
+                <Alert severity="success" size="small">
+                  {success}
+                </Alert>
+              </Stack>
+            )
+          }*/}
           <FormControl sx={{ marginBottom: 0 }}>
             <div className="d-flex justify-content-between align-items-center">
               <FormControlLabel control={<Checkbox />} label="Ghi nhớ đăng nhập" />

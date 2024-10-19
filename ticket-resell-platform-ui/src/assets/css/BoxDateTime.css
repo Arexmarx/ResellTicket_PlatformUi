@@ -1,0 +1,90 @@
+.calendar-container {
+    position: relative;
+}
+
+.calendar-box {
+    width: 100px;
+    height: 120px;
+    background-color: rgba(255, 255, 255, 0.15); /* Semi-transparent white */
+    backdrop-filter: blur(10px); /* Background blur effect */
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    color: white;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Deeper shadow for better contrast */
+}
+
+.month {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.day {
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.year {
+    font-size: 12px;
+    position: relative;
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+.image {
+    width: 100%;
+}
+
+/* Small style */
+.calendar-box-sm {
+    width: 60px;
+    height: 70px;
+    background-color: rgba(255, 255, 255, 0.15); /* Semi-transparent white */
+    backdrop-filter: blur(10px); /* Background blur effect */
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    color: white;
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4); /* Deeper shadow for better contrast */
+}
+
+.month-sm {
+    font-size: 10px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.day-sm {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.year-sm {
+    font-size: 12px;
+    position: relative;
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+.image-sm {
+    width: 100%;
+}

@@ -24,6 +24,7 @@ import {
   RETURN_PASSWORD_PAGE,
   PERSONAL_PAGE,
   LOGIN_GOOGLE_HANDLER_PAGE,
+  NOTIFICATION_PAGE,
 } from "./config/Constant";
 import HomePage from "./page/public/HomePage";
 import SignUp from "./page/public/SignUpPage";
@@ -48,8 +49,9 @@ import ViewHistoryDeposited from "./page/private/ViewHistoryDeposited";
 import ForgetPasswordPage from "./page/public/ForgetPasswordPage";
 import VerifyForgetPasswordPage from "./page/public/VerifyForgetPasswordPage";
 import ReturnPasswordPage from "./page/public/ReturnPasswordPage";
-import PersonalPage from "./page/private/PersonalPage";
+import PersonalPage from "./page/public/PersonalPage";
 import LoginGoogleHandler from "./page/public/LoginGoogleHandler";
+import NotificationPage from "./page/private/NotificationPage";
 const GlobalStyles = () => (
   <Global
     styles={css`
@@ -122,6 +124,8 @@ function App() {
             <Route path={PERSONAL_PAGE} element={<PersonalPage/>}></Route>
 
             <Route path={LOGIN_GOOGLE_HANDLER_PAGE} element={ <LoginGoogleHandler/> }></Route>
+
+            <Route path={NOTIFICATION_PAGE} element={ <NotificationPage/> }></Route>
 
           </Routes>
         </AuthProvider>

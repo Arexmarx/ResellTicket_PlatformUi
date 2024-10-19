@@ -4,7 +4,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { Avatar, Badge } from '@mui/material';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
-import { BOUGHT_TICKET_MANEMENT_PAGE, MAIN_COLOR, MY_SHOP_PAGE, PROFILE_PAGE, SidebarOption ,MANAGE_BUYER_PAGE, CHANGE_PASSWORD_PAGE} from '../config/Constant';
+import { BOUGHT_TICKET_MANEMENT_PAGE, MAIN_COLOR, MY_SHOP_PAGE, PROFILE_PAGE, SidebarOption ,MANAGE_BUYER_PAGE, CHANGE_PASSWORD_PAGE, NOTIFICATION_PAGE} from '../config/Constant';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import Divider from '@mui/material/Divider';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
@@ -89,10 +89,11 @@ export default function SideBar({sideBarOption, user}) {
 
             <div className='mb-3'>
                 <ListItemButton 
-                    sx={sideBarOption === SidebarOption.INFORM ? { backgroundColor: MAIN_COLOR } : {}}
+                    sx={sideBarOption === SidebarOption.NOTIFICATION ? { backgroundColor: MAIN_COLOR } : {}}
+                    onClick={() => navigator(NOTIFICATION_PAGE)}
                 >
                     <ListItemIcon>
-                    <Badge badgeContent={4} color="warning">
+                    <Badge badgeContent={"!"} color="warning">
                         <NotificationsActiveIcon />
 
                     </Badge>
