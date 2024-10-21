@@ -22,6 +22,8 @@ export const VERIFY_FORGET_PASSWORD_PAGE ="/verify-forget-password"
 export const RETURN_PASSWORD_PAGE ="/return-password"
 export const PERSONAL_PAGE = "/users/personal-page"
 export const LOGIN_GOOGLE_HANDLER_PAGE = "/oauth2/processing"
+export const POLICY_DETAIL_PAGE = "/policy"
+export const CHAT_PAGE = "/users/chat"
 
 // Color
 export const MAIN_COLOR = '#2dc275';
@@ -32,6 +34,7 @@ export const SidebarOption = {
     BOUGHT_TICKET: 'boughtTicket',
     MY_SHOP: 'myShop',
     BALANCE: 'balance',
+    CHAT: 'chat',
     INFORM: 'inform',
     CHANGE_PASS: 'changePassword'
 }

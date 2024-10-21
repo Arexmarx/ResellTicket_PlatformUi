@@ -24,6 +24,8 @@ import {
   RETURN_PASSWORD_PAGE,
   PERSONAL_PAGE,
   LOGIN_GOOGLE_HANDLER_PAGE,
+  POLICY_DETAIL_PAGE,
+  CHAT_PAGE,
 } from "./config/Constant";
 import HomePage from "./page/public/HomePage";
 import SignUp from "./page/public/SignUpPage";
@@ -50,6 +52,8 @@ import VerifyForgetPasswordPage from "./page/public/VerifyForgetPasswordPage";
 import ReturnPasswordPage from "./page/public/ReturnPasswordPage";
 import PersonalPage from "./page/private/PersonalPage";
 import LoginGoogleHandler from "./page/public/LoginGoogleHandler";
+import PolicyDetailPage from "./page/public/PolicyDetailPage";
+import ChatPage from "./page/private/ChatPage";
 const GlobalStyles = () => (
   <Global
     styles={css`
@@ -122,6 +126,10 @@ function App() {
             <Route path={PERSONAL_PAGE} element={<PersonalPage/>}></Route>
 
             <Route path={LOGIN_GOOGLE_HANDLER_PAGE} element={ <LoginGoogleHandler/> }></Route>
+
+            <Route path={POLICY_DETAIL_PAGE} element={ <PolicyDetailPage/> }></Route>
+
+            <Route path={CHAT_PAGE} element={<ChatPage/>}></Route>
 
           </Routes>
         </AuthProvider>
