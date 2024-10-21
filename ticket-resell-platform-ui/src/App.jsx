@@ -26,6 +26,7 @@ import {
   LOGIN_GOOGLE_HANDLER_PAGE,
   POLICY_DETAIL_PAGE,
   CHAT_PAGE,
+  NOTIFICATION_PAGE,
 } from "./config/Constant";
 import HomePage from "./page/public/HomePage";
 import SignUp from "./page/public/SignUpPage";
@@ -50,10 +51,11 @@ import ViewHistoryDeposited from "./page/private/ViewHistoryDeposited";
 import ForgetPasswordPage from "./page/public/ForgetPasswordPage";
 import VerifyForgetPasswordPage from "./page/public/VerifyForgetPasswordPage";
 import ReturnPasswordPage from "./page/public/ReturnPasswordPage";
-import PersonalPage from "./page/private/PersonalPage";
+import PersonalPage from "./page/public/PersonalPage";
 import LoginGoogleHandler from "./page/public/LoginGoogleHandler";
 import PolicyDetailPage from "./page/public/PolicyDetailPage";
 import ChatPage from "./page/private/ChatPage";
+import NotificationPage from "./page/private/NotificationPage";
 const GlobalStyles = () => (
   <Global
     styles={css`
@@ -130,6 +132,8 @@ function App() {
             <Route path={POLICY_DETAIL_PAGE} element={ <PolicyDetailPage/> }></Route>
 
             <Route path={CHAT_PAGE} element={<ChatPage/>}></Route>
+            
+            <Route path={NOTIFICATION_PAGE} element={ <NotificationPage/> }></Route>
 
           </Routes>
         </AuthProvider>

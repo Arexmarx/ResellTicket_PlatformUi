@@ -17,7 +17,9 @@ const API =  {
         VERIFY_ACCOUNT_BY_OPT: "/api/users/register/verify-email",
         CHECK_EMAIL: "/api/users/reset-password",
         SEND_PASSWORD_OTP: "/api/users/reset-password/verify-reset-otp",
-        SET_NEW_PASSWORD: "/api/users/reset-password/new-pass"
+        SET_NEW_PASSWORD: "/api/users/reset-password/new-pass",
+        CHANGE_PASSWORD: "/api/users/change-pass",
+        GET_ALL_RECEIVED_NOTIFICATION: "/api/users/get/notifications/all/"
     },
 
     Ticket: {
@@ -72,7 +74,13 @@ const API =  {
 
     ReportType : {
         GET_ALL_REPORT_TYPE: "/api/report-type/get-all"
-    }
+    },
+
+    Notiication: {
+        MARK_READ: "/api/notifications/mark-read/",
+        MARK_DELETED: "/api/notifications/mark-deleted/",
+        DELETE_FOREVER:  "/api/notifications/delete-forever/",
+    },
 }
 
 export default API

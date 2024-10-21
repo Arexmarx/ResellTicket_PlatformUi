@@ -21,15 +21,20 @@ import TicketAPI from "../../service/api/TicketAPI.js";
 import HttpStatus from "../../config/HttpStatus.js";
 import useAxios from "../../utils/useAxios.jsx";
 import API from "../../config/API.js";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
 
-
-
 export default function BuyTicketPage() {
+
   const location = useLocation();
   const { ticket } = location.state || {};
+
+  const errorNotification = (str) => toast.error(str)
+  const successNotification = (str) => toast.success(str)
+
   const [quantity, setQuantity] = useState(1); // Khởi tạo số lượng là 1
   const [numberOfTickets, setNumberOfTickets] = useState()
   const [paymentMethods, setPaymentMethods] = useState([])
@@ -89,13 +94,16 @@ export default function BuyTicketPage() {
       const response = await api.post(API.GenericTicket.ORDER_GENERIC_TICKET, orderTicketRequest)
       if (response.data.httpStatus === HttpStatus.OK) {
         setOrderMessage({ status: true, message: response.data.message })
+        successNotification(response.data.message)
       }
       else {
         setOrderMessage({ status: false, message: response.data.message })
+        errorNotification(response.data.message)
       }
     }
     else {
       setOrderMessage({ status: false, message: 'Bạn không đủ số dư để mua!' })
+      errorNotification('Bạn không đủ số dư để mua!')
     }
     //navigate(CHECK_OUT_PAGE, { state: { ticket: x, quantity: quantity } });
   };
@@ -111,6 +119,7 @@ export default function BuyTicketPage() {
   return (
     <div>
       <Header />
+      <ToastContainer/>
       <MDBContainer style={{ marginTop: "5%" }}>
         <MDBRow className="justify-content-center ">
           <MDBCol md="6" className="mb-6">

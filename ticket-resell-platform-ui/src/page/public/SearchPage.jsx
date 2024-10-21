@@ -21,6 +21,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
+import '../../assets/css/BoxDateTime.css'
+import { getDay, getMonth, getYear } from "../../service/DateService";
 
 export default function SearchPage() {
   const location = useLocation();
@@ -71,7 +73,7 @@ export default function SearchPage() {
   const handleSearchDate = (findDate) => {
     if (events.length > 0) {
       const selectedDate = dayjs(findDate).format("YYYY-MM-DD");
-  
+
       setFilteredEvents(
         events.filter((eventItem) => {
           const eventDate = dayjs(eventItem.startDate).format("YYYY-MM-DD");
@@ -105,12 +107,20 @@ export default function SearchPage() {
             filteredEvents.map((eventItem, index) => (
               <MDBCol key={index} md="3" style={{ marginTop: "4%" }}>
                 <MDBCard>
-                  <MDBCardImage
-                    onClick={() => handleClick(eventItem)}
-                    style={{ maxHeight: "206px", minHeight: "206px" }}
-                    src={"data:image/png;base64, " + eventItem.image}
-                    position="top"
-                  />
+                  <div className="calendar-container">
+                    <MDBCardImage
+                      onClick={() => handleClick(eventItem)}
+                      style={{ maxHeight: "206px", minHeight: "206px" }}
+                      src={"data:image/png;base64, " + eventItem.image}
+                      position="top"
+                    />
+                    <div className="calendar-box-sm">
+                      <div className="month-sm">Tháng {getMonth(eventItem.startDate)}</div>
+                      <div className="day-sm">{getDay(eventItem.startDate)}</div>
+                      <div className="year-sm">{getYear(eventItem.startDate)}</div>
+                    </div>
+                  </div>
+
                   <MDBCardBody>
                     <MDBCardTitle
                       title={eventItem.name}
@@ -127,10 +137,10 @@ export default function SearchPage() {
                         marginTop: eventItem.name.length > 22 ? "8%" : "8%",
                       }}
                     >
-                      Ngày bắt đầu: {formatDateTime(eventItem.startDate)}
+                      Từ ngày: <strong>{formatDateTime(eventItem.startDate)}</strong>
                     </MDBCardText>
                     <MDBCardText>
-                      Ngày kết thúc: {formatDateTime(eventItem.endDate)}
+                      Đến ngày: <strong>{formatDateTime(eventItem.endDate)}</strong>
                     </MDBCardText>
                   </MDBCardBody>
                 </MDBCard>

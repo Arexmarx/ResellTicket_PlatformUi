@@ -24,6 +24,8 @@ import HttpStatus from "../../config/HttpStatus.js";
 import { formatToVND } from "../../service/StringService.js";
 import useAxios from "../../utils/useAxios.jsx";
 import API from "../../config/API.js";
+import '../../assets/css/BoxDateTime.css'
+import { getDay, getMonth, getYear } from "../../service/DateService";
 
 /**
  * Author: Phan Nguyễn Mạnh Cường
@@ -89,8 +91,8 @@ export default function EventDetail() {
                 <MDBCardHeader style={{ fontSize: '35px' }}>{event.name}</MDBCardHeader>
                 <div className="mt-3">
                   <MDBCardText><strong>Mô tả sự kiện:</strong> {event.detail}</MDBCardText>
-                  <MDBCardText><strong>Ngày bắt đầu:</strong> {formatDateTime(event.startDate)}</MDBCardText>
-                  <MDBCardText><strong>Ngày kết thúc:</strong> {formatDateTime(event.endDate)}</MDBCardText>
+                  <MDBCardText><strong>Từ ngày:</strong> {formatDateTime(event.startDate)}</MDBCardText>
+                  <MDBCardText><strong>Đến ngày:</strong> {formatDateTime(event.endDate)}</MDBCardText>
                 </div>
               </MDBCardBody>
             </MDBCard>
@@ -133,9 +135,9 @@ export default function EventDetail() {
                       </MDBCol>
                       <MDBCol style={{ marginRight: '1%' }}>
                         <div className="d-flex justify-content-center">
-                          <Avatar 
-                            sx={{ width: 42, height: 42 }} alt="Seller" 
-                            src={gTicket.seller.avatar ? "data:image/png;base64, " + gTicket.seller.avatar : "broken-image.jpg"} 
+                          <Avatar
+                            sx={{ width: 42, height: 42 }} alt="Seller"
+                            src={gTicket.seller.avatar ? "data:image/png;base64, " + gTicket.seller.avatar : "broken-image.jpg"}
                           />
                         </div>
                         <div className="d-flex justify-content-center">

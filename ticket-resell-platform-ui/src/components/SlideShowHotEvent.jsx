@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MDBCarousel, MDBCarouselItem, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBIcon } from 'mdb-react-ui-kit';
 import { MDBTypography } from 'mdb-react-ui-kit';
 import { useNavigate } from "react-router-dom";
 import {EVENT_DETAIL_PAGE} from "../config/Constant";
-import { ITEMS } from '../test/DataTest.js'
 import API from '../config/API.js';
 import axios from 'axios';
 import LoadEffect from './LoadEffect.jsx';
+import '../assets/css/BoxDateTime.css'
+
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
@@ -18,7 +19,7 @@ export default function SlideShowHotEvent() {
     const fetchData = async () => {
       axios.get(API.GATEWAY + API.Event.GET_HAPPENING_EVENT_BY_HASHTAG_SEPECIAL).then(
         response => {
-          console.log(response.data.object)
+          // console.log(response.data.object)
           setItems(response.data.object)
         }
       );

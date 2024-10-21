@@ -23,7 +23,7 @@ import {
 import { MAIN_COLOR, TicketProcess } from "../config/Constant";
 import { formatDateTime } from "../service/DateService";
 import { formatToVND, getFirstFiveChars } from "../service/StringService";
-import { Alert, Avatar, Stack } from "@mui/material";
+import { Alert, Avatar, Rating, Stack } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -41,6 +41,23 @@ export default function BoughtTicketBox({ user }) {
   const [openTicketId, setOpenTicketId] = useState(null);
   const [openReport, setOpenReport] = useState(null);
   const [typeReport, setTypeReport] = useState("");
+
+  const [value, setValue] = useState(0); // Stars
+  const [ratingDetail, setRatingDetail] = useState(); // Comment
+  const [ratingModal, setRatingModal] = useState(false);
+
+  // const toggleOpen = () => setBasicModal(!basicModal);
+  const toggleOpenRating = (id) => setRatingModal(ratingModal === id ? null : id);
+  const handleSubmitRating = (item) => {
+    console.log(item);
+    console.log(value);
+    console.log(ratingDetail);
+
+    setValue(0)
+    setRatingDetail('')
+    setRatingModal(ratingModal === item.ticketSerial ? null : item.ticketSerial);
+  }
+
 
   const [contentReport, setContentReport] = useState(null);
   const [imageReport, setImageReport] = useState(null);
@@ -171,6 +188,8 @@ export default function BoughtTicketBox({ user }) {
     whiteSpace: "nowrap",
     width: 1,
   });
+
+
   return (
     <div>
       <MDBContainer fluid>
@@ -191,7 +210,7 @@ export default function BoughtTicketBox({ user }) {
                           {getFirstFiveChars(x.ticketSerial)}*****
                         </MDBRow>
                       </MDBCol>
-                      <MDBCol md="3" style={{ marginRight: "2%" }}>
+                      <MDBCol md="2" style={{ marginRight: "2%" }}>
                         <MDBRow style={titleCss}>Tên vé</MDBRow>
                         <MDBRow>{x.genericTicketObject.ticketName}</MDBRow>
                       </MDBCol>
@@ -249,18 +268,31 @@ export default function BoughtTicketBox({ user }) {
                         <MDBBtn
                           outline
                           color="tertiary"
-                          style={{ borderColor: "fbf9f9" }}
+                          style={{ borderColor: "fbf9f9", fontSize: '65%' }}
                           size="sm"
                           onClick={() => toggleOpen(x.ticketSerial)}
                         >
                           Chi tiết
                         </MDBBtn>
                       </MDBCol>
+
+                      <MDBCol md="1">
+                        <MDBBtn
+                          outline
+                          color="tertiary"
+                          style={{ borderColor: "fbf9f9", fontSize: '65%' }}
+                          size="sm"
+                          onClick={() => toggleOpenRating(x.ticketSerial)}
+                        >
+                          Đánh giá
+                        </MDBBtn>
+                      </MDBCol>
+
                       <MDBCol md="1">
                         <MDBBtn
                           outline
                           color="danger"
-                          style={{ borderColor: "fbf9f9" }}
+                          style={{ borderColor: "fbf9f9", fontSize: '65%' }}
                           size="sm"
                           onClick={() => toggleOpenReport(x)}
                           disabled={(() => {
@@ -337,7 +369,7 @@ export default function BoughtTicketBox({ user }) {
                                     src={
                                       x.genericTicketObject.seller.avatar
                                         ? "data:image/png;base64, " +
-                                          x.genericTicketObject.seller.avatar
+                                        x.genericTicketObject.seller.avatar
                                         : "broken-image.jpg"
                                     }
                                   />
@@ -545,7 +577,80 @@ export default function BoughtTicketBox({ user }) {
                           </MDBModalContent>
                         </MDBModalDialog>
                       </MDBModal>
+
+
+                      <MDBModal open={ratingModal === x.ticketSerial} onClose={() => setRatingModal(false)}>
+                        <MDBModalDialog centered={true} size="lg">
+                          <MDBModalContent>
+                            <MDBModalHeader>
+                              <h4>Đánh giá cho đơn hàng</h4>
+                            </MDBModalHeader>
+                            <MDBModalBody>
+                              <div className="row d-flex align-content-center mx-1">
+                                <div className="col-md-3">
+                                  <div style={titleCss} className="row">
+                                    Người bán
+                                  </div>
+                                  <div className="row">{x.genericTicketObject.seller.firstname + " " + x.genericTicketObject.seller.lastname}</div>
+                                </div>
+                                <div className="col-md-3">
+                                  <div style={titleCss} className="row">
+                                    Tên vé
+                                  </div>
+                                  <div className="row">{x.genericTicketObject.ticketName}</div>
+                                </div>
+                                <div className="col-md-3">
+                                  <div style={titleCss} className="row">
+                                    Giá bán/ Giá khuyến mãi
+                                  </div>
+                                  <div className="row">
+                                    {
+                                      formatToVND(x.genericTicketObject.price - (x.genericTicketObject.price * x.genericTicketObject.salePercent) / 100)
+                                    }
+                                  </div>
+                                </div>
+
+                                <div className="col-md-3">
+                                  <div style={{ ...titleCss, marginLeft: 5 }} className="row ">
+                                    Đánh giá sao (bắt buộc)
+                                  </div>
+                                  <div className="row">
+                                    <Rating
+                                      name="simple-controlled"
+                                      value={value}
+                                      onChange={(event, newValue) => {
+                                        setValue(newValue);
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+
+                              </div>
+                              <div className="row mt-3">
+                                <textarea
+                                  className="form-control"
+                                  rows="3"
+                                  placeholder="Viết đánh giá của bạn (tùy chọn)"
+                                  value={ratingDetail}
+                                  onChange={(e) => setRatingDetail(e.target.value)}
+                                ></textarea>
+                              </div>
+                              <div className="text-danger mt-3">
+                                *Đánh giá này sẽ đánh giá cho cả đơn hàng của bạn (gồm tất cả những vé đã mua)
+                              </div>
+                            </MDBModalBody>
+                            <MDBModalFooter>
+                              <MDBBtn onClick={() => handleSubmitRating(x)} color="success">
+                                Gửi đánh giá
+                              </MDBBtn>
+                            </MDBModalFooter>
+                          </MDBModalContent>
+                        </MDBModalDialog>
+                      </MDBModal>
+
                     </MDBRow>
+
+
                   )
               )}
           </MDBRow>

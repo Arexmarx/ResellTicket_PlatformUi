@@ -87,9 +87,9 @@ export default function BoughtTicketManagementPage() {
                   tabs.map((tab) => (
                     <a
                       key={tab.id}
-                      href="#"
                       className={activeTab.id === tab.id ? 'active' : ''}
                       onClick={() => handleTabClick(tab)}
+                      style={{cursor: 'pointer'}}
                     >
                       {tab.label} {tab.count && <span>({tab.count})</span>}
                     </a>
@@ -115,6 +115,7 @@ export default function BoughtTicketManagementPage() {
                 (
                   tickets.map((item, index) => (
                     <TicketInfoRowBox key={index} item={item} />
+                    
                   ))
                 )
                 : ''

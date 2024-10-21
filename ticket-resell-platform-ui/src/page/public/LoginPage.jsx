@@ -25,6 +25,8 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {FORGET_PASSWORD_PAGE, MAIN_COLOR} from "../../config/Constant"
 import {SIGN_UP_PAGE} from "../../config/Constant"
 import AuthContext from "../../context/AuthContext";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const handleLoginGoogle = () => {
   window.location.href = "http://localhost:8080/oauth2/authorization/google";
@@ -34,6 +36,9 @@ const handleLoginGoogle = () => {
  * Author: Phan Nguyễn Mạnh Cường
  */
 export default function Login() {
+
+  const errorNotification = (str) => toast.error(str)
+
   const navigate = useNavigate();
   const { loginUser } = React.useContext(AuthContext)
 
@@ -83,12 +88,14 @@ export default function Login() {
       setFormValid(
         "Tên đăng nhập không được để trống!"
       );
+      errorNotification("Tên đăng nhập không được để trống!")
       return;
     }
     if (passwordError || !passwordInput) {
       setFormValid(
         "Mật khẩu không được để trống"
       );
+      errorNotification("Mật khẩu không được để trống")
       return;
     }
     // sendLoginRequest().catch(console.error);
@@ -102,6 +109,7 @@ export default function Login() {
     } 
     catch (error) {
         setLoginErrorMessage(error); // Set the error message
+        errorNotification(error)
     }
   }
 
@@ -120,6 +128,8 @@ export default function Login() {
     navigate(FORGET_PASSWORD_PAGE);
   }
 
+  
+
   return (
     <div
       className="d-flex justify-content-center align-items-center"
@@ -131,6 +141,9 @@ export default function Login() {
         alignItems: "center",
       }}
     >
+
+      <ToastContainer  />
+
       <Card sx={{ minWidth: 500, marginTop: "2%", borderRadius: 3 }}>
         <Typography variant="h3" className="text-center mt-5">
           Đăng Nhập
@@ -179,9 +192,9 @@ export default function Login() {
               name="password-input"
             />
           </FormControl>
-          {
+          {/* {
             loginErrorMessage && <div className="mt-2 mb-3 text-danger">{loginErrorMessage}</div>
-          }
+          } */}
           <FormControl sx={{ marginBottom: 3 }}>
             <Button
               onClick={handleSubmit}
@@ -194,20 +207,22 @@ export default function Login() {
               Đăng nhập
             </Button>
           </FormControl>
-          {formValid && (
+          {/* {formValid && (
             <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
               <Alert severity="error" size="small">
                 {formValid}
               </Alert>
             </Stack>
-          )}
-          {success && (
-            <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
-              <Alert severity="success" size="small">
-                {success}
-              </Alert>
-            </Stack>
-          )}
+          )} */}
+          {/* {
+            success && (
+              <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
+                <Alert severity="success" size="small">
+                  {success}
+                </Alert>
+              </Stack>
+            )
+          }*/}
           <FormControl sx={{ marginBottom: 0 }}>
             <div className="d-flex justify-content-between align-items-center">
               <FormControlLabel control={<Checkbox />} label="Ghi nhớ đăng nhập" />

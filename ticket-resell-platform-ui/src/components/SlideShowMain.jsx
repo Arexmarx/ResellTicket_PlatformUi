@@ -18,6 +18,9 @@ import { EVENT_DETAIL_PAGE } from "../config/Constant";
 import axios from "axios";
 import API from "../config/API";
 import LoadEffect from "./LoadEffect";
+import '../assets/css/BoxDateTime.css'
+import { getDay, getMonth, getYear } from "../service/DateService";
+
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
@@ -85,23 +88,33 @@ export default function SlideShowMain() {
 
   return (
     items.length > 0 &&
-    <MDBContainer style={{cursor: 'pointer'}} className="my-5 position-relative">
+    <MDBContainer style={{ cursor: 'pointer' }} className="my-5 position-relative">
       <MDBCarousel showControls={false} showIndicators={false} fade>
         <MDBCarouselItem className="active">
           <MDBRow className="justify-content-center">
             {getVisibleItems().map((item) => (
               <MDBCol key={item.id} md="11" className="mb-6">
+
                 <MDBCard onClick={() => handleClick(item)}>
-                  <MDBCardImage
-                    src={"data:image/png;base64, " + item.image}
-                    alt={item.title}
-                    position="top"
-                    style={{
-                      borderRadius: "15px", // Add rounded corners
-                      // border: "2px solid #ddd",  
-                      maxHeight: '600px'
-                    }}
-                  />
+                  <div className="calendar-container">
+                    <MDBCardImage
+                      className="image"
+                      src={"data:image/png;base64, " + item.image}
+                      alt={item.title}
+                      position="top"
+                      style={{
+                        borderRadius: "15px", // Add rounded corners
+                        // border: "2px solid #ddd",  
+                        maxHeight: '600px'
+                      }}
+                    />
+                    <div className="calendar-box">
+                      <div className="month">Tháng {getMonth(item.startDate)}</div>
+                      <div className="day">{getDay(item.startDate)}</div>
+                      <div className="year">{getYear(item.startDate)}</div>
+                    </div>
+                  </div>
+
                   {/* <MDBCardOverlay>
                     <MDBCardTitle>{item.name}</MDBCardTitle>
                     <MDBCardText>{item.description}</MDBCardText>

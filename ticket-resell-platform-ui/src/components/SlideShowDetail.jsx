@@ -17,6 +17,9 @@ import { MDBTypography } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import { EVENT_DETAIL_PAGE } from "../config/Constant";
 import { formatDateTime } from "../service/DateService.js";
+import '../assets/css/BoxDateTime.css'
+import { getDay, getMonth, getYear } from "../service/DateService";
+
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
@@ -77,12 +80,20 @@ export default function SlideShowDetail({ Category, Events }) {
                 className="mb-3"
               >
                 <MDBCard onClick={() => handleClick(item)}>
-                  <MDBCardImage
-                    style={{ maxHeight: "206px", minHeight: "206px" }}
-                    src={"data:image/png;base64, " + item.image}
-                    alt={item.name}
-                    position="top"
-                  />
+                  <div className="calendar-container">
+                    <MDBCardImage
+                      style={{ maxHeight: "206px", minHeight: "206px" }}
+                      src={"data:image/png;base64, " + item.image}
+                      alt={item.name}
+                      position="top"
+                    />
+                    <div className="calendar-box-sm">
+                      <div className="month-sm">Tháng {getMonth(item.startDate)}</div>
+                      <div className="day-sm">{getDay(item.startDate)}</div>
+                      <div className="year-sm">{getYear(item.startDate)}</div>
+                    </div>
+                  </div>
+
                   <MDBCardBody>
                     <MDBCardTitle
                       title={item.name}
@@ -95,10 +106,10 @@ export default function SlideShowDetail({ Category, Events }) {
                       {item.name}
                     </MDBCardTitle>
                     <MDBCardText>
-                      Ngày bắt đầu: {formatDateTime(item.startDate)}
+                      Từ ngày: <strong>{formatDateTime(item.startDate)}</strong>
                     </MDBCardText>
                     <MDBCardText>
-                      Ngày kết thúc: {formatDateTime(item.endDate)}
+                      Đến ngày: <strong>{formatDateTime(item.endDate)}</strong>
                     </MDBCardText>
                   </MDBCardBody>
                 </MDBCard>
@@ -137,5 +148,5 @@ export default function SlideShowDetail({ Category, Events }) {
       />
     </MDBContainer>
   ) : ''
-  ;
+    ;
 }
