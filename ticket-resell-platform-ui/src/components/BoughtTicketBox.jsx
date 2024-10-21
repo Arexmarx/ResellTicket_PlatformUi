@@ -31,11 +31,16 @@ import Select from "@mui/material/Select";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const titleCss = {
   marginBottom: "5px",
   fontSize: "70%",
 };
+
+
 export default function BoughtTicketBox({ user }) {
+
   const api = useAxios();
   const [boughtTickets, setBoughtTickets] = useState([]);
   const [openTicketId, setOpenTicketId] = useState(null);
@@ -46,13 +51,29 @@ export default function BoughtTicketBox({ user }) {
   const [ratingDetail, setRatingDetail] = useState(); // Comment
   const [ratingModal, setRatingModal] = useState(false);
 
+  const successNotification = (str) => toast.success(str)
+  const errorNotification = (str) => toast.error(str)
+
   // const toggleOpen = () => setBasicModal(!basicModal);
   const toggleOpenRating = (id) => setRatingModal(ratingModal === id ? null : id);
-  const handleSubmitRating = (item) => {
-    console.log(item);
-    console.log(value);
-    console.log(ratingDetail);
 
+  const handleSubmitRating = async (item) => {
+    const ratingRequest = {
+      buyerId: item.buyerId,
+      genericTicketId: item.genericTicketId,
+      comment: ratingDetail,
+      stars: value
+    }
+    console.log(ratingRequest);
+    const response = await api.post(API.Rating.CREATE_RATING, ratingRequest)
+    if (response.data.httpStatus == HttpStatus.OK ){
+      successNotification(response.data.message)
+      setRatingModal(null)
+    }
+    else {
+      errorNotification(response.data.message)
+      setRatingModal(null)
+    }
     setValue(0)
     setRatingDetail('')
     setRatingModal(ratingModal === item.ticketSerial ? null : item.ticketSerial);
@@ -189,16 +210,23 @@ export default function BoughtTicketBox({ user }) {
     width: 1,
   });
 
+  if (!boughtTickets) {
+    return (
+      <LoadEffect/>
+    )
+  }
+
 
   return (
     <div>
       <MDBContainer fluid>
+        <ToastContainer/>
         <MDBCol>
           <MDBRow style={{ marginLeft: "1%", marginRight: "1%" }}>
             {boughtTickets &&
               boughtTickets.map(
                 (x, index) =>
-                  x.process === TicketProcess.SUCCESS && (
+                  x.process === TicketProcess.SUCCESS && !x.isRated && (
                     <MDBRow
                       className="shadow-sm p-3 mb-5 bg-body rounded"
                       key={index}

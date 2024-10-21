@@ -371,7 +371,7 @@ export default function AddingTicketPage() {
                                                         )
                                                         : ''
                                                 }
-                                                <option value={"-1"}>Khác...</option>
+                                                {/* <option value={"-1"}>Khác...</option> */}
                                             </select>
                                         </div>
                                         <div className="mb-3">

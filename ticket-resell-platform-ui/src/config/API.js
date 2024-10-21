@@ -38,7 +38,9 @@ const API =  {
         GET_GENERIC_TICKET_BY_EVENT: "/api/tickets/generic/get-by-event/",
         ORDER_GENERIC_TICKET: "/api/tickets/generic/order",
         GET_PROCESSING_ORDER_TICKET: "/api/tickets/generic/get-processing-order-ticket/",
-        GET_REQUEST_ORDER_TICKET: "/api/tickets/generic/get-all-request-order-ticket/"
+        GET_CANCELED_ORDER_TICKET: "/api/tickets/generic/get-canceled-order-ticket/",
+        GET_REQUEST_ORDER_TICKET: "/api/tickets/generic/get-all-request-order-ticket/",
+        CANCEL_ORDER_TICKET: "/api/tickets/generic/cancel-order",
     },
     
     Policy: {
@@ -75,9 +77,14 @@ const API =  {
     },
 
     Notiication: {
+        HAVE_NOTIFICATION: "/api/notifications/have-notifications/",
         MARK_READ: "/api/notifications/mark-read/",
         MARK_DELETED: "/api/notifications/mark-deleted/",
         DELETE_FOREVER:  "/api/notifications/delete-forever/",
+    },
+
+    Rating: {
+        CREATE_RATING: "/api/rating/create"
     },
 }
 

@@ -10,6 +10,7 @@ import HttpStatus from "../../config/HttpStatus";
 import useAxios from "../../utils/useAxios";
 import LoadEffect from "../../components/LoadEffect";
 import BoughtTicketBox from "../../components/BoughtTicketBox";
+import CanceledOrderTicketBox from "../../components/CanceledOrderTicketBox";
 
 /*
     Author: Nguyen Tien Thuan
@@ -114,14 +115,19 @@ export default function BoughtTicketManagementPage() {
                 activeTab.id === tabs[0].id && tickets.length > 0 ?
                 (
                   tickets.map((item, index) => (
-                    <TicketInfoRowBox key={index} item={item} />
+                    <TicketInfoRowBox key={index} item={item} user={user} />
                     
                   ))
                 )
                 : ''
               }
+
               {
                 activeTab.id === tabs[3].id && <BoughtTicketBox user={user}/>
+              }
+
+              {
+                activeTab.id === tabs[4].id && <CanceledOrderTicketBox user={user}/>
               }
 
             </div>

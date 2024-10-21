@@ -76,7 +76,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 function Header() {
 
   const { logoutUser } = React.useContext(AuthContext)
-
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [search, setSearch] = React.useState("Nhập tên sự kiện");
   const navigate = useNavigate();
@@ -111,7 +110,7 @@ function Header() {
 
   const handleSearchKeyDown = (eventName) => {
     if (eventName.key === 'Enter') {
-      navigate(SEARCH_PAGE, {state: {eventName: eventName.target.value}})
+      navigate(SEARCH_PAGE, { state: { eventName: eventName.target.value } })
     }
   }
 
@@ -131,6 +130,21 @@ function Header() {
     }
     fetchData().catch(console.error)
   }, [])
+
+  const [havingNotification, setHavingNotification] = React.useState(false);
+
+  React.useEffect(() => {
+    if (user) {
+      const fetchData = async () => {
+        const response = await api.get(API.Notiication.HAVE_NOTIFICATION + user.id)
+        if (response.data.httpStatus === HttpStatus.OK) {
+          // console.log(response.data);
+          setHavingNotification(response.data.object)
+        }
+      }
+      fetchData().catch(console.error)
+    }
+  }, [user])
 
 
   return (
@@ -201,22 +215,30 @@ function Header() {
               </Box>
               :
               <Box sx={{ flexGrow: 0 }}>
-                
+
                 <Tooltip className="d-flex align-items-md-center" >
                   <span>
-                    <div className="mx-3" style={{ fontSize:'110%' }}><strong>{user.firstname + " " + user.lastname}</strong></div>
-                    <div className="mx-3" style={{ fontSize:'90%', fontWeight:500 }}>
-                    <i className="flag flag-vietnam"></i> {formatToVND(user.balance)}
+                    <div className="mx-3" style={{ fontSize: '110%' }}><strong>{user.firstname + " " + user.lastname}</strong></div>
+                    <div className="mx-3" style={{ fontSize: '90%', fontWeight: 500 }}>
+                      <i className="flag flag-vietnam"></i> {formatToVND(user.balance)}
                     </div>
                   </span>
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
                     <Avatar alt="Remy Sharp" src={!user || !user.avatar ? "/broken-image.jpg" : "data:image/png;base64, " + user.avatar} />
                   </IconButton>
-                  <Badge className="ms-3" badgeContent={"!"} color="warning">
-                        <NotificationsActiveIcon />
 
-                  </Badge>
+                  {
+                    havingNotification ?
+                      <Badge className="ms-3" badgeContent={"!"} color="warning">
+                        <NotificationsActiveIcon />
+                      </Badge>
+                      :
+                      <div className="ms-3">
+                        <NotificationsActiveIcon />
+                      </div>
+                  }
+
                 </Tooltip>
                 <Menu
                   sx={{ mt: '45px' }}
@@ -245,13 +267,13 @@ function Header() {
                       <Typography sx={{ textAlign: 'center' }}>
 
                         {
-                          setting == settings[0] && <AccountCircleIcon/>
+                          setting == settings[0] && <AccountCircleIcon />
                         }
                         {
-                          setting == settings[1] && <LocalActivityIcon/>
+                          setting == settings[1] && <LocalActivityIcon />
                         }
                         {
-                          setting == settings[2] && <LogoutIcon/>
+                          setting == settings[2] && <LogoutIcon />
                         }
                         &nbsp;&nbsp;
                         {

@@ -4,7 +4,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { Avatar, Badge } from '@mui/material';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
-import { BOUGHT_TICKET_MANEMENT_PAGE, MAIN_COLOR, MY_SHOP_PAGE, PROFILE_PAGE, SidebarOption ,MANAGE_BUYER_PAGE, CHANGE_PASSWORD_PAGE, NOTIFICATION_PAGE} from '../config/Constant';
+import { BOUGHT_TICKET_MANEMENT_PAGE, MAIN_COLOR, MY_SHOP_PAGE, PROFILE_PAGE, SidebarOption, MANAGE_BUYER_PAGE, CHANGE_PASSWORD_PAGE, NOTIFICATION_PAGE } from '../config/Constant';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import Divider from '@mui/material/Divider';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
@@ -14,18 +14,38 @@ import { useNavigate } from 'react-router-dom';
 import KeyIcon from '@mui/icons-material/Key';
 import PropTypes from 'prop-types';
 import { formatToVND } from '../service/StringService';
+import { useEffect, useState } from 'react';
+import useAxios from '../utils/useAxios';
+import API from '../config/API';
+import HttpStatus from '../config/HttpStatus';
 
 /*
     Author: Nguyen Tien Thuan
 */
 // eslint-disable-next-line react/prop-types
-export default function SideBar({sideBarOption, user}) {
+export default function SideBar({ sideBarOption, user }) {
+
+    const api = useAxios()
+    const navigator = useNavigate();
 
     SideBar.propTypes = {
-        sideBarOption: PropTypes.oneOf(['BOUGHT_TICKET', 'PROFILE', 'MY_SHOP', 'BALANCE', 'INFORM', 'CHANGE_PASS']).isRequired, 
+        sideBarOption: PropTypes.oneOf(['BOUGHT_TICKET', 'PROFILE', 'MY_SHOP', 'BALANCE', 'INFORM', 'CHANGE_PASS']).isRequired,
     };
 
-    const navigator = useNavigate();
+    const [havingNotification, setHavingNotification] = useState(false);
+
+    useEffect(() => {
+        if (user) {
+            const fetchData = async () => {
+                const response = await api.get(API.Notiication.HAVE_NOTIFICATION + user.id)
+                if (response.data.httpStatus === HttpStatus.OK) {
+                    // console.log(response.data);
+                    setHavingNotification(response.data.object)
+                }
+            }
+            fetchData().catch(console.error)
+        }
+    }, [user])
 
     return (
         <List
@@ -34,7 +54,7 @@ export default function SideBar({sideBarOption, user}) {
             aria-labelledby="nested-list-subheader"
         >
             <div className='d-flex justify-content-center mb-3'>
-                <Avatar src={ !user || !user.avatar ? "/broken-image.jpg" : "data:image/png;base64, "+ user.avatar } sx={{ width: 72, height: 72 }} /> 
+                <Avatar src={!user || !user.avatar ? "/broken-image.jpg" : "data:image/png;base64, " + user.avatar} sx={{ width: 72, height: 72 }} />
                 {/*  src="/broken-image.jpg" */}
             </div>
             {
@@ -54,7 +74,7 @@ export default function SideBar({sideBarOption, user}) {
                     <div> Quản lý tài khoản</div>
                 </ListItemButton>
 
-                <ListItemButton 
+                <ListItemButton
                     sx={sideBarOption === SidebarOption.BOUGHT_TICKET ? { backgroundColor: MAIN_COLOR } : {}}
                     onClick={() => { navigator(BOUGHT_TICKET_MANEMENT_PAGE) }}
                 >
@@ -74,9 +94,9 @@ export default function SideBar({sideBarOption, user}) {
                     <div>Shop của tôi</div>
                 </ListItemButton>
 
-                <ListItemButton 
+                <ListItemButton
                     sx={sideBarOption === SidebarOption.BALANCE ? { backgroundColor: MAIN_COLOR } : {}}
-                    onClick={() => { navigator(MANAGE_BUYER_PAGE)}}
+                    onClick={() => { navigator(MANAGE_BUYER_PAGE) }}
                 >
                     <ListItemIcon>
                         <LocalAtmIcon />
@@ -88,25 +108,29 @@ export default function SideBar({sideBarOption, user}) {
             <div className='mb-3'><Divider /></div>
 
             <div className='mb-3'>
-                <ListItemButton 
+                <ListItemButton
                     sx={sideBarOption === SidebarOption.NOTIFICATION ? { backgroundColor: MAIN_COLOR } : {}}
                     onClick={() => navigator(NOTIFICATION_PAGE)}
                 >
                     <ListItemIcon>
-                    <Badge badgeContent={"!"} color="warning">
-                        <NotificationsActiveIcon />
-
-                    </Badge>
+                        {
+                            havingNotification ?
+                            <Badge badgeContent={"!"} color="warning">
+                                <NotificationsActiveIcon />
+                            </Badge>
+                            : 
+                            <NotificationsActiveIcon />
+                        }
                     </ListItemIcon>
                     <div>Thông báo</div>
                 </ListItemButton>
 
-                <ListItemButton 
+                <ListItemButton
                     sx={sideBarOption === SidebarOption.CHANGE_PASS ? { backgroundColor: MAIN_COLOR } : {}}
                     onClick={() => navigator(CHANGE_PASSWORD_PAGE)}
                 >
                     <ListItemIcon>
-                        <KeyIcon/>
+                        <KeyIcon />
                     </ListItemIcon>
                     <div>Đổi mật khẩu</div>
                 </ListItemButton>
