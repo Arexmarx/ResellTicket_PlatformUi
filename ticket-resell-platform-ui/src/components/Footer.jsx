@@ -5,12 +5,20 @@ import {
   MDBCol,
   MDBIcon,
 } from "mdb-react-ui-kit";
+import { useNavigate } from "react-router-dom";
+import { POLICY_DETAIL_PAGE } from "../config/Constant";
 
 
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
 export default function Footer() {
+  const navigate = useNavigate();
+
+  const handlePolicy = (x) =>{
+    navigate(POLICY_DETAIL_PAGE, {state: {typeOfPolicy: x}})
+  }
+
   return (
     <MDBFooter bgColor="light" className="text-center text-lg-start text-muted">
       <div style={{backgroundColor: 'rgb(57, 63, 78)', color:'rgb(206 206 206)'}}>
@@ -61,17 +69,17 @@ export default function Footer() {
                   Chính sách
                 </h6>
                 <p>
-                  <a href="#!" className="text-reset">
+                  <a href="#!" className="text-reset" onClick={() => handlePolicy("buyerPolicy")}>
                     Chính sách cho người mua
                   </a>
                 </p>
                 <p>
-                  <a href="#!" className="text-reset">
+                  <a href="#!" className="text-reset" onClick={() => handlePolicy("sellerPolicy")}>
                   Chính sách cho người bán
                   </a>
                 </p>
                 <p>
-                  <a href="#!" className="text-reset">
+                  <a href="#!" className="text-reset" onClick={() => handlePolicy("generalPolicy")}>
                     Chính sách chung
                   </a>
                 </p>

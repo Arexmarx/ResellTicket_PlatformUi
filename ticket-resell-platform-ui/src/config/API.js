@@ -44,7 +44,9 @@ const API =  {
     },
     
     Policy: {
-        GET_SELLING_POLICY: "/api/policy/get/selling"
+        GET_SELLING_POLICY: "/api/policy/get/selling",
+        GET_BUYING_POLICY: "/api/policy/get/buying",
+        GET_GENERAL_POLICY: "/api/policy/get/general"
     },
 
     Event: {

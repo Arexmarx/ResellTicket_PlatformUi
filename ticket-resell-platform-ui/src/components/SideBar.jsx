@@ -4,10 +4,15 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { Avatar, Badge } from '@mui/material';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
+<<<<<<< HEAD
 import { BOUGHT_TICKET_MANEMENT_PAGE, MAIN_COLOR, MY_SHOP_PAGE, PROFILE_PAGE, SidebarOption, MANAGE_BUYER_PAGE, CHANGE_PASSWORD_PAGE, NOTIFICATION_PAGE } from '../config/Constant';
+=======
+import { BOUGHT_TICKET_MANEMENT_PAGE, MAIN_COLOR, MY_SHOP_PAGE, PROFILE_PAGE, SidebarOption ,MANAGE_BUYER_PAGE, CHANGE_PASSWORD_PAGE, CHAT_PAGE,NOTIFICATION_PAGE} from '../config/Constant';
+>>>>>>> 63cbb98e9ba07e5137d7ad22188a159acda86f81
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import Divider from '@mui/material/Divider';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +34,7 @@ export default function SideBar({ sideBarOption, user }) {
     const navigator = useNavigate();
 
     SideBar.propTypes = {
-        sideBarOption: PropTypes.oneOf(['BOUGHT_TICKET', 'PROFILE', 'MY_SHOP', 'BALANCE', 'INFORM', 'CHANGE_PASS']).isRequired,
+        sideBarOption: PropTypes.oneOf(['BOUGHT_TICKET', 'PROFILE', 'MY_SHOP', 'BALANCE','CHAT', 'INFORM', 'CHANGE_PASS']).isRequired, 
     };
 
     const [havingNotification, setHavingNotification] = useState(false);
@@ -102,6 +107,15 @@ export default function SideBar({ sideBarOption, user }) {
                         <LocalAtmIcon />
                     </ListItemIcon>
                     <div>Quản lý số dư</div>
+                </ListItemButton>
+                <ListItemButton 
+                    sx={sideBarOption === SidebarOption.CHAT ? { backgroundColor: MAIN_COLOR } : {}}
+                    onClick={() => { navigator(CHAT_PAGE)}}
+                >
+                    <ListItemIcon>
+                        <QuestionAnswerOutlinedIcon />
+                    </ListItemIcon>
+                    <div>Nhắn tin</div>
                 </ListItemButton>
             </div>
 
