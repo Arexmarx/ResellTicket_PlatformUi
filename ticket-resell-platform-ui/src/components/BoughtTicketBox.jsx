@@ -228,7 +228,7 @@ export default function BoughtTicketBox({ user }) {
                 (x, index) =>
                   x.process === TicketProcess.SUCCESS && !x.isRated && (
                     <MDBRow
-                      className="shadow-sm p-3 mb-5 bg-body rounded"
+                      className="shadow-sm p-3 mt-3 bg-body rounded"
                       key={index}
                       center
                     >

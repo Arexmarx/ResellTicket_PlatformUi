@@ -7,6 +7,7 @@ import API from "../config/API";
 import HttpStatus from "../config/HttpStatus";
 import { formatToVND, getFirstFiveChars } from "../service/StringService";
 import { formatDateTime } from "../service/DateService";
+import { TicketProcess } from "../config/Constant";
 
 
 const titleCss = {
@@ -19,11 +20,11 @@ export default function SoldTicketBox({ user }) {
     const api = useAxios();
     const [boughtTickets, setBoughtTickets] = useState(null);
 
-    
+
     useEffect(() => {
         if (user) {
             const fetchData = async () => {
-                const reponse = await api.get(API.Ticket.GET_ALL_BOUGHT_TICKET + user?.id)
+                const reponse = await api.get(API.Ticket.GET_ALL_BOUGHT_TICKET + user.id)
                 if (reponse.data.httpStatus === HttpStatus.OK) {
                     //console.log(reponse.data.object)
                     setBoughtTickets(reponse.data.object)
@@ -31,10 +32,10 @@ export default function SoldTicketBox({ user }) {
             }
             fetchData().catch(console.error)
         }
-    }, [])
-    
+    }, [user])
 
-    if (!user || !boughtTickets) {
+
+    if (!boughtTickets) {
         return (
             <LoadEffect />
         )
@@ -50,13 +51,19 @@ export default function SoldTicketBox({ user }) {
                         (<div key={index} className="row shadow-sm p-3 mb-5 bg-body rounded mx-2">
                             <div className="row d-flex align-content-center">
                                 <div className="col-md-1 d-flex justify-content-center align-items-center">
-                                    <Avatar src={item.buyer.avatar ? "data:image/png;base64, " + item.buyer.avatar : "broken-image.jpg"} />
+                                    {
+                                        item.buyer && <Avatar src={item.buyer.avatar ? "data:image/png;base64, " + item.buyer.avatar : "broken-image.jpg"} />
+                                    }
+
                                 </div>
                                 <div className="col-md-2">
                                     <div style={titleCss} className="row">
                                         Người mua
                                     </div>
-                                    <div className="row">{item.buyer.firstname + " " + item.buyer.lastname}</div>
+                                    {
+                                        item.buyer ? <div className="row">{item.buyer.firstname + " " + item.buyer.lastname}</div> : "(Đánh đấu đã mua)"
+                                    }
+
                                 </div>
                                 <div className="col-md-2">
                                     <div style={titleCss} className="row">
@@ -80,7 +87,7 @@ export default function SoldTicketBox({ user }) {
                                     </div>
                                     <div className="row">
                                         {
-                                            formatToVND(item.genericTicketObject.price - ( item.genericTicketObject.price * item.genericTicketObject.salePercent / 100 ))
+                                            formatToVND(item.genericTicketObject.price - (item.genericTicketObject.price * item.genericTicketObject.salePercent / 100))
                                         }
                                     </div>
                                 </div>
@@ -89,7 +96,7 @@ export default function SoldTicketBox({ user }) {
                                         Loại vé
                                     </div>
                                     <div className="row">
-                                        {item.isPaper ? 'Giấy' : 'Online'}
+                                        {item.genericTicketObject.isPaper ? 'Giấy' : 'Online'}
                                     </div>
                                 </div>
                                 <div className="col-md-2">
@@ -98,6 +105,22 @@ export default function SoldTicketBox({ user }) {
                                     </div>
                                     <div className="row">
                                         {formatDateTime(item.genericTicketObject.expiredDateTime)}
+                                    </div>
+                                </div>
+                                <div className="col-md-2">
+                                    <div style={titleCss} className="row">
+                                        Tình trạng
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-5">
+                                            {item.process === TicketProcess.DELIVERING ? "Đang giao" : "Đã giao"}
+                                        </div>
+                                        {
+                                            item.genericTicketObject.isPaper && item.process === TicketProcess.DELIVERING &&
+                                            <div className="col-md-7">
+                                                <button className="btn btn-success">Xác nhận đã giao</button>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </div>

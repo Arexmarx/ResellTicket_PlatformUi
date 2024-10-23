@@ -69,5 +69,6 @@ export const BASE_GETWAY_API = "http://localhost:8090"
 export const TicketProcess = {
     SELLING: "SELLING",
     SUCCESS: "SUCCESS",
-    REJECTED: "REJECTED"
+    REJECTED: "REJECTED",
+    DELIVERING: "DELIVERING"
 }

@@ -6,6 +6,7 @@ import API from "../config/API";
 import HttpStatus from "../config/HttpStatus";
 import { formatToVND } from "../service/StringService";
 import { formatDateTime } from "../service/DateService";
+import { MDBBadge } from "mdb-react-ui-kit";
 
 const titleCss = {
     fontSize: "70%",
@@ -92,7 +93,9 @@ export default function CanceledOrderTicketBox({ user }) {
                                 Tình trạng
                             </div>
                             <div className="row">
-                                Đã hủy
+                                <MDBBadge style={{ width: 'auto' }} color='danger' light>
+                                    Đã hủy
+                                </MDBBadge>
                             </div>
                         </div>
                     </div>

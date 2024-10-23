@@ -4,11 +4,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { Avatar, Badge } from '@mui/material';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
-<<<<<<< HEAD
-import { BOUGHT_TICKET_MANEMENT_PAGE, MAIN_COLOR, MY_SHOP_PAGE, PROFILE_PAGE, SidebarOption, MANAGE_BUYER_PAGE, CHANGE_PASSWORD_PAGE, NOTIFICATION_PAGE } from '../config/Constant';
-=======
 import { BOUGHT_TICKET_MANEMENT_PAGE, MAIN_COLOR, MY_SHOP_PAGE, PROFILE_PAGE, SidebarOption ,MANAGE_BUYER_PAGE, CHANGE_PASSWORD_PAGE, CHAT_PAGE,NOTIFICATION_PAGE} from '../config/Constant';
->>>>>>> 63cbb98e9ba07e5137d7ad22188a159acda86f81
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import Divider from '@mui/material/Divider';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';

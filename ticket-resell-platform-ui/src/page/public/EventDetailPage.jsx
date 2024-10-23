@@ -11,6 +11,7 @@ import {
   MDBCardText,
   MDBBtn,
   MDBCardHeader,
+  MDBBadge,
 } from "mdb-react-ui-kit";
 import { BUY_TICKET_PAGE } from "../../config/Constant.js";
 import { useNavigate } from "react-router-dom";
@@ -93,6 +94,15 @@ export default function EventDetail() {
                   <MDBCardText><strong>Mô tả sự kiện:</strong> {event.detail}</MDBCardText>
                   <MDBCardText><strong>Từ ngày:</strong> {formatDateTime(event.startDate)}</MDBCardText>
                   <MDBCardText><strong>Đến ngày:</strong> {formatDateTime(event.endDate)}</MDBCardText>
+                  {
+                    new Date(event.endDate) < new Date() && (
+                      <h5>
+                        <MDBBadge color='danger' light>
+                          *Sự kiện đã diễn ra
+                        </MDBBadge>
+                      </h5>
+                    )
+                  }
                 </div>
               </MDBCardBody>
             </MDBCard>
@@ -123,6 +133,8 @@ export default function EventDetail() {
               !user && <Alert severity="error">Bạn cần đăng nhập để mua vé</Alert>
             }
             {
+              // Display selling ticket when event are available
+              new Date(event.endDate) > new Date() &&
               sellingGenericTicket &&
               sellingGenericTicket.map((gTicket) => (user?.id != gTicket.seller.id &&
                 <MDBCard key={gTicket.id} style={{ marginTop: "2%" }}>

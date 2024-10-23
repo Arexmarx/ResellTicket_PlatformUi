@@ -199,6 +199,7 @@ function Header() {
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
+                style={{ backgroundColor:'rgba(213, 213, 213, 0)', color:'white' }}
                 name="search_field"
                 placeholder={search}
                 inputProps={{ 'aria-label': 'search' }}

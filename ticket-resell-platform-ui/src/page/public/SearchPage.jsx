@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import {
+  MDBBadge,
   MDBCard,
   MDBCardBody,
   MDBCardImage,
@@ -23,6 +24,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import '../../assets/css/BoxDateTime.css'
 import { getDay, getMonth, getYear } from "../../service/DateService";
+import { TextField } from "@mui/material";
 
 export default function SearchPage() {
   const location = useLocation();
@@ -31,6 +33,10 @@ export default function SearchPage() {
 
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  //console.log(events);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,26 +51,16 @@ export default function SearchPage() {
   }, []);
 
   useEffect(() => {
-    // console.log("Component mounted or updated");
-    // console.log("Event name:", eventName);
-    // console.log("Events:", events);
-
     if (events.length > 0) {
-      if (eventName) {
-        setFilteredEvents(
-          events.filter(
-            (eventItem) =>
-              eventItem.name &&
-              eventItem.name.toLowerCase().includes(eventName.toLowerCase())
-          )
-        );
-      } else {
-        setFilteredEvents(events);
-      }
+      const filteredByName = events.filter((eventItem) =>
+        eventItem.name && eventItem.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
+      setFilteredEvents(filteredByName);
     } else {
       console.log("No events to filter.");
     }
-  }, [events, eventName]);
+  }, [events, searchTerm]);
 
   const handleClick = (item) => {
     navigate(EVENT_DETAIL_PAGE, { state: { event: item } });
@@ -85,6 +81,10 @@ export default function SearchPage() {
     }
   };
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
   return (
     <div>
       <Header />
@@ -92,22 +92,45 @@ export default function SearchPage() {
         <MDBTypography style={{ paddingTop: "3%" }}>
           Kết quả tìm kiếm của: {eventName}
         </MDBTypography>
-        <MDBRow>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={["DatePicker"]}>
-              <DatePicker
-                label="Chọn ngày bắt đầu sự kiện"
-                onChange={(date) => handleSearchDate(date)}
+
+        <MDBRow style={{ marginTop: '2%' }}>
+          <div className="col-md-5 d-flex align-items-center">
+            <div style={{ width: '100%' }}>
+              <div>Tìm kiếm tên sự kiện</div>
+              <TextField type="text"
+                style={{ width: '100%' }}
+                value={searchTerm} onChange={handleSearchChange}
+                label="Tìm kiếm sự kiện theo tên"
               />
-            </DemoContainer>
-          </LocalizationProvider>
+            </div>
+            {/* <input
+              type="text"
+              placeholder="Tìm kiếm sự kiện theo tên"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              className="form-control"
+            /> */}
+          </div>
+          <div className="col-md-5">
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <div>Tìm kiếm tên sự kiện</div>
+              <DemoContainer components={["DatePicker"]}>
+                
+                <DatePicker
+                  label="Chọn ngày bắt đầu sự kiện"
+                  onChange={(date) => handleSearchDate(date)}
+                />
+              </DemoContainer>
+            </LocalizationProvider>
+          </div>
         </MDBRow>
-        <MDBRow style={{ marginTop: "3%" }}>
+        <MDBRow style={{ marginTop: "2%" }}>
           {filteredEvents.length > 0 ? (
             filteredEvents.map((eventItem, index) => (
               <MDBCol key={index} md="3" style={{ marginTop: "4%" }}>
                 <MDBCard>
                   <div className="calendar-container">
+
                     <MDBCardImage
                       onClick={() => handleClick(eventItem)}
                       style={{ maxHeight: "206px", minHeight: "206px" }}
@@ -120,7 +143,11 @@ export default function SearchPage() {
                       <div className="year-sm">{getYear(eventItem.startDate)}</div>
                     </div>
                   </div>
-
+                  {/* {
+                    <MDBBadge className='mx-2 mt-2' color='danger' light>
+                        Đã kết thúc
+                    </MDBBadge>
+                  } */}
                   <MDBCardBody>
                     <MDBCardTitle
                       title={eventItem.name}
@@ -132,6 +159,14 @@ export default function SearchPage() {
                     >
                       {eventItem.name}
                     </MDBCardTitle>
+
+                    {/* {
+                      eventItem.hashtags &&
+                      eventItem.hashtags.map((hashtag, index) => (
+                        <span key={index}>{hashtag.name}</span>
+                      ))
+                    } */}
+
                     <MDBCardText
                       style={{
                         marginTop: eventItem.name.length > 22 ? "8%" : "8%",
