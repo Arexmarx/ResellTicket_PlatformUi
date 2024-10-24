@@ -14,6 +14,8 @@ import {
   MDBListGroup,
   MDBListGroupItem,
   MDBInputGroup,
+  MDBCardHeader,
+  MDBCardFooter,
 } from "mdb-react-ui-kit";
 import SideBar from "../../components/SideBar";
 import { SidebarOption } from "../../config/Constant";
@@ -21,6 +23,7 @@ import useAxios from "../../utils/useAxios";
 import API from "../../config/API";
 import HttpStatus from "../../config/HttpStatus";
 import { Avatar } from "@mui/material";
+import SendRoundedIcon from '@mui/icons-material/SendRounded';
 
 export default function ChatPage() {
   const [user, setUser] = useState({});
@@ -32,9 +35,9 @@ export default function ChatPage() {
   const [conversation, setConversation] = useState(null); // Initialize as null
   const [connected, setConnected] = useState(false);
   const [stompClient, setStompClient] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
   const api = useAxios();
 
-  // Ref for auto-scrolling
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -47,13 +50,12 @@ export default function ChatPage() {
     };
     fetchData().catch(console.error);
 
-    // Fetch other users (or chats)
     const fetchOtherUsers = async () => {
       const response = await api.get(API.User.GET_ALL_USER_BY_NAME, {
         params: { name: "" },
       });
       if (response.data.httpStatus === HttpStatus.OK) {
-        setOtherUsers(response.data.object); // Assuming this returns an array of users
+        setOtherUsers(response.data.object);
       }
     };
     fetchOtherUsers().catch(console.error);
@@ -62,16 +64,16 @@ export default function ChatPage() {
   const handleSendMessage = () => {
     if (newMessage.trim() !== "" && stompClient) {
       const chatMessage = {
-          senderId: user.id,
-          message: newMessage,
-          time: new Date().toISOString(),
+        senderId: user.id,
+        message: newMessage,
+        time: new Date().toISOString(),
       };
       stompClient.send(
         `/chat/chat.sendMessage/${conversation.conversationId}`,
         {},
         JSON.stringify(chatMessage)
       ); // Send message to room
-      setNewMessage(""); // Clear the input after sending
+      setNewMessage("");
       onConnected
     }
   };
@@ -92,7 +94,7 @@ export default function ChatPage() {
     if (value.key === "Enter") {
       if (searchUser.length > 0) {
         setFullUserList(
-          otherUsers.filter((users) =>
+          fullUserlist.filter((users) =>
             fullname(users.firstname, users.lastname)
               .toLowerCase()
               .includes(searchUser.toLowerCase())
@@ -124,9 +126,10 @@ export default function ChatPage() {
       );
       if (chatResponse.data.httpStatus === HttpStatus.OK) {
         console.log(chatResponse.data.object);
-        setConversation(chatResponse.data.object); // Set conversation state
-        connect(chatResponse.data.object.conversationId); // Connect to the WebSocket with conversation ID
-        setMessages(chatResponse.data.object.messages); // Set initial messages from the chat room
+        setConversation(chatResponse.data.object);
+        setSelectedUser(userChat)
+        connect(chatResponse.data.object.conversationId);
+        setMessages(chatResponse.data.object.messages); 
       }
     } catch (error) {
       console.log(error);
@@ -134,18 +137,18 @@ export default function ChatPage() {
   };
 
   const connect = (conversationId) => {
-      const socket = new SockJS("http://localhost:9009/ws");
-      const client = Stomp.over(socket);
-      client.connect(
-        {},
-        () => {
+    const socket = new SockJS("http://localhost:9009/ws");
+    const client = Stomp.over(socket);
+    client.connect(
+      {},
+      () => {
         console.log("Connected to WebSocket");
-          setConnected(true);
-        onConnected(client, conversationId); // Pass conversationId to onConnected
-        },
-        onError
-      );
-      setStompClient(client);
+        setConnected(true);
+        onConnected(client, conversationId);
+      },
+      onError
+    );
+    setStompClient(client);
   };
 
   const onConnected = (client, conversationId) => {
@@ -176,7 +179,7 @@ export default function ChatPage() {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]); // Auto-scroll to the bottom when messages change
+  }, [messages]);
 
   return (
     <div>
@@ -242,6 +245,21 @@ export default function ChatPage() {
                     flexDirection: "column",
                   }}
                 >
+                  <MDBCardHeader>
+
+                    <div className="col-md-12 d-flex justify-content-start align-items-center">
+                      {
+                        selectedUser && <Avatar className="me-3"
+                        src={
+                          selectedUser.avatar
+                            ? "data:image/png;base64, " + selectedUser.avatar
+                            : "broken-image.jpg"
+                        }
+                      />
+                      }
+                      {selectedUser && <>{selectedUser.firstname + " " + selectedUser.lastname}</>}
+                    </div>
+                  </MDBCardHeader>
                   <MDBCardBody className="overflow-auto">
                     {/* Message Display Area */}
                     <div
@@ -256,11 +274,10 @@ export default function ChatPage() {
                           }
                         >
                           <div
-                            className={`message p-2 mb-2 rounded ${
-                              msg.senderId === user.id
-                                ? "bg-primary text-white"
-                                : "bg-light"
-                            }`}
+                            className={`message p-2 mb-2 rounded ${msg.senderId === user.id
+                              ? "bg-primary text-white"
+                              : "bg-light"
+                              }`}
                             style={{ maxWidth: "70%", display: "inline-block" }}
                           >
                             {msg.message}
@@ -271,24 +288,24 @@ export default function ChatPage() {
                       {/* Reference for auto-scrolling */}
                     </div>
                   </MDBCardBody>
-                  <MDBCardBody>
+                  <MDBCardFooter>
                     <MDBInputGroup>
-                    <MDBInput
-                      type="text"
-                      value={newMessage}
-                      onChange={(e) => setNewMessage(e.target.value)}
+                      <MDBInput
+                        type="text"
+                        value={newMessage}
+                        onChange={(e) => setNewMessage(e.target.value)}
                         placeholder="Type a message"
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             handleSendMessage();
                           }
                         }}
-                    />
+                      />
                       <MDBBtn color="primary" onClick={handleSendMessage}>
-                      Send
-                    </MDBBtn>
+                        <SendRoundedIcon/>
+                      </MDBBtn>
                     </MDBInputGroup>
-                  </MDBCardBody>
+                  </MDBCardFooter>
                 </MDBCard>
               </MDBCol>
             </MDBRow>
