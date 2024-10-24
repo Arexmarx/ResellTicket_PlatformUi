@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "prop-types": "^15.8.1"
+    "global": "^4.4.0",
+    "prop-types": "^15.8.1",
+    "sockjs-client": "^1.6.1"
   }
 }
