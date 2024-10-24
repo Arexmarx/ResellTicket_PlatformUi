@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import HttpStatus from "../config/HttpStatus";
 import API from "../config/API";
 import { useEffect, useState } from "react";
+import LoadEffect from "./LoadEffect";
 
 export default function NotificationReadBox({ user }) {
 
@@ -12,7 +13,7 @@ export default function NotificationReadBox({ user }) {
     const successNotification = (str) => toast.success(str)
     const errorNotification = (str) => toast.error(str)
 
-    const [visibleNotifications, setVisibleNotifications] = useState([]);
+    const [visibleNotifications, setVisibleNotifications] = useState(null);
 
 
     useEffect(() => {
@@ -42,6 +43,12 @@ export default function NotificationReadBox({ user }) {
         else {
             errorNotification(response.data.message)
         }
+    }
+
+    if (!Array.isArray(visibleNotifications)) {
+        return(
+            <LoadEffect/>
+        )
     }
 
     return (

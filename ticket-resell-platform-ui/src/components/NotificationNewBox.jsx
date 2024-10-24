@@ -6,13 +6,14 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HttpStatus from "../config/HttpStatus";
 import { useEffect, useState } from "react";
+import LoadEffect from "./LoadEffect";
 
 export default function NotificationNewBox({ user }) {
 
     const api = useAxios();
     const successNotification = (str) => toast.success(str)
     const errorNotification = (str) => toast.error(str)
-    const [visibleNotifications, setVisibleNotifications] = useState([]);
+    const [visibleNotifications, setVisibleNotifications] = useState(null);
 
 
     useEffect(() => {
@@ -42,6 +43,12 @@ export default function NotificationNewBox({ user }) {
         else {
             errorNotification(response.data.message)
         }
+    }
+
+    if (!Array.isArray(visibleNotifications)) {
+        return(
+            <LoadEffect/>
+        )
     }
 
 

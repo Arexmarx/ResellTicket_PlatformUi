@@ -34,7 +34,7 @@ const titleCss = {
 
 export default function CanceledTicketBox({ user }) {
     const api = useAxios()
-    const [tickets, setTickets] = useState([]);
+    const [tickets, setTickets] = useState(null);
     const [openTicketId, setOpenTicketId] = useState(null);
 
     //console.log(user);
@@ -59,7 +59,7 @@ export default function CanceledTicketBox({ user }) {
         setOpenTicketId(openTicketId === ticketId ? null : ticketId);
     };
 
-    if (!tickets) {
+    if (!Array.isArray(tickets)) {
         return (
             <LoadEffect />
         )

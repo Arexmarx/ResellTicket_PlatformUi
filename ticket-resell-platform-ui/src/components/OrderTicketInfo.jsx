@@ -17,7 +17,7 @@ const titleCss = {
 export default function OrderTicketInfo({ user }) {
 
     const api = useAxios();
-    const [requestOrders, setRequestOrders] = useState([])
+    const [requestOrders, setRequestOrders] = useState(null)
 
 
     useEffect(() => {
@@ -112,7 +112,7 @@ export default function OrderTicketInfo({ user }) {
     }
 
 
-    if (!user) {
+    if (!Array.isArray(requestOrders)) {
         return (
             <LoadEffect />
         )
