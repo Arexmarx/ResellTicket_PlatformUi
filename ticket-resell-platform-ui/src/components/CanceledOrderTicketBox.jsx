@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Avatar, Box } from "@mui/material";
 import useAxios from "../utils/useAxios";
 import { useEffect, useState } from "react";

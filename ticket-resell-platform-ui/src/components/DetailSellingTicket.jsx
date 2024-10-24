@@ -47,7 +47,7 @@ export default function DetailSellingTicket({ user }) {
   const successNotification = (str) => toast.success(str)
   const errorNotification = (str) => toast.error(str)
 
-  const [tickets, setTickets] = useState([]);
+  const [tickets, setTickets] = useState(null);
   const [openTicketId, setOpenTicketId] = useState(null);
   const [editModalOpen, setEditModalOpen] = useState(null);
   const [checked, setChecked] = useState(false);
@@ -85,6 +85,12 @@ export default function DetailSellingTicket({ user }) {
   if (!tickets) {
     return (
       <LoadEffect />
+    )
+  }
+
+  if (!Array.isArray(tickets)) {
+    return (
+      <LoadEffect/>
     )
   }
 

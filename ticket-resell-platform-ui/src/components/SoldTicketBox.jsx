@@ -8,7 +8,9 @@ import HttpStatus from "../config/HttpStatus";
 import { formatToVND, getFirstFiveChars } from "../service/StringService";
 import { formatDateTime } from "../service/DateService";
 import { TicketProcess } from "../config/Constant";
-
+import { MDBBtn, MDBCardText, MDBModal, MDBModalBody, MDBModalContent, MDBModalDialog, MDBModalFooter, MDBModalHeader, MDBModalTitle } from "mdb-react-ui-kit";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const titleCss = {
     fontSize: "70%",
@@ -19,6 +21,9 @@ export default function SoldTicketBox({ user }) {
 
     const api = useAxios();
     const [boughtTickets, setBoughtTickets] = useState(null);
+    const [confirmDeliveredModalOpen, setConfirmDeliveredModalopen]= useState(null)
+    const successNotification = (str) => toast.success(str)
+    const errorNotification = (str) => toast.error(str)
 
 
     useEffect(() => {
@@ -35,7 +40,19 @@ export default function SoldTicketBox({ user }) {
     }, [user])
 
 
-    if (!boughtTickets) {
+    const handleConfirmDelivered = async (ticketId) => {
+        console.log("ticket id" ,ticketId);
+        const response = await api.put(API.Ticket.MAKR_DELIVERED_PAPER_TICKET + ticketId) 
+        if (response.data.httpStatus === HttpStatus.OK) {
+            successNotification(response.data.message)
+        }
+        else {
+            errorNotification(response.data.message)
+        }
+    }
+
+
+    if (!Array.isArray(boughtTickets)) {
         return (
             <LoadEffect />
         )
@@ -43,6 +60,7 @@ export default function SoldTicketBox({ user }) {
 
     return (
         <Box>
+            <ToastContainer/>
             {
                 boughtTickets && boughtTickets.length > 0 &&
                 (
@@ -118,12 +136,43 @@ export default function SoldTicketBox({ user }) {
                                         {
                                             item.genericTicketObject.isPaper && item.process === TicketProcess.DELIVERING &&
                                             <div className="col-md-7">
-                                                <button className="btn btn-success">Xác nhận đã giao</button>
+                                                <button onClick={() => setConfirmDeliveredModalopen(item.ticketId)} 
+                                                        className="btn btn-success"
+                                                >
+                                                    Xác nhận đã giao
+                                                </button>
                                             </div>
                                         }
                                     </div>
                                 </div>
                             </div>
+
+                            <MDBModal open={confirmDeliveredModalOpen === item.ticketId} 
+                                    onClose={() => setConfirmDeliveredModalopen(null)} tabIndex='-1'
+                            >
+                                <MDBModalDialog centered={true} size="lg">
+                                    <MDBModalContent>
+
+                                        <MDBModalHeader>
+                                            <MDBModalTitle className="text-success">Xác nhận đã giao</MDBModalTitle>
+                                            <MDBBtn onClick={() => setConfirmDeliveredModalopen(null)} className='btn-close' color='none'></MDBBtn>
+                                        </MDBModalHeader>
+
+                                        <MDBModalBody>
+                                            <MDBCardText>Tên vé: <strong>{item.genericTicketObject.ticketName}</strong></MDBCardText>
+                                            <MDBCardText>Mã serial: <strong>{item.ticketSerial}</strong></MDBCardText>
+                                            <MDBCardText></MDBCardText>
+                                        </MDBModalBody>
+
+                                        <MDBModalFooter>
+                                            <button onClick={() => handleConfirmDelivered(item.ticketId)} className="btn btn-success">Xác nhận</button>
+                                        </MDBModalFooter>
+
+                                    </MDBModalContent>
+                                </MDBModalDialog>
+                            </MDBModal>
+
+
                         </div>
 
                         )

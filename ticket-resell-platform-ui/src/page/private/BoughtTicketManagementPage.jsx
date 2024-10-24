@@ -41,12 +41,11 @@ export default function BoughtTicketManagementPage() {
       const fetchData = async () => {
         const response = await api2.get(API.GenericTicket.GET_PROCESSING_ORDER_TICKET + user.id)
         //console.log("Response"+response);
-        
         if (response.data.httpStatus === HttpStatus.OK) {
           //console.log(response.data.object)
           setTickets(response.data.object)
         }
-        response.status
+        //response.status
       }
       fetchData().catch(console.error)
     }
