@@ -19,7 +19,8 @@ const API =  {
         SEND_PASSWORD_OTP: "/api/users/reset-password/verify-reset-otp",
         SET_NEW_PASSWORD: "/api/users/reset-password/new-pass",
         CHANGE_PASSWORD: "/api/users/change-pass",
-        GET_ALL_RECEIVED_NOTIFICATION: "/api/users/get/notifications/all/"
+        GET_ALL_RECEIVED_NOTIFICATION: "/api/users/get/notifications/all/",
+        GET_ALL_USER_BY_NAME: "/api/users/get-by-name"
     },
 
     Ticket: {
@@ -81,6 +82,10 @@ const API =  {
         MARK_DELETED: "/api/notifications/mark-deleted/",
         DELETE_FOREVER:  "/api/notifications/delete-forever/",
     },
+
+    Chat :{
+        GET_OR_CREATE_ROOM: "/api/chat/get-room",
+    }
 }
 
 export default API
