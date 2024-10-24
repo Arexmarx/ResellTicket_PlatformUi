@@ -46,7 +46,7 @@ export default function CanceledTicketBox({ user }) {
             const response = await api.get(API.Ticket.GET_ALL_TICKET_OF_SELLER + user?.id)
             //console.log(response.data)
             if (response.data.httpStatus === HttpStatus.OK) {
-                console.log(response.data.object)
+                //console.log(response.data.object)
                 setTickets(response.data.object)
             }
         }

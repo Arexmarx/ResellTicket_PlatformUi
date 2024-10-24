@@ -31,6 +31,8 @@ const API =  {
         DENY_SELLING_TICKET_REQUEST: "/api/tickets/deny/selling-request",
         GET_ALL_BOUGHT_TICKET: "/api/tickets/get-all-bought-tickets/",
         GET_ALL_BOUGHT_TICKET_BY_BUYER: "/api/tickets/get-all-bought-tickets-of-buyer/",
+        MARK_TICKET_IS_BOUGHT: "/api/tickets/mark-bought/",
+
     },
 
     GenericTicket: {
@@ -39,7 +41,11 @@ const API =  {
         GET_GENERIC_TICKET_BY_EVENT: "/api/tickets/generic/get-by-event/",
         ORDER_GENERIC_TICKET: "/api/tickets/generic/order",
         GET_PROCESSING_ORDER_TICKET: "/api/tickets/generic/get-processing-order-ticket/",
-        GET_REQUEST_ORDER_TICKET: "/api/tickets/generic/get-all-request-order-ticket/"
+        
+        GET_CANCELED_ORDER_TICKET: "/api/tickets/generic/get-canceled-order-ticket/",
+        GET_REQUEST_ORDER_TICKET: "/api/tickets/generic/get-all-request-order-ticket/",
+        CANCEL_ORDER_TICKET: "/api/tickets/generic/cancel-order",
+        GET_RATED_GENERIC_TICKET_BY_BUYER: "/api/tickets/generic/get-rated-generic-ticket-of-buyer/",
     },
     
     Policy: {
@@ -78,6 +84,7 @@ const API =  {
     },
 
     Notiication: {
+        HAVE_NOTIFICATION: "/api/notifications/have-notifications/",
         MARK_READ: "/api/notifications/mark-read/",
         MARK_DELETED: "/api/notifications/mark-deleted/",
         DELETE_FOREVER:  "/api/notifications/delete-forever/",
@@ -85,7 +92,10 @@ const API =  {
 
     Chat :{
         GET_OR_CREATE_ROOM: "/api/chat/get-room",
-    }
+    },
+    Rating: {
+        CREATE_RATING: "/api/rating/create"
+    },
 }
 
 export default API

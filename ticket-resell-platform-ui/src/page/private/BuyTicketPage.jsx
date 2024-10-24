@@ -89,7 +89,8 @@ export default function BuyTicketPage() {
         buyerId: user.id,
         quantity: quantity,
         paymentMethodId: ticket.isPaper ? 2 : 1,
-        totalPrice: quantity * (ticket.price - (ticket.price * (ticket.salePercent / 100)))
+        totalPrice: quantity * (ticket.price - (ticket.price * (ticket.salePercent / 100))),
+        isPaper: ticket.isPaper
       }
       const response = await api.post(API.GenericTicket.ORDER_GENERIC_TICKET, orderTicketRequest)
       if (response.data.httpStatus === HttpStatus.OK) {

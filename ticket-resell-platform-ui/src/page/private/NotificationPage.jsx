@@ -1,5 +1,5 @@
 import LoadEffect from "../../components/LoadEffect";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import useAxios from "../../utils/useAxios";
 import { useEffect, useState } from "react";
 import API from "../../config/API";
@@ -10,7 +10,6 @@ import SideBar from "../../components/SideBar";
 import { SidebarOption } from "../../config/Constant";
 import NotificationNewBox from "../../components/NotificationNewBox";
 import NotificationReadBox from "../../components/NotificationReadBox";
-import NotificationDeletedBox from "../../components/NotificationDeletedBox";
 
 
 export default function NotificationPage() {
@@ -19,13 +18,9 @@ export default function NotificationPage() {
     const [user, setUser] = useState();
     const [notifications, setNotifications] = useState([]);
 
-    const successNotification = (str) => toast.success(str)
-    const errorNotification = (str) => toast.error(str)
-
     const tabs = [
         { id: '1', label: 'Thông báo mới' },
-        { id: '2', label: 'Đã đọc' },
-        { id: '3', label: 'Đã xóa' }
+        { id: '2', label: 'Đã đọc' }
     ];
     const [activeTab, setActiveTab] = useState(tabs[0]);
     const handleTabClick = (tab) => { setActiveTab(tab); };
@@ -40,18 +35,6 @@ export default function NotificationPage() {
         fetchData().catch(console.error)
     }, [])
 
-    useEffect(() => {
-        if (user) {
-            const fetchData = async () => {
-                const response = await api.get(API.User.GET_ALL_RECEIVED_NOTIFICATION + user?.id)
-                if (response.data.httpStatus === HttpStatus.OK) {
-                    //console.log(response.data.object);
-                    setNotifications(response.data.object)
-                }
-            }
-            fetchData().catch(console.error)
-        }
-    }, [user])
 
     if (!user) {
         return (
@@ -74,7 +57,7 @@ export default function NotificationPage() {
                         <div className="d-flex justify-content-between align-items-center">
                             <h2>Thông báo</h2>
 
-                            <div className="tab-menu" style={{ width: '70%' }}>
+                            <div className="tab-menu w-50" style={{ width: '70%' }}>
                                 {
                                     tabs.map((tab) => (
                                         <a
@@ -93,15 +76,11 @@ export default function NotificationPage() {
                         <div className="mx-5">
 
                             {
-                                activeTab.id === tabs[0].id && <NotificationNewBox notifications={notifications}/>
+                                activeTab.id === tabs[0].id && <NotificationNewBox user={user}/>
                             }
 
                             {
-                                activeTab.id === tabs[1].id && <NotificationReadBox notifications={notifications}/>
-                            }
-
-                            {
-                                activeTab.id === tabs[2].id && <NotificationDeletedBox notifications={notifications}/>
+                                activeTab.id === tabs[1].id && <NotificationReadBox user={user}/>
                             }
 
                         </div>

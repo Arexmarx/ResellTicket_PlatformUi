@@ -58,11 +58,12 @@ export default function OrderTicketInfo({ user }) {
             quantity: item.quantity,
             totalPrice: item.totalPrice,
             isAccepted: true,
-            note: ''
+            note: '',
+            isPaper: item.genericTicket.isPaper
         }
-        //console.log(acceptOrDenySellingRequest);
+        // console.log(acceptOrDenySellingRequest);
         const response = await api.post(API.Ticket.ACCEPT_SELLING_TICKET_REQUEST, acceptOrDenySellingRequest)
-        if (response.status === HttpStatus.OK) {
+        if (response.data.httpStatus === HttpStatus.OK) {
             console.log(response.data)
             setAcceptResponseMessage({ status: true, message: response.data.message })
         }
@@ -165,7 +166,7 @@ export default function OrderTicketInfo({ user }) {
                                         Loại vé
                                     </div>
                                     <div className="row">
-                                        {item.isPaper ? 'Giấy' : 'Online'}
+                                        {item.genericTicket.isPaper ? 'Giấy' : 'Online'}
                                     </div>
                                 </div>
                                 <div className="col-md-2">

@@ -10,7 +10,6 @@ import {
   MDBModalTitle,
   MDBModalBody,
   MDBModalFooter,
-  MDBCheckbox,
   MDBCollapse,
   MDBRow,
   MDBContainer,
@@ -19,6 +18,11 @@ import {
 import { useState } from "react";
 import LoadEffect from "./LoadEffect";
 import { formatDateTime } from "../service/DateService";
+import useAxios from "../utils/useAxios";
+import API from "../config/API";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import HttpStatus from "../config/HttpStatus";
 
 const titleCss = {
   fontSize: "70%",
@@ -27,10 +31,33 @@ const titleCss = {
 /*
  * Author: Nguyen Tien Thuan
  */
-export default function TicketInfoRowBox({ item }) {
+export default function TicketInfoRowBox({ item, user }) {
 
+  const api = useAxios();
   const [basicModal, setBasicModal] = useState(false);
   const [confirmCancelModal, setConfirmCancalModal] = useState(false)
+  const successNotification = (str) => toast.success(str)
+  const errorNotification = (str) => toast.error(str)
+
+
+  const handleCancelOrderTicket = async (item) => {
+    console.log(item.orderNo);
+    console.log(user.id);
+    const response = await api.post(API.GenericTicket.CANCEL_ORDER_TICKET, {}, {
+      params: {
+        orderNo: item.orderNo,
+        senderId: user.id
+      }
+    })
+    console.log(response);
+    
+    if (response.data.httpStatus === HttpStatus.OK) {
+      successNotification(response.data.message)
+    }
+    else {
+      errorNotification(response.data.message)
+    }
+  }
 
 
   if (!item) {
@@ -41,6 +68,7 @@ export default function TicketInfoRowBox({ item }) {
 
   return (
     <Box>
+      <ToastContainer/>
       <div className="row mt-3 shadow-sm p-3 mb-5 bg-body rounded">
         <div className="row d-flex align-content-center ">
           <div className="col-md-1 d-flex justify-content-center align-items-center">
@@ -164,7 +192,7 @@ export default function TicketInfoRowBox({ item }) {
               </div>
             </MDBModalBody>
             <MDBModalFooter>
-              <button className="btn btn-danger">Hủy đơn</button>
+              <button onClick={() => handleCancelOrderTicket(item)} className="btn btn-danger">Hủy đơn</button>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>

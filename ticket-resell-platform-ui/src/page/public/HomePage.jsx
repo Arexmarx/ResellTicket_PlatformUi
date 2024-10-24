@@ -125,7 +125,7 @@ export default function HomePage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
-      <MDBRow style={{marginTop: '4%', marginLeft: '15%'}}>
+      <MDBRow style={{marginTop: '6%', marginLeft: '15%'}}>
           <MDBCol>
 
             {
@@ -135,7 +135,7 @@ export default function HomePage() {
                   outline
                   color="tertiary"
                   size="lg"
-                  style={{borderColor: '#fbf9f9',fontWeight:'bold' }}
+                  style={{borderColor: '#fbf9f9',fontWeight:'bold', fontSize:'medium' }}
                   onClick={() => scrollToSection(
                     (cate.name == 'Âm nhạc') ? musicRef :
                       (cate.name == 'Sự kiện') ? eventRef :
@@ -169,7 +169,7 @@ export default function HomePage() {
           </MDBCol>
 
         </MDBRow>
-      <MDBContainer style={{ marginTop: "1%" }}>
+      <MDBContainer>
       </MDBContainer>
 
       <SlideShowMain />

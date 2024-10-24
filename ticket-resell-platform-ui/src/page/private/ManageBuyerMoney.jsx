@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import {
   MDBCol,
   MDBContainer,
   MDBRow,
-  MDBCardImage,
   MDBBtn,
   MDBCardHeader,
   MDBCard,
@@ -30,18 +29,24 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Stack, TextField } from "@mui/material";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
+
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
 export default function ManageBuyerMoney() {
-  const [user, setUser] = React.useState({});
+
   const api = useAxios();
-
+  const navigate = useNavigate();
+  const [user, setUser] = React.useState({});
   const [money, setMoney] = React.useState("");
-
   const [link, setLink] = React.useState();
 
-  const navigate = useNavigate();
+  const successNotification = (str) => toast.success(str)
+  const errorNotification  = (str) => toast.error(str)
+
   const handleChange = (event) => {
     setMoney(event.target.value);
   };
@@ -57,7 +62,7 @@ export default function ManageBuyerMoney() {
     message: "",
   });
 
-  console.log(paymentResponse);
+  // console.log(paymentResponse);
   useEffect(() => {
     if (paymentResponse) {
       if (paymentResponse?.object) {
@@ -70,33 +75,41 @@ export default function ManageBuyerMoney() {
     }
   }, [paymentResponse]);
 
-  const handleDeposite = () => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get(API.Payment.DEPOSITED_USER_API, {
-          params: {
-            amount: money,
-            orderInfo: "DEPOSIT",
-            customerCode: user?.customerCode,
-          },
-        });
-        if (response.data.httpStatus === HttpStatus.OK) {
-          console.log(response.data);
-          setLink(response.data.object);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const checkValidAmount = () => {
+    return money >= 10000 && money % 1000 === 0;
+  }
 
-    if (!link) fetchData(); // Only call fetchData here without recursion
+  const handleDeposite = () => {
+    if (checkValidAmount(money)) {
+      const fetchData = async () => {
+        try {
+          const response = await api.get(API.Payment.DEPOSITED_USER_API, {
+            params: {
+              amount: money,
+              orderInfo: "DEPOSIT",
+              customerCode: user?.customerCode,
+            },
+          });
+          if (response.data.httpStatus === HttpStatus.OK) {
+            // console.log(response.data);
+            setLink(response.data.object);
+          }
+        } catch (error) {
+          // console.error(error);  
+          errorNotification(error);
+        }
+      };
+      if (!link) fetchData(); 
+    }
+    else {
+      errorNotification("Số tiền nạp không hợp lệ!")
+    }
   };
 
   const handleCustomAmountChange = (event) => {
     const input = event.target.value;
     if (!isNaN(input) && Number(input) >= 0) {
-        setMoney(input);
-      
+      setMoney(input);
     }
   };
 
@@ -108,7 +121,7 @@ export default function ManageBuyerMoney() {
     const fetchData = async () => {
       const response = await api.get(API.User.GET_USER_INFO);
       if (response.data.httpStatus === HttpStatus.OK) {
-        console.log(response.data.object);
+        // console.log(response.data.object);
         setUser(response.data.object);
       }
     };
@@ -118,10 +131,13 @@ export default function ManageBuyerMoney() {
   const handleViewDeposited = () => {
     navigate(VIEW_HISTORY_DEPOSITED_PAGE);
   };
+
+
   return (
     <div>
       <Header />
       <MDBContainer fluid mb="5">
+        <ToastContainer/>
         <MDBRow style={{ marginTop: "7%" }}>
           <MDBCol md="2">
             <SideBar user={user} sideBarOption={SidebarOption.BALANCE} />
@@ -200,13 +216,13 @@ export default function ManageBuyerMoney() {
 
                     <FormControl fullWidth style={{ marginBottom: "1rem" }}>
                       <InputLabel id="select-money-label">
-                        Chọn số tiền của bạn
+                        Chọn số tiền bạn muốn nạp
                       </InputLabel>
                       <Select
                         labelId="select-money-label"
                         id="select-money"
                         value={money}
-                        label="Chọn số tiền của bạn"
+                        label="Chọn số tiền bạn muốn nạp"
                         onChange={handleChange}
                       >
                         <MenuItem value={10000}>{formatToVND(10000)}</MenuItem>
@@ -231,13 +247,18 @@ export default function ManageBuyerMoney() {
                           {formatToVND(10000000)}
                         </MenuItem>
                       </Select>
+                      <div style={{ display: 'flex', alignItems: 'center', marginTop: 10 }}>
+                        <hr style={{ flexGrow: 1, border: 'none', borderTop: '1px solid #000' }} />
+                        <span style={{ margin: '0 10px' }}>Hoặc</span>
+                        <hr style={{ flexGrow: 1, border: 'none', borderTop: '1px solid #000' }} />
+                      </div>
                       <TextField
                         fullWidth
-                        label="Hoặc nhập số tiền mong muốn"
+                        label="Nhập số tiền khác"
                         variant="outlined"
                         value={money}
                         onChange={handleCustomAmountChange}
-                        style={{ marginBottom: "1rem" ,marginTop:'2%'}}
+                        style={{ marginBottom: "1rem", marginTop: '2%' }}
 
                       />
                     </FormControl>

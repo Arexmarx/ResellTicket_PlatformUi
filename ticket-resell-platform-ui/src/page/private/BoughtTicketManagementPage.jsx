@@ -10,6 +10,9 @@ import HttpStatus from "../../config/HttpStatus";
 import useAxios from "../../utils/useAxios";
 import LoadEffect from "../../components/LoadEffect";
 import BoughtTicketBox from "../../components/BoughtTicketBox";
+import CanceledOrderTicketBox from "../../components/CanceledOrderTicketBox";
+import RatedTicketBox from "../../components/RatedTicketBox";
+import DeliveringTicketBox from "../../components/DeliveringTicketBox";
 
 /*
     Author: Nguyen Tien Thuan
@@ -43,6 +46,7 @@ export default function BoughtTicketManagementPage() {
           //console.log(response.data.object)
           setTickets(response.data.object)
         }
+        response.status
       }
       fetchData().catch(console.error)
     }
@@ -50,11 +54,11 @@ export default function BoughtTicketManagementPage() {
 
   const tabs = [
     { id: '1', label: 'Đang xử lý' },
-    { id: '2', label: 'Đang chuẩn bị' },
-    { id: '3', label: 'Đang giao hàng' },
-    { id: '4', label: 'Hoàn thành' },
-    { id: '5', label: 'Đã hủy' },
-    { id: '6', label: 'Đánh giá' }
+    // { id: '2', label: 'Đang chuẩn bị' },
+    { id: '2', label: 'Đang giao hàng' },
+    { id: '3', label: 'Hoàn thành' },
+    { id: '4', label: 'Đã hủy' },
+    { id: '5', label: 'Đánh giá' }
   ];
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const handleTabClick = (tab) => { setActiveTab(tab); };
@@ -114,14 +118,27 @@ export default function BoughtTicketManagementPage() {
                 activeTab.id === tabs[0].id && tickets.length > 0 ?
                 (
                   tickets.map((item, index) => (
-                    <TicketInfoRowBox key={index} item={item} />
+                    <TicketInfoRowBox key={index} item={item} user={user} />
                     
                   ))
                 )
                 : ''
               }
+
               {
-                activeTab.id === tabs[3].id && <BoughtTicketBox user={user}/>
+                activeTab.id === tabs[1].id && <DeliveringTicketBox user={user}/>
+              }
+
+              {
+                activeTab.id === tabs[2].id && <BoughtTicketBox user={user}/>
+              }
+
+              {
+                activeTab.id === tabs[3].id && <CanceledOrderTicketBox user={user}/>
+              }
+
+              {
+                activeTab.id == tabs[4].id && <RatedTicketBox user={user}/>
               }
 
             </div>
