@@ -14,6 +14,7 @@ import { Event } from "../../config/Constant.js";
 import EventAPI from "../../service/api/EventAPI.js";
 import CategoryAPI from "../../service/api/CategoryAPI.js";
 import LoadEffect from "../../components/LoadEffect.jsx";
+import ChatBubble from "../../components/ChatBubble.jsx";
 
 
 /**
@@ -216,7 +217,7 @@ export default function HomePage() {
         )
       }
 
-
+      <ChatBubble/>
       <Footer />
     </div>
   );

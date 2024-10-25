@@ -25,6 +25,7 @@ import dayjs from "dayjs";
 import '../../assets/css/BoxDateTime.css'
 import { getDay, getMonth, getYear } from "../../service/DateService";
 import { TextField } from "@mui/material";
+import ChatBubble from "../../components/ChatBubble";
 
 export default function SearchPage() {
   const location = useLocation();
@@ -186,6 +187,7 @@ export default function SearchPage() {
           )}
         </MDBRow>
       </MDBContainer>
+      <ChatBubble/>
       <Footer />
     </div>
   );
