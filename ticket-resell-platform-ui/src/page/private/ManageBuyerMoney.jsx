@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import {
@@ -9,6 +9,13 @@ import {
   MDBCardHeader,
   MDBCard,
   MDBCardBody,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter,
 } from "mdb-react-ui-kit";
 import {
   FONT_MAIN,
@@ -44,8 +51,10 @@ export default function ManageBuyerMoney() {
   const [money, setMoney] = React.useState("");
   const [link, setLink] = React.useState();
 
-  const successNotification = (str) => toast.success(str)
-  const errorNotification  = (str) => toast.error(str)
+  //const successNotification = (str) => toast.success(str)
+  const errorNotification = (str) => toast.error(str)
+  const [withdrawalModalOpen, setWithdrawalModalOpen] = useState(false);
+
 
   const handleChange = (event) => {
     setMoney(event.target.value);
@@ -99,7 +108,7 @@ export default function ManageBuyerMoney() {
           errorNotification(error);
         }
       };
-      if (!link) fetchData(); 
+      if (!link) fetchData();
     }
     else {
       errorNotification("Số tiền nạp không hợp lệ!")
@@ -137,7 +146,7 @@ export default function ManageBuyerMoney() {
     <div>
       <Header />
       <MDBContainer fluid mb="5">
-        <ToastContainer/>
+        <ToastContainer />
         <MDBRow style={{ marginTop: "7%" }}>
           <MDBCol md="2">
             <SideBar user={user} sideBarOption={SidebarOption.BALANCE} />
@@ -147,10 +156,10 @@ export default function ManageBuyerMoney() {
               style={{ backgroundColor: MAIN_COLOR, marginRight: "2%" }}
               onClick={handleViewDeposited}
             >
-              Lịch sử nạp tiền
+              Lịch sử giao dịch
             </MDBBtn>
-            <MDBBtn style={{ backgroundColor: MAIN_COLOR }}>
-              Lịch sử rút tiền
+            <MDBBtn onClick={() => setWithdrawalModalOpen(!withdrawalModalOpen)} style={{ backgroundColor: MAIN_COLOR }}>
+              Rút tiền
             </MDBBtn>
             <MDBRow>
               <MDBCardHeader
@@ -259,13 +268,14 @@ export default function ManageBuyerMoney() {
                         value={money}
                         onChange={handleCustomAmountChange}
                         style={{ marginBottom: "1rem", marginTop: '2%' }}
-
+                        name="input-amount"
                       />
                     </FormControl>
 
                     <MDBBtn
                       style={{ backgroundColor: MAIN_COLOR, width: "100%" }}
                       onClick={handleDeposite}
+                      name="deposite-btn"
                     >
                       Nạp tiền
                     </MDBBtn>
@@ -329,6 +339,31 @@ export default function ManageBuyerMoney() {
             </MDBRow>
           </MDBCol>
         </MDBRow>
+
+        <MDBModal open={withdrawalModalOpen} onClose={() => setWithdrawalModalOpen(false)} tabIndex='-1'>
+          <MDBModalDialog centered={true}>
+            <MDBModalContent>
+              <MDBModalHeader>
+                <MDBModalTitle>Rút tiền</MDBModalTitle>
+                <MDBBtn className='btn-close' color='none' onClick={() => setWithdrawalModalOpen(false)}></MDBBtn>
+              </MDBModalHeader>
+              <MDBModalBody>
+                <label className="label-control">Nhập số tài khoản của bạn</label>
+                <input className="form-control" />
+                <label className="label-control mt-2">Nhập số tiền</label>
+                <input className="form-control" />
+                <p className="mt-2 text-danger"><strong>Lưu ý</strong>: Số tiền rút tối thiểu 10.000đ</p>
+              </MDBModalBody>
+
+              <MDBModalFooter>
+                <MDBBtn color='secondary' onClick={() => setWithdrawalModalOpen(false)}>
+                  Đóng
+                </MDBBtn>
+                <MDBBtn color="success">Xác nhận</MDBBtn>
+              </MDBModalFooter>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
       </MDBContainer>
 
       <Footer />

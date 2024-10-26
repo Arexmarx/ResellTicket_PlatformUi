@@ -2,17 +2,14 @@ import { useEffect, useState } from "react";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
-import { MY_SHOP_PAGE, TicketTypes, USER_ID_KEY } from "../../config/Constant";
-import UserAPI from "../../service/api/UserAPI";
+import { MY_SHOP_PAGE, TicketTypes } from "../../config/Constant";
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import PolicyAPI from "../../service/api/PolicyAPI";
 import HttpStatus from "../../config/HttpStatus";
 import CategoryAPI from "../../service/api/CategoryAPI";
 import EventAPI from "../../service/api/EventAPI";
-import TicketAPI from "../../service/api/TicketAPI";
 import useAxios from "../../utils/useAxios";
 import API from "../../config/API";
-import LoadEffect from "../../components/LoadEffect";
 
 export const SidebarOption = {
     PROFILE: 'profile',

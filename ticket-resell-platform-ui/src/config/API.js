@@ -72,7 +72,8 @@ const API =  {
     Payment: {
         DEPOSITED_USER_API: "/api/payments/request",
         PAGE_BACK_DEPOSITED_API: "/api/payments/vn-pay-callback",
-        VIEW_DEPOSITED_HISTORY_API:"/api/transactions/get-trans-deposit/"
+        VIEW_DEPOSITED_HISTORY_API:"/api/transactions/get-trans-deposit/",
+        GET_ALL_TRANSACTION_OF_USER: "/api/transactions/get-all-trans/"
     },
 
     Report:{
@@ -93,8 +94,10 @@ const API =  {
     Chat :{
         GET_OR_CREATE_ROOM: "/api/chat/get-room",
     },
+
     Rating: {
-        CREATE_RATING: "/api/rating/create"
+        CREATE_RATING: "/api/rating/create",
+        GET_ALL_RATING_BY_SELLER: "/api/rating/get-all-by-seller/"
     },
 }
 

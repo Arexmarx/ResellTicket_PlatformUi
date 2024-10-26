@@ -13,7 +13,7 @@ import {
   MDBCardHeader,
   MDBBadge,
 } from "mdb-react-ui-kit";
-import { BUY_TICKET_PAGE } from "../../config/Constant.js";
+import { BUY_TICKET_PAGE, PERSONAL_PAGE } from "../../config/Constant.js";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer.jsx";
 import Header from "../../components/Header.jsx";
@@ -81,6 +81,12 @@ export default function EventDetail() {
   }, [event.id])
 
 
+  const navigator = useNavigate();
+  const handleClickPersonalAvatar = (account) => {
+    navigator(PERSONAL_PAGE, { state: { seller: account } });
+  };
+
+
   return (
     <div >
       <Header />
@@ -146,7 +152,10 @@ export default function EventDetail() {
                         {/* "data:image/png;base64, " + gTicket.seller.image */}
                       </MDBCol>
                       <MDBCol style={{ marginRight: '1%' }}>
-                        <div className="d-flex justify-content-center">
+                        <div onClick={() => handleClickPersonalAvatar(gTicket.seller)} 
+                            className="d-flex justify-content-center" style={{ cursor: 'pointer' }}
+                            title="Xem trang cá nhân"
+                        >
                           <Avatar
                             sx={{ width: 42, height: 42 }} alt="Seller"
                             src={gTicket.seller.avatar ? "data:image/png;base64, " + gTicket.seller.avatar : "broken-image.jpg"}

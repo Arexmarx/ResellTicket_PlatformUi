@@ -18,11 +18,25 @@ import API from "../../config/API";
 import { MAIN_COLOR, SidebarOption } from "../../config/Constant";
 import { formatToVND } from "../../service/StringService";
 import { formatDateTime } from "../../service/DateService";
+import LoadEffect from "../../components/LoadEffect";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+
+const TransactionType = [
+  { id: 1, name: "Nạp tiền" },
+  { id: 2, name: "Rút tiền" },
+  { id: 3, name: "Bán vé" },
+  { id: 4, name: "Mua vé" },
+  { id: 5, name: "Tất cả" }
+]
 
 export default function ViewHistoryDeposited() {
   const [user, setUser] = React.useState({});
-  const [depositedHistoryList, setDepositedHistoryList] = useState([]);
+  const [historyTransactions, setHistoryTransactions] = useState(null);
   const api = useAxios();
+  const [selectedTransactionType, setSelectedTransactionType] = useState(0); 
+
+  
+
   React.useEffect(() => {
     const fetchData = async () => {
       const response = await api.get(API.User.GET_USER_INFO);
@@ -38,19 +52,33 @@ export default function ViewHistoryDeposited() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get(API.Payment.VIEW_DEPOSITED_HISTORY_API + user.id);
+        const response = await api.get(API.Payment.GET_ALL_TRANSACTION_OF_USER + user.id);
         if (response.data.httpStatus === HttpStatus.OK) {
           console.log(response.data.object);
-          setDepositedHistoryList(response.data.object);
+          setHistoryTransactions(response.data.object);
         }
       } catch (error) {
         console.error(error);
       }
     };
-  
+
     fetchData();
-  }, [user.id]); // add user.id to dependency array
-  
+  }, [user.id]);
+
+
+  if (!Array.isArray(historyTransactions)) {
+    return (
+      <LoadEffect />
+    )
+  }
+
+  const handleTransactionTypeChange = (event) => {
+    setSelectedTransactionType(event.target.value); // Update state on selection change
+  };
+
+  const filteredTransactions = historyTransactions.filter(transaction => 
+    transaction.type === selectedTransactionType.name // Filter based on selected type
+  );
 
   return (
     <div>
@@ -62,11 +90,11 @@ export default function ViewHistoryDeposited() {
           </MDBCol>
           <MDBCol md="10">
             <MDBBtn style={{ backgroundColor: MAIN_COLOR, marginRight: "2%" }}>
-              Lịch sử nạp tiền
+              Lịch sử giao dịch   
             </MDBBtn>
-            <MDBBtn style={{ backgroundColor: MAIN_COLOR }}>
+            {/* <MDBBtn style={{ backgroundColor: MAIN_COLOR }}>
               Lịch sử rút tiền
-            </MDBBtn>
+            </MDBBtn> */}
             <MDBRow>
               <MDBCardHeader
                 style={{ textAlign: "center", fontSize: "30px", color: "red" }}
@@ -74,6 +102,26 @@ export default function ViewHistoryDeposited() {
                 Lịch sử giao dịch
               </MDBCardHeader>
               <hr />
+
+              <MDBRow className="mb-3 mt-2">
+                <MDBCol md={3}>
+                  <FormControl fullWidth>
+                    <InputLabel>Loại giao dịch</InputLabel>
+                    <Select
+                      value={selectedTransactionType} // Use state value
+                      label="Loại giao dịch"
+                      onChange={handleTransactionTypeChange} // Handle change
+                    >
+                      <MenuItem selected={true} value={TransactionType[0]}>{TransactionType[0].name}</MenuItem>
+                      <MenuItem value={TransactionType[1]}>{TransactionType[1].name}</MenuItem>
+                      <MenuItem value={TransactionType[2]}>{TransactionType[2].name}</MenuItem>
+                      <MenuItem value={TransactionType[3]}>{TransactionType[3].name}</MenuItem>
+                    </Select>
+                  </FormControl>
+                </MDBCol>
+
+              </MDBRow>
+
             </MDBRow>
             <MDBRow>
               <MDBTable>
@@ -88,16 +136,18 @@ export default function ViewHistoryDeposited() {
                   </tr>
                 </MDBTableHead>
                 <MDBTableBody>
-                  {depositedHistoryList.map((historyDeposited, index) => (
-                    <tr key={index}>
-                      <th scope="row">{index + 1}</th>
-                      <td>{historyDeposited.transactionNo}</td>
-                      <td>{formatToVND(historyDeposited.amount)}</td>
-                      <td>{historyDeposited.type}</td>
-                      <td>{historyDeposited.isDone ? "Thành công" : "Thất bại"}</td>
-                      <td>{formatDateTime(historyDeposited.transDate)}</td>
-                    </tr>
-                  ))}
+                  {
+                    filteredTransactions && filteredTransactions.map((historyDeposited, index) => (
+                      <tr key={index}>
+                        <th scope="row">{index + 1}</th>
+                        <td>{historyDeposited.transactionNo}</td>
+                        <td>{formatToVND(historyDeposited.amount)}</td>
+                        <td>{historyDeposited.type}</td>
+                        <td>{historyDeposited.isDone ? "Thành công" : "Thất bại"}</td>
+                        <td>{formatDateTime(historyDeposited.transDate)}</td>
+                      </tr>
+                    ))
+                  }
                 </MDBTableBody>
               </MDBTable>
             </MDBRow>
