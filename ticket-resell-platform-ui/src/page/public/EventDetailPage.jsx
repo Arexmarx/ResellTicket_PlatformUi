@@ -27,6 +27,7 @@ import useAxios from "../../utils/useAxios.jsx";
 import API from "../../config/API.js";
 import '../../assets/css/BoxDateTime.css'
 import { getDay, getMonth, getYear } from "../../service/DateService";
+import ChatBubble from "../../components/ChatBubble.jsx";
 
 /**
  * Author: Phan Nguyễn Mạnh Cường
@@ -204,6 +205,7 @@ export default function EventDetail() {
           </MDBCol>
         </MDBRow>
       </MDBContainer>
+      <ChatBubble/>
       <Footer />
     </div>
   );
