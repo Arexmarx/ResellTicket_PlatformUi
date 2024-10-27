@@ -20,7 +20,6 @@ import AuthContext from "../context/AuthContext";
 import useAxios from "../utils/useAxios";
 import API from "../config/API";
 import { formatToVND } from "../service/StringService";
-import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -152,12 +151,11 @@ function Header() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <LocalActivityIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <img src="..\..\src\assets\logo\LogoTab-Photoroom.png" style={{ maxHeight: '40px' }} />
+          <img onClick={handleHomepage} src="..\..\src\assets\logo\LogoTab-Photoroom.png" style={{ maxHeight: '40px', cursor: 'pointer' }} />
           <Typography
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -178,7 +176,6 @@ function Header() {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },

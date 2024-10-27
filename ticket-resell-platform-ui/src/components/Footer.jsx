@@ -69,17 +69,17 @@ export default function Footer() {
                   Chính sách
                 </h6>
                 <p>
-                  <a href="#!" className="text-reset" onClick={() => handlePolicy("buyerPolicy")}>
+                  <a className="text-reset" onClick={() => handlePolicy("buyerPolicy")}>
                     Chính sách cho người mua
                   </a>
                 </p>
                 <p>
-                  <a href="#!" className="text-reset" onClick={() => handlePolicy("sellerPolicy")}>
+                  <a className="text-reset" onClick={() => handlePolicy("sellerPolicy")}>
                   Chính sách cho người bán
                   </a>
                 </p>
                 <p>
-                  <a href="#!" className="text-reset" onClick={() => handlePolicy("generalPolicy")}>
+                  <a className="text-reset" onClick={() => handlePolicy("generalPolicy")}>
                     Chính sách chung
                   </a>
                 </p>

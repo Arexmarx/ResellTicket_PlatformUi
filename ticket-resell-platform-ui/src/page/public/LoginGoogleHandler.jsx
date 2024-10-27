@@ -2,8 +2,9 @@ import { useContext, useEffect } from "react";
 import LoadEffect from "../../components/LoadEffect";
 import axios from "axios";
 import AuthContext from "../../context/AuthContext";
-import { SIGN_UP_PAGE } from "../../config/Constant";
+import { LOGIN_PAGE, SIGN_UP_PAGE } from "../../config/Constant";
 import { useNavigate } from "react-router-dom";
+import HttpStatus from "../../config/HttpStatus";
 
 
 export default function LoginGoogleHandler() {
@@ -30,6 +31,9 @@ export default function LoginGoogleHandler() {
     axios.get("http://localhost:8080/api/oauth2/user", { withCredentials: true })
       .then(
         response => {
+          if (response.data.httpStatus === HttpStatus.UNAUTHORIZED) {
+            navigator(LOGIN_PAGE)
+          } 
           // console.log(response.data);
           oauth2LoginUser(response.data.email).catch( error => {
             navigator(SIGN_UP_PAGE,  { state: { oauth2Data: response.data } })

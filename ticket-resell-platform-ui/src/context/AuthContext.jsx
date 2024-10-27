@@ -17,14 +17,18 @@ export const AuthProvider = ({children}) => {
 
     const navigator = useNavigate()
 
+    
+
     let [authTokens, setAuthTokens] = useState(
         ()=> localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem(AUTH_TOKENS_KEY)) : null
     )
 
+    if ( authTokens == null) localStorage.removeItem('authTokens')
+
     let [user, setUser] = useState(
         ()=> localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem(AUTH_TOKENS_KEY)) : null
     )
-
+   
     let [loading, setLoading] = useState(true)
 
     

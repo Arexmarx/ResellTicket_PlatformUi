@@ -33,6 +33,7 @@ const API =  {
         GET_ALL_BOUGHT_TICKET_BY_BUYER: "/api/tickets/get-all-bought-tickets-of-buyer/",
         MARK_TICKET_IS_BOUGHT: "/api/tickets/mark-bought/",
         MAKR_DELIVERED_PAPER_TICKET: "/api/tickets/mark-delivered-paper-ticket/",
+        DELETE_TICKET_FROM_SHOP: "/api/tickets/delete-ticket-from-shop/"
     },
 
     GenericTicket: {
