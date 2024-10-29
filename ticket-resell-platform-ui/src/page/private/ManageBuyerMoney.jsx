@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import {
@@ -9,6 +9,13 @@ import {
   MDBCardHeader,
   MDBCard,
   MDBCardBody,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter,
 } from "mdb-react-ui-kit";
 import {
   FONT_MAIN,
@@ -36,6 +43,11 @@ import 'react-toastify/dist/ReactToastify.css';
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
+
+function timeout(delay) {
+  return new Promise( res => setTimeout(res, delay) );
+}
+
 export default function ManageBuyerMoney() {
 
   const api = useAxios();
@@ -43,9 +55,13 @@ export default function ManageBuyerMoney() {
   const [user, setUser] = React.useState({});
   const [money, setMoney] = React.useState("");
   const [link, setLink] = React.useState();
+  const [withdrawalAmount, setWithdrawalAmount] = useState(0)
+  const [bankNumber, setBankNumber]= useState('')
 
   const successNotification = (str) => toast.success(str)
-  const errorNotification  = (str) => toast.error(str)
+  const errorNotification = (str) => toast.error(str)
+  const [withdrawalModalOpen, setWithdrawalModalOpen] = useState(false);
+
 
   const handleChange = (event) => {
     setMoney(event.target.value);
@@ -79,6 +95,28 @@ export default function ManageBuyerMoney() {
     return money >= 10000 && money % 1000 === 0;
   }
 
+  const handleWithdrawal = async () => {
+    const withdrawalRequest = {
+      userId: user.id,
+      amount: withdrawalAmount
+    };
+    if (bankNumber) {
+      if (withdrawalAmount >= 10000 && withdrawalAmount % 1000 === 0) {
+        const response = await api.post(API.Payment.WITHDRAWAL_AMOUNT, withdrawalRequest)
+        if (response.data.httpStatus === HttpStatus.OK) {
+          successNotification(response.data.message)
+          await timeout(1500)
+          window.location.reload()
+        }
+        else {
+          errorNotification(response.data.message)
+        }
+      }
+      else errorNotification("Số tiền nhập vào không hợp lệ!")
+    }
+    else errorNotification("Số tài khoản không được để trống!")
+  }
+
   const handleDeposite = () => {
     if (checkValidAmount(money)) {
       const fetchData = async () => {
@@ -99,7 +137,7 @@ export default function ManageBuyerMoney() {
           errorNotification(error);
         }
       };
-      if (!link) fetchData(); 
+      if (!link) fetchData();
     }
     else {
       errorNotification("Số tiền nạp không hợp lệ!")
@@ -137,7 +175,7 @@ export default function ManageBuyerMoney() {
     <div>
       <Header />
       <MDBContainer fluid mb="5">
-        <ToastContainer/>
+        <ToastContainer />
         <MDBRow style={{ marginTop: "7%" }}>
           <MDBCol md="2">
             <SideBar user={user} sideBarOption={SidebarOption.BALANCE} />
@@ -147,10 +185,10 @@ export default function ManageBuyerMoney() {
               style={{ backgroundColor: MAIN_COLOR, marginRight: "2%" }}
               onClick={handleViewDeposited}
             >
-              Lịch sử nạp tiền
+              Lịch sử giao dịch
             </MDBBtn>
-            <MDBBtn style={{ backgroundColor: MAIN_COLOR }}>
-              Lịch sử rút tiền
+            <MDBBtn onClick={() => setWithdrawalModalOpen(!withdrawalModalOpen)} style={{ backgroundColor: MAIN_COLOR }}>
+              Rút tiền
             </MDBBtn>
             <MDBRow>
               <MDBCardHeader
@@ -259,13 +297,14 @@ export default function ManageBuyerMoney() {
                         value={money}
                         onChange={handleCustomAmountChange}
                         style={{ marginBottom: "1rem", marginTop: '2%' }}
-
+                        name="input-amount"
                       />
                     </FormControl>
 
                     <MDBBtn
                       style={{ backgroundColor: MAIN_COLOR, width: "100%" }}
                       onClick={handleDeposite}
+                      name="deposite-btn"
                     >
                       Nạp tiền
                     </MDBBtn>
@@ -329,6 +368,31 @@ export default function ManageBuyerMoney() {
             </MDBRow>
           </MDBCol>
         </MDBRow>
+
+        <MDBModal open={withdrawalModalOpen} onClose={() => setWithdrawalModalOpen(false)} tabIndex='-1'>
+          <MDBModalDialog centered={true}>
+            <MDBModalContent>
+              <MDBModalHeader>
+                <MDBModalTitle>Rút tiền</MDBModalTitle>
+                <MDBBtn className='btn-close' color='none' onClick={() => setWithdrawalModalOpen(false)}></MDBBtn>
+              </MDBModalHeader>
+              <MDBModalBody>
+                <label className="label-control">Nhập số tài khoản của bạn<span className="text-danger">*</span> </label>
+                <input onChange={(e) => setBankNumber(e.target.value)} className="form-control" />
+                <label className="label-control mt-2">Nhập số tiền<span className="text-danger">*</span></label>
+                <input onChange={(e) => setWithdrawalAmount(e.target.value)} className="form-control" />
+                <p className="mt-2 text-danger"><strong>Lưu ý</strong>: Số tiền rút tối thiểu 10.000đ</p>
+              </MDBModalBody>
+
+              <MDBModalFooter>
+                <MDBBtn color='secondary' onClick={() => setWithdrawalModalOpen(false)}>
+                  Đóng
+                </MDBBtn>
+                <MDBBtn onClick={handleWithdrawal} color="success">Xác nhận</MDBBtn>
+              </MDBModalFooter>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
       </MDBContainer>
 
       <Footer />

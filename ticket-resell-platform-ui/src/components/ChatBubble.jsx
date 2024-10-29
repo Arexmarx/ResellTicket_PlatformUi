@@ -69,8 +69,8 @@ export default function ChatBubble() {
       }}
     >
     <ToastContainer style={{marginTop: '3%'}}/>
-      <MDBDropdownToggle style={{borderRadius: '55%',backgroundColor: MAIN_COLOR}}>
-        <TelegramIcon style={{ width: "30px", height: "30px" ,}} />
+      <MDBDropdownToggle style={{borderRadius: '55%'  , backgroundColor: MAIN_COLOR}}>
+        <TelegramIcon style={{ width: "20px", height: '50px' }} />
       </MDBDropdownToggle>
 
       <MDBDropdownMenu
@@ -84,13 +84,13 @@ export default function ChatBubble() {
           alignItems: "center", // Align the icons to the right
         }}
       >
-        <MDBDropdownItem onClick={() => handleSubmit('Zalo')}>
+        <MDBDropdownItem style={{ marginBottom: '20px' }} onClick={() => handleSubmit('Zalo')}>
           <img src="..\..\src/assets/logo/Zalo.png" style={styleIcon} />
         </MDBDropdownItem>
-        <MDBDropdownItem onClick={() => handleSubmit('Mess')}>
+        <MDBDropdownItem style={{ marginBottom: '20px' }}  onClick={() => handleSubmit('Mess')}>
         <img src="..\..\src/assets/logo/Messenger.png" style={styleIcon} />
         </MDBDropdownItem>
-        <MDBDropdownItem onClick={() => handleSubmit('Chat')}>
+        <MDBDropdownItem  onClick={() => handleSubmit('Chat')}>
           <ThreePIcon style={styleIcon} />
         </MDBDropdownItem>
       </MDBDropdownMenu>

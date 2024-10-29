@@ -64,17 +64,17 @@ export default function Footer() {
               <MDBCol md="3" lg="2" xl="2" className="mx-auto mb-4">
                 <h6 className="text-uppercase fw-bold mb-4">Chính sách</h6>
                 <p>
-                  <a href="#!" className="text-reset" onClick={() => handlePolicy("buyerPolicy")}>
+                  <a className="text-reset" onClick={() => handlePolicy("buyerPolicy")}>
                     Chính sách cho người mua
                   </a>
                 </p>
                 <p>
-                  <a href="#!" className="text-reset" onClick={() => handlePolicy("sellerPolicy")}>
-                    Chính sách cho người bán
+                  <a className="text-reset" onClick={() => handlePolicy("sellerPolicy")}>
+                  Chính sách cho người bán
                   </a>
                 </p>
                 <p>
-                  <a href="#!" className="text-reset" onClick={() => handlePolicy("generalPolicy")}>
+                  <a className="text-reset" onClick={() => handlePolicy("generalPolicy")}>
                     Chính sách chung
                   </a>
                 </p>

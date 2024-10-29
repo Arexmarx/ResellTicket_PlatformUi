@@ -22,8 +22,8 @@ import LoginIcon from "@mui/icons-material/Login";
 import * as React from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import {FORGET_PASSWORD_PAGE, MAIN_COLOR} from "../../config/Constant"
-import {SIGN_UP_PAGE} from "../../config/Constant"
+import { FORGET_PASSWORD_PAGE, MAIN_COLOR } from "../../config/Constant"
+import { SIGN_UP_PAGE } from "../../config/Constant"
 import AuthContext from "../../context/AuthContext";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -60,7 +60,7 @@ export default function Login() {
   const handleUsername = () => {
     if (
       !userNameInput ||
-      userNameInput.length <=0 ||
+      userNameInput.length <= 0 ||
       userNameInput.length > 20
     ) {
       setUserNameError(true);
@@ -105,11 +105,11 @@ export default function Login() {
   async function handleLogin(e) {
     e.preventDefault(); // Prevent default form submission
     try {
-        await loginUser(e, userNameInput, passwordInput); // Await the promise
-    } 
+      await loginUser(e, userNameInput, passwordInput); // Await the promise
+    }
     catch (error) {
-        setLoginErrorMessage(error); // Set the error message
-        errorNotification(error)
+      setLoginErrorMessage(error); // Set the error message
+      errorNotification(error)
     }
   }
 
@@ -124,11 +124,11 @@ export default function Login() {
     event.preventDefault();
   };
 
-  const handleForget =() => {
+  const handleForget = () => {
     navigate(FORGET_PASSWORD_PAGE);
   }
 
-  
+
 
   return (
     <div
@@ -142,7 +142,7 @@ export default function Login() {
       }}
     >
 
-      <ToastContainer  />
+      <ToastContainer />
 
       <Card sx={{ minWidth: 500, marginTop: "2%", borderRadius: 3 }}>
         <Typography variant="h3" className="text-center mt-5">
@@ -238,17 +238,21 @@ export default function Login() {
               </div>
             </div>
           </FormControl>
-          <Link component="button" style={{color: MAIN_COLOR, textAlign:'right'}} onClick={handleForget}>Quên mật khẩu ?</Link>
-          
+          <Link component="button" style={{ color: MAIN_COLOR, textAlign: 'right' }} onClick={handleForget}>Quên mật khẩu ?</Link>
+
         </FormGroup>
-        <hr />
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <hr style={{ flexGrow: 1, border: 'none', borderTop: '1px solid #000' }} />
+          <span style={{ margin: '0 5px' }}>Hoặc</span>
+          <hr style={{ flexGrow: 1, border: 'none', borderTop: '1px solid #000' }} />
+        </div>
         <div className="d-flex justify-content-center mb-5 mx-5">
 
           <Button
             fullWidth={true}
             variant="outlined"
             startIcon={<SvgIcon component={GoogleIcon} />}
-            sx={{ mt: 1, color: MAIN_COLOR , borderColor: MAIN_COLOR}}
+            sx={{ mt: 1, color: MAIN_COLOR, borderColor: MAIN_COLOR }}
             onClick={handleLoginGoogle}
           >
             Đăng nhập bằng Google

@@ -1,13 +1,9 @@
 import {
   MDBBadge,
   MDBBtn,
-  MDBCard,
-  MDBCardBody,
-  MDBCardHeader,
   MDBCheckbox,
   MDBCol,
   MDBContainer,
-  MDBFooter,
   MDBIcon,
   MDBModal,
   MDBModalBody,
@@ -20,7 +16,6 @@ import {
 } from "mdb-react-ui-kit";
 import {
   ADD_TICKET_PAGE,
-  SidebarOption,
   TicketProcess
 } from "../config/Constant";
 import { useState } from "react";
@@ -33,7 +28,9 @@ import API from "../config/API";
 import LoadEffect from "./LoadEffect";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 const titleCss = {
   marginBottom: "5px",
@@ -50,6 +47,7 @@ export default function DetailSellingTicket({ user }) {
   const [tickets, setTickets] = useState(null);
   const [openTicketId, setOpenTicketId] = useState(null);
   const [editModalOpen, setEditModalOpen] = useState(null);
+  const [deleteTicketModalOpen, setDeleteTicketModalOpen] = useState(null)
   const [checked, setChecked] = useState(false);
   //console.log(user);
 
@@ -82,6 +80,20 @@ export default function DetailSellingTicket({ user }) {
     }
   }
 
+  const handleDeleteTicket = async (ticketId) => {
+    setDeleteTicketModalOpen(null)
+    //console.log(ticketId);
+    // Remove the ticket from the state
+    const response = await api.delete(API.Ticket.DELETE_TICKET_FROM_SHOP + ticketId);
+    if (response.data.httpStatus == HttpStatus.OK) {
+      successNotification(response.data.message)
+      setTickets(prevTickets => prevTickets.filter(ticket => ticket.ticketId !== ticketId));
+    }
+    else {
+      errorNotification(response.data.message)
+    }
+  }
+
   if (!tickets) {
     return (
       <LoadEffect />
@@ -90,14 +102,14 @@ export default function DetailSellingTicket({ user }) {
 
   if (!Array.isArray(tickets)) {
     return (
-      <LoadEffect/>
+      <LoadEffect />
     )
   }
 
 
   return (
     <div>
-      <ToastContainer/>
+      <ToastContainer />
       <MDBContainer fluid>
         <MDBCol>
           <a
@@ -168,18 +180,43 @@ export default function DetailSellingTicket({ user }) {
                       }
                     </MDBRow>
                   </MDBCol>
-                  <MDBCol md="1">
-                    {/* <MDBRow style={titleCss}>Chỉnh sửa</MDBRow> */}
-                    <MDBBtn color="info" size="sm" onClick={() => setEditModalOpen(index)}>
-                      Chỉnh sửa
+                  <MDBCol md="2">
+                    <MDBBtn style={{ marginRight: '10px' }} color="info" size="sm" onClick={() => setEditModalOpen(index)} title="Chỉnh sửa">
+                      <EditNoteIcon />
+                    </MDBBtn>
+                    <MDBBtn outline color="tertiary" style={{ borderColor: 'fbf9f9', marginRight: '10px' }} size="sm" onClick={() => (toggleOpen(x.ticketSerial))} title="Xem chi tiết">
+                      <DescriptionIcon />
+                    </MDBBtn>
+                    <MDBBtn onClick={() => setDeleteTicketModalOpen(index)} color="danger"  size="sm">
+                      <DeleteForeverIcon/>
                     </MDBBtn>
                   </MDBCol>
 
-                  <MDBCol md="1">
-                    <MDBBtn outline color="tertiary" style={{ borderColor: 'fbf9f9' }} size="sm" onClick={() => (toggleOpen(x.ticketSerial))} >
-                      Chi tiết
-                    </MDBBtn>
-                  </MDBCol>
+                  {/* <MDBCol md="1">
+                      <MDBBtn outline color="tertiary" style={{ borderColor: 'fbf9f9' }} size="sm" onClick={() => (toggleOpen(x.ticketSerial))} >
+                        Chi tiết
+                      </MDBBtn>
+                    </MDBCol> */}
+                  <MDBModal open={deleteTicketModalOpen === index} onClose={() => setDeleteTicketModalOpen(null)}>
+                    <MDBModalDialog centered={true} size="lg">
+                      <MDBModalContent>
+                        <MDBModalHeader>
+                          <h4 className="text-danger">Hủy bán vé</h4>
+                        </MDBModalHeader>
+                        <MDBModalBody>
+                          <MDBTypography tag="h6">Số Seri: {getFirstFiveChars(x.ticketSerial)}*****</MDBTypography>
+                        </MDBModalBody>
+                        <MDBModalFooter>
+                          <MDBBtn onClick={() => handleDeleteTicket(x.ticketId)} color="danger" >
+                            Xác nhận
+                          </MDBBtn>
+                          <MDBBtn color="secondary" onClick={() => setDeleteTicketModalOpen(null)}>
+                            Đóng
+                          </MDBBtn>
+                        </MDBModalFooter>
+                      </MDBModalContent>
+                    </MDBModalDialog>
+                  </MDBModal>
 
                   <MDBModal open={editModalOpen === index}>
                     <MDBModalDialog centered={true} size="lg">

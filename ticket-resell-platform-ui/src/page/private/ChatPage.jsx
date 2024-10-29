@@ -24,6 +24,7 @@ import API from "../../config/API";
 import HttpStatus from "../../config/HttpStatus";
 import { Avatar } from "@mui/material";
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import ScrollToTop from "../../components/ScrollToTop";
 
 export default function ChatPage() {
   const [user, setUser] = useState({});
@@ -177,66 +178,22 @@ export default function ChatPage() {
     setConnected(false);
   };
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  // Auto scroll error
+  // useEffect(() => {
+  //   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  // }, [messages]);
 
   return (
     <div>
       <Header />
-      <MDBContainer fluid mb="5">
+      <MDBContainer fluid mb="5" style={{ marginBottom: '5%' }}>
         <MDBRow style={{ marginTop: "7%" }}>
           <MDBCol md="2">
             <SideBar user={user} sideBarOption={SidebarOption.CHAT} />
           </MDBCol>
           <MDBCol md="10">
             <MDBRow>
-              <MDBCol md="3">
-                <MDBRow>
-                  <MDBInputGroup className="full-width" noBorder>
-                    <MDBInput
-                      autoComplete="off"
-                      className="active"
-                      type="search"
-                      placeholder="Search"
-                      style={{ minWidth: "225px" }}
-                      onChange={(e) => setSearchUser(e.target.value)}
-                      onKeyDown={handleSearchKeyDown}
-                    />
-                  </MDBInputGroup>
-                </MDBRow>
-                <MDBCard style={{ marginTop: "2%" }}>
-                  <MDBCardBody>
-                    <h5>Chat List</h5>
-                    <MDBListGroup>
-                      {fullUserlist.map((otherUser, index) => (
-                        <MDBListGroupItem
-                          key={index}
-                          className="d-flex justify-content-between align-items-start"
-                        >
-                          <div className="col-md-1 d-flex justify-content-center align-items-center">
-                            <Avatar
-                              src={
-                                otherUser.avatar
-                                  ? "data:image/png;base64, " + otherUser.avatar
-                                  : "broken-image.jpg"
-                              }
-                            />
-                          </div>
-                          {otherUser.firstname + " " + otherUser.lastname}
-                          <MDBBtn
-                            size="sm"
-                            color="primary"
-                            onClick={() => getRoomChat(otherUser)}
-                          >
-                            Chat
-                          </MDBBtn>
-                        </MDBListGroupItem>
-                      ))}
-                    </MDBListGroup>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
+              
               <MDBCol md="9">
                 <MDBCard
                   style={{
@@ -306,6 +263,52 @@ export default function ChatPage() {
                       </MDBBtn>
                     </MDBInputGroup>
                   </MDBCardFooter>
+                </MDBCard>
+              </MDBCol>
+              <MDBCol md="3">
+                <MDBRow>
+                  <MDBInputGroup className="full-width" noBorder>
+                    <MDBInput
+                      autoComplete="off"
+                      className="active"
+                      type="search"
+                      placeholder="Search"
+                      style={{ minWidth: "225px" }}
+                      onChange={(e) => setSearchUser(e.target.value)}
+                      onKeyDown={handleSearchKeyDown}
+                    />
+                  </MDBInputGroup>
+                </MDBRow>
+                <MDBCard style={{ marginTop: "2%" }}>
+                  <MDBCardBody>
+                    <h5>Chat List</h5>
+                    <MDBListGroup>
+                      {fullUserlist.map((otherUser, index) => (
+                        <MDBListGroupItem
+                          key={index}
+                          className="d-flex justify-content-between align-items-start"
+                        >
+                          <div className="col-md-1 d-flex justify-content-center align-items-center">
+                            <Avatar
+                              src={
+                                otherUser.avatar
+                                  ? "data:image/png;base64, " + otherUser.avatar
+                                  : "broken-image.jpg"
+                              }
+                            />
+                          </div>
+                          {otherUser.firstname + " " + otherUser.lastname}
+                          <MDBBtn
+                            size="sm"
+                            color="primary"
+                            onClick={() => getRoomChat(otherUser)}
+                          >
+                            Chat
+                          </MDBBtn>
+                        </MDBListGroupItem>
+                      ))}
+                    </MDBListGroup>
+                  </MDBCardBody>
                 </MDBCard>
               </MDBCol>
             </MDBRow>
