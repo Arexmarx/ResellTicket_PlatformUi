@@ -15,7 +15,7 @@ import {
 } from "mdb-react-ui-kit";
 import { MDBTypography } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
-import { EVENT_DETAIL_PAGE } from "../config/Constant";
+import { EVENT_DETAIL_PAGE, SEARCH_PAGE } from "../config/Constant";
 import { formatDateTime } from "../service/DateService.js";
 import '../assets/css/BoxDateTime.css'
 import { getDay, getMonth, getYear } from "../service/DateService";
@@ -29,7 +29,7 @@ export default function SlideShowDetail({ Category, Events }) {
   const items = Events;
   const [activeItem, setActiveItem] = useState(1);
   const itemsPerSlide = items.length > 4 ? 4 : items.length;
-  const intervalTime = 3000;
+  const intervalTime = 5000;
 
   const handlePrev = () => {
     setActiveItem((prevItem) => (prevItem === 1 ? items.length : prevItem - 1));
@@ -64,6 +64,9 @@ export default function SlideShowDetail({ Category, Events }) {
     return () => clearInterval(interval); // Clean up interval on unmount
   }, []);
 
+  // const handleSubmit = (cataName) => {
+  //   navigate(SEARCH_PAGE,{state: {cataName: cataName}})
+  // }
   return items ? (
     <MDBContainer className="my-5 position-relative">
       <MDBTypography variant="h4" className="mb-4" color="black">

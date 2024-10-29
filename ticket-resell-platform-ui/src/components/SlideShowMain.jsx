@@ -43,7 +43,7 @@ export default function SlideShowMain() {
 
   const [activeItem, setActiveItem] = useState(1);
   const itemsPerSlide = 1;
-  const intervalTime = 3000; // Time in milliseconds for auto-cycling (e.g., 3000ms = 3 seconds)
+  const intervalTime = 5000; // Time in milliseconds for auto-cycling (e.g., 3000ms = 3 seconds)
 
   const handlePrev = () => {
     setActiveItem((prevItem) => (prevItem === 1 ? items.length : prevItem - 1));

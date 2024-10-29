@@ -8,20 +8,19 @@ import {
 import { useNavigate } from "react-router-dom";
 import { POLICY_DETAIL_PAGE } from "../config/Constant";
 
-
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
 export default function Footer() {
   const navigate = useNavigate();
 
-  const handlePolicy = (x) =>{
-    navigate(POLICY_DETAIL_PAGE, {state: {typeOfPolicy: x}})
-  }
+  const handlePolicy = (x) => {
+    navigate(POLICY_DETAIL_PAGE, { state: { typeOfPolicy: x } });
+  };
 
   return (
     <MDBFooter bgColor="light" className="text-center text-lg-start text-muted">
-      <div style={{backgroundColor: 'rgb(57, 63, 78)', color:'rgb(206 206 206)'}}>
+      <div style={{ backgroundColor: "rgb(57, 63, 78)", color: "rgb(206 206 206)" }}>
         <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
           <div className="me-5 d-none d-lg-block">
             <span>Hãy liên hệ với chúng tôi qua mạng xã hội</span>
@@ -54,20 +53,16 @@ export default function Footer() {
             <MDBRow className="mt-3">
               <MDBCol md="3" lg="4" xl="3" className="mx-auto mb-4">
                 <h6 className="text-uppercase fw-bold mb-4">
-                  {/* <MDBIcon icon="ticket-alt" className="me-3" /> */}
-                  <img src="..\src\assets\logo\LogoTab-Photoroom.png" style={{maxHeight: '20px'}}/>
+                  <img src="..\src\assets\logo\LogoTab-Photoroom.png" style={{ maxHeight: "20px" }} alt="Logo" />
                   &nbsp;&nbsp;Resell Ticket
                 </h6>
                 <p>
-                  Nền tảng bán lại vé chưa dùng uy tín, an toàn, chất lượng đầu
-                  hàng Việt Nam.
+                  Nền tảng bán lại vé chưa dùng uy tín, an toàn, chất lượng đầu hàng Việt Nam.
                 </p>
               </MDBCol>
 
               <MDBCol md="3" lg="2" xl="2" className="mx-auto mb-4">
-                <h6 className="text-uppercase fw-bold mb-4">
-                  Chính sách
-                </h6>
+                <h6 className="text-uppercase fw-bold mb-4">Chính sách</h6>
                 <p>
                   <a href="#!" className="text-reset" onClick={() => handlePolicy("buyerPolicy")}>
                     Chính sách cho người mua
@@ -75,7 +70,7 @@ export default function Footer() {
                 </p>
                 <p>
                   <a href="#!" className="text-reset" onClick={() => handlePolicy("sellerPolicy")}>
-                  Chính sách cho người bán
+                    Chính sách cho người bán
                   </a>
                 </p>
                 <p>
@@ -99,7 +94,7 @@ export default function Footer() {
                   <MDBIcon icon="phone" className="me-3" /> +84 65.5656.92
                 </p>
                 <p>
-                  <MDBIcon icon="print" className="me-3" /> + 01.234.567.89
+                  <MDBIcon icon="print" className="me-3" /> +01.234.567.89
                 </p>
               </MDBCol>
             </MDBRow>
@@ -107,10 +102,7 @@ export default function Footer() {
         </section>
       </div>
 
-      <div
-        className="text-center p-4"
-        style={{ backgroundColor: "rgb(29, 29, 29)" }}
-      >
+      <div className="text-center p-4" style={{ backgroundColor: "rgb(29, 29, 29)" }}>
         © 2024 Copyright:
         <a className="text-reset fw-bold" href="https://mdbootstrap.com/">
           Ticket Resell

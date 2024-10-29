@@ -138,7 +138,7 @@ function Header() {
       const fetchData = async () => {
         const response = await api.get(API.Notiication.HAVE_NOTIFICATION + user.id)
         if (response.data.httpStatus === HttpStatus.OK) {
-          // console.log(response.data);
+          //  console.log(response.data);
           setHavingNotification(response.data.object)
         }
       }
@@ -157,7 +157,6 @@ function Header() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -178,7 +177,6 @@ function Header() {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },

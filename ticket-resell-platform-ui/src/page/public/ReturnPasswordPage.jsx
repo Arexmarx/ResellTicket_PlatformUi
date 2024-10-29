@@ -83,6 +83,7 @@ export default function ReturnPasswordPage() {
         setSuccessSignUp(true);
         setLoading(false);
         updatePassword();
+        localStorage.removeItem("emailPassword")
       }, 5000);
     }
   };

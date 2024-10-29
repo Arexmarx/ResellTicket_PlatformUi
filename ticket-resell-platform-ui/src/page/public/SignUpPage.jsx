@@ -207,17 +207,29 @@ export default function SignUp() {
     }
 
     const fetchData = async () => {
-      const response = await AuthenticationAPI.register(registerRequest);
-      if (response.data.httpStatus === HttpStatus.CREATED) {
-        console.log(response.data);
-        
-        setSuccessMessage({ status: true, message: response.data.message })
-        setErrorMessage({ status: false, message: '' })
+      setLoading(true);
+      try{
+        const response = await AuthenticationAPI.register(registerRequest);
+        if (response.data.httpStatus === HttpStatus.CREATED) {
+          console.log(response.data);
+          
+          setSuccessMessage({ status: true, message: response.data.message })
+          setErrorMessage({ status: false, message: '' })
+        }
+        else {
+          setErrorMessage({ status: true, message: response.data.message })
+          setSuccessMessage({ status: false, message: '' })
+        }
+      } catch (error){
+        console.error(error);
+        setErrorMessage({
+          status: true,
+          message: "Đã xảy ra lỗi, vui lòng thử lại.",
+        });
+      } finally {
+        setLoading(false);
       }
-      else {
-        setErrorMessage({ status: true, message: response.data.message })
-        setSuccessMessage({ status: false, message: '' })
-      }
+
     }
 
     fetchData().catch(console.error)

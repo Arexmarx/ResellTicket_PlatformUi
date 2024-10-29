@@ -29,7 +29,7 @@ export default function SlideShowHotEvent() {
 
   const [activeItem, setActiveItem] = useState(1);
   const itemsPerSlide = items.length < 6 ? items.length : 6;
-  const intervalTime = 3000;
+  const intervalTime = 5000;
 
   const handlePrev = () => {
     setActiveItem((prevItem) => (prevItem === 1 ? items.length : prevItem - 1));

@@ -10,18 +10,19 @@ import Header from "../../components/Header.jsx";
 import SlideShowMain from "../../components/SlideShowMain.jsx";
 import SlideShowHotEvent from "../../components/SlideShowHotEvent.jsx";
 import SlideShowDetail from "../../components/SlideShowDetail.jsx";
-import { Event } from "../../config/Constant.js";
+import { Event, SEARCH_PAGE } from "../../config/Constant.js";
 import EventAPI from "../../service/api/EventAPI.js";
 import CategoryAPI from "../../service/api/CategoryAPI.js";
 import LoadEffect from "../../components/LoadEffect.jsx";
 import ChatBubble from "../../components/ChatBubble.jsx";
+import { Navigate, useNavigate } from "react-router-dom";
 
 
 /**
  * Author: Phan Nguyễn Mạnh Cường
  */
 export default function HomePage() {
-
+  const navigate = useNavigate();
   const musicRef = useRef(null);
   const exhibitionRef = useRef(null);
   const eventRef = useRef(null);
@@ -179,7 +180,7 @@ export default function HomePage() {
 
       {
         musicEvents && musicEvents.length > 0 && (
-          <div ref={musicRef}>
+          <div ref={musicRef} >
             <SlideShowDetail Category={Event.MUSIC} Events={musicEvents} />
           </div>
         )
