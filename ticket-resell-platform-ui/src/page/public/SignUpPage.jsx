@@ -257,7 +257,7 @@ export default function SignUp() {
       }}
     >
       <Card sx={{ minWidth: 500, marginTop: "2%", borderRadius: 3 }}>
-        <Typography variant="h3" className="text-center mt-5">
+        <Typography variant="h3" className="text-center mt-5" sx={{ color: MAIN_COLOR, fontWeight: "bold" }}>
           Đăng Ký
         </Typography>
         <FormGroup sx={{ margin: 5, minWidth: 450 }}>

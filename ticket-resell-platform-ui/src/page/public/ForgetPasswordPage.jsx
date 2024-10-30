@@ -5,6 +5,7 @@ import {
   FormGroup,
   Typography,
   CircularProgress,
+  Link,
 } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
@@ -12,11 +13,17 @@ import TextField from "@mui/material/TextField";
 import LoginIcon from "@mui/icons-material/Login";
 import * as React from "react";
 import { green } from "@mui/material/colors";
-import { MAIN_COLOR, VERIFY_FORGET_PASSWORD_PAGE } from "../../config/Constant";
+import {
+  LOGIN_PAGE,
+  MAIN_COLOR,
+  VERIFY_FORGET_PASSWORD_PAGE,
+} from "../../config/Constant";
 import API from "../../config/API";
 import useAxios from "../../utils/useAxios";
 import axios, { Axios } from "axios";
 import HttpStatus from "../../config/HttpStatus";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
+import { useNavigate } from "react-router-dom";
 const isEmail = (email) =>
   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 export default function ForgetPasswordPage() {
@@ -37,6 +44,8 @@ export default function ForgetPasswordPage() {
 
   const api = useAxios();
   const timer = React.useRef(undefined);
+
+  const navigate = useNavigate();
   const buttonSx = {
     ...(successSignUp && {
       bgcolor: green[500],
@@ -76,7 +85,7 @@ export default function ForgetPasswordPage() {
 
   const sendEmailRequestCheck = async () => {
     // console.log(emailInput);
-    
+
     setLoading(true);
     try {
       const response = await axios.post(
@@ -89,7 +98,7 @@ export default function ForgetPasswordPage() {
 
       if (response.data.httpStatus === HttpStatus.OK) {
         console.log(response.data);
-        localStorage.setItem("emailPassword",emailInput)
+        localStorage.setItem("emailPassword", emailInput);
         setFlag(true);
         setSuccessMessage({
           status: true,
@@ -97,13 +106,13 @@ export default function ForgetPasswordPage() {
         });
         setErrorMessage({
           status: false,
-          message: ""
-        })
+          message: "",
+        });
       } else {
         setSuccessMessage({
           status: false,
-          message: ""
-        })
+          message: "",
+        });
         setErrorMessage({
           status: true,
           message: "Email chưa được đăng ký",
@@ -118,6 +127,10 @@ export default function ForgetPasswordPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLogin = () => {
+    navigate(LOGIN_PAGE);
   };
 
   return (
@@ -174,6 +187,13 @@ export default function ForgetPasswordPage() {
               />
             )}
           </FormControl>
+          <Link
+            onClick={handleLogin}
+            color={MAIN_COLOR}
+            sx={{ cursor: "pointer" }}
+          >
+            <KeyboardReturnIcon /> Quay lại
+          </Link>
           {formValid && (
             <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
               <Alert severity="error" size="small">

@@ -223,7 +223,7 @@ function Header() {
                   </span>
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
-                    <Avatar alt="Remy Sharp" src={!user || !user.avatar ? "/broken-image.jpg" : "data:image/png;base64, " + user.avatar} />
+                    <Avatar alt="Remy Sharp" src={!user || !user.avatar ? "/src/assets/logo/broken-image.jpg" : "data:image/png;base64, " + user.avatar} />
                   </IconButton>
 
                   {
