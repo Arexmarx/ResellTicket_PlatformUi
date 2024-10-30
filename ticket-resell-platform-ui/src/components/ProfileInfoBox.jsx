@@ -256,7 +256,7 @@ export default function ProfileInfoBox({ user }) {
             </div>
             <div className='row d-flex justify-content-center mt-3 mb-3'>
                 <div style={{ width: '40%' }}>
-                    <TextField onChange={handleEmailChange}
+                    <TextField onChange={handleEmailChange} disabled={true}
                         value={email} fullWidth={true} id="standard-basic" label="Email" variant="standard"
                     />
                     {
