@@ -13,7 +13,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from "react-router-dom";
-import { HOME_PAGE, BOUGHT_TICKET_MANEMENT_PAGE, PROFILE_PAGE, MAIN_COLOR, FONT_MAIN, SEARCH_PAGE } from "../config/Constant"
+import { HOME_PAGE, BOUGHT_TICKET_MANEMENT_PAGE, PROFILE_PAGE, MAIN_COLOR, FONT_MAIN, SEARCH_PAGE, NOTIFICATION_PAGE } from "../config/Constant"
 import { Badge, Button } from "@mui/material";
 import HttpStatus from "../config/HttpStatus";
 import AuthContext from "../context/AuthContext";
@@ -229,11 +229,11 @@ function Header() {
                   {
                     havingNotification ?
                       <Badge className="ms-3" badgeContent={"!"} color="warning">
-                        <NotificationsActiveIcon />
+                        <NotificationsActiveIcon style={{ cursor: 'pointer' }} onClick={ () => navigate(NOTIFICATION_PAGE)} />
                       </Badge>
                       :
                       <div className="ms-3">
-                        <NotificationsActiveIcon />
+                        <NotificationsActiveIcon style={{ cursor: 'pointer' }} onClick={ () => navigate(NOTIFICATION_PAGE)} />
                       </div>
                   }
 

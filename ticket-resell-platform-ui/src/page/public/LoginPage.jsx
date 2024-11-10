@@ -125,7 +125,7 @@ export default function Login() {
       <ToastContainer />
       <Card
         sx={{
-          width: 900,
+          width: 1000,
           maxHeight: "90vh",
           overflowY: "auto",
           padding: 2,
@@ -134,18 +134,19 @@ export default function Login() {
           textAlign: "center",
         }}
       >
-        <MDBRow>
+        <MDBRow style={{ margin: '10px 10px 30px 10px' }}>
           <MDBCol md="6" style={{ position: "relative" }}>
-            <MDBCard
+          <MDBCardImage
+                src="/src/assets/logo/LogoHeader-Photoroom.png"
+                alt="Logo"
+                style={{ width: "80%", objectFit: "contain", marginTop: "30%" }}
+              />
+            {/* <MDBCard
               className="text-white d-flex justify-content-center align-items-center"
               style={{ height: "100%", textAlign: "center" }}
             >
-              <MDBCardImage
-                src="/src/assets/logo/LogoHeader-Photoroom.png"
-                alt="Logo"
-                style={{ width: "80%", objectFit: "contain" }}
-              />
-            </MDBCard>
+              
+            </MDBCard> */}
             <Link
               component="button"
               onClick={handleHomepage}
@@ -153,11 +154,13 @@ export default function Login() {
                 position: "absolute",
                 bottom: 0,
                 left: 0,
-                margin: "10px",
+                // margin: "10px",
+                marginLeft: 2,
                 color: "black", // Default color
                 "&:hover": {
                   color: MAIN_COLOR, // Hover color
                 },
+                textDecoration: "none"
               }}
             >
               <MDBIcon fas icon="home" /> Về trang chủ

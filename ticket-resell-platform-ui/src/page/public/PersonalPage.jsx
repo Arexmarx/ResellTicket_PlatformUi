@@ -94,7 +94,7 @@ export default function PersonalPage() {
                     style={{
                       marginTop: "120px",
                       color: "#fff",
-                      padding: "0 15px",
+                      padding: "0 0px",
                     }}
                   >
                     <MDBTypography
