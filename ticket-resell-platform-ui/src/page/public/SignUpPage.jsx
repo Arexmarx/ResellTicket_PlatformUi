@@ -410,7 +410,7 @@ export default function SignUp() {
               <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
                 <Alert severity="success" size="small">
                   {successMessage.message}
-                  <div>Mã xác thực đã được gửi qua emial. <a href={EMAIL_VERIFY_PAGE}>Xác thực</a></div>
+                  <div>Mã xác thực đã được gửi qua email. <a href={EMAIL_VERIFY_PAGE}>Xác thực</a></div>
                 </Alert>
               </Stack>
             )

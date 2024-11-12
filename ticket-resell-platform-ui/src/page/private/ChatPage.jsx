@@ -28,39 +28,49 @@ import ScrollToTop from "../../components/ScrollToTop";
 
 export default function ChatPage() {
   const [user, setUser] = useState({});
-  const [messages, setMessages] = useState([]); // State to hold messages
-  const [newMessage, setNewMessage] = useState(""); // State for the new message input
-  const [otherUsers, setOtherUsers] = useState([]); // State to hold other users in chat
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [otherUsers, setOtherUsers] = useState([]);
   const [fullUserlist, setFullUserList] = useState([]);
-  const [searchUser, setSearchUser] = useState(""); // Initialize as an empty string
-  const [conversation, setConversation] = useState(null); // Initialize as null
+  const [searchUser, setSearchUser] = useState("");
+  const [conversation, setConversation] = useState(null);
   const [connected, setConnected] = useState(false);
   const [stompClient, setStompClient] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const api = useAxios();
-
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await api.get(API.User.GET_USER_INFO);
-      if (response.data.httpStatus === HttpStatus.OK) {
-        console.log(response.data.object);
-        setUser(response.data.object);
+      try {
+        const response = await api.get(API.User.GET_USER_INFO);
+        if (response.data.httpStatus === HttpStatus.OK) {
+          setUser(response.data.object);
+        }
+      } catch (error) {
+        console.error("Error fetching user info:", error);
       }
     };
-    fetchData().catch(console.error);
 
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     const fetchOtherUsers = async () => {
-      const response = await api.get(API.User.GET_ALL_USER_BY_NAME, {
-        params: { name: "" },
-      });
-      if (response.data.httpStatus === HttpStatus.OK) {
-        setOtherUsers(response.data.object);
+      try {
+        const response = await api.get(API.User.GET_ALL_USER_BOX_CHAT + user.id);
+        if (response.data.httpStatus === HttpStatus.OK) {
+          setOtherUsers(response.data.object);
+        }
+      } catch (error) {
+        console.error("Error fetching other users:", error);
       }
     };
-    fetchOtherUsers().catch(console.error);
-  }, []);
+
+    if (user) {
+      fetchOtherUsers();
+    }
+  }, [user]);
 
   const handleSendMessage = () => {
     if (newMessage.trim() !== "" && stompClient) {
@@ -73,9 +83,9 @@ export default function ChatPage() {
         `/chat/chat.sendMessage/${conversation.conversationId}`,
         {},
         JSON.stringify(chatMessage)
-      ); // Send message to room
+      );
       setNewMessage("");
-      onConnected
+      scrollToBottom();
     }
   };
 
@@ -86,8 +96,6 @@ export default function ChatPage() {
           otherUsers.filter((users) => users.id && users.id !== user.id)
         );
       }
-    } else {
-      console.log("No Users to filter.");
     }
   }, [otherUsers]);
 
@@ -109,7 +117,6 @@ export default function ChatPage() {
             );
           }
         }
-        console.log("No users to filter.");
       }
     }
   };
@@ -126,11 +133,10 @@ export default function ChatPage() {
         { params: { firstMemberId: user.id, secondMemberId: userChat.id } }
       );
       if (chatResponse.data.httpStatus === HttpStatus.OK) {
-        console.log(chatResponse.data.object);
         setConversation(chatResponse.data.object);
-        setSelectedUser(userChat)
+        setSelectedUser(userChat);
         connect(chatResponse.data.object.conversationId);
-        setMessages(chatResponse.data.object.messages); 
+        setMessages(chatResponse.data.object.messages);
       }
     } catch (error) {
       console.log(error);
@@ -143,7 +149,6 @@ export default function ChatPage() {
     client.connect(
       {},
       () => {
-        console.log("Connected to WebSocket");
         setConnected(true);
         onConnected(client, conversationId);
       },
@@ -153,35 +158,29 @@ export default function ChatPage() {
   };
 
   const onConnected = (client, conversationId) => {
-    client.subscribe(`/room/${conversationId}`, onMessageReceived, {
-      onError: (error) => console.error("Subscription error:", error),
-    });
-    console.log(`Subscribed to topic: /room/${conversationId}`);
+    client.subscribe(`/room/${conversationId}`, onMessageReceived);
   };
 
   const onMessageReceived = (payload) => {
     try {
       const message = JSON.parse(payload.body);
-      console.log("Received message:", message); // Log the message received
-      setMessages((prevMessages) => [...prevMessages, message]); // Update messages
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" }); // Auto-scroll to the latest message
+      setMessages((prevMessages) => [...prevMessages, message]);
+      scrollToBottom();
     } catch (error) {
       console.error("Error parsing message:", error);
     }
   };
 
   const onError = (error) => {
-    console.error(
-      "Could not connect to WebSocket server. Please refresh this page to try again!",
-      error
-    );
+    console.error("WebSocket connection error:", error);
     setConnected(false);
   };
 
-  // Auto scroll error
-  // useEffect(() => {
-  //   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  // }, [messages]);
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  };
 
   return (
     <div>
@@ -193,42 +192,30 @@ export default function ChatPage() {
           </MDBCol>
           <MDBCol md="10">
             <MDBRow>
-              
               <MDBCol md="9">
-                <MDBCard
-                  style={{
-                    height: "80vh",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
+                <MDBCard style={{ height: "80vh", display: "flex", flexDirection: "column" }}>
                   <MDBCardHeader>
-
                     <div className="col-md-12 d-flex justify-content-start align-items-center">
-                      {
-                        selectedUser && <Avatar className="me-3"
-                        src={
-                          selectedUser.avatar
-                            ? "data:image/png;base64, " + selectedUser.avatar
-                            : "broken-image.jpg"
-                        }
-                      />
-                      }
-                      {selectedUser && <>{selectedUser.firstname + " " + selectedUser.lastname}</>}
+                      {selectedUser && (
+                        <>
+                          <Avatar
+                            className="me-3"
+                            src={selectedUser.avatar ? `data:image/png;base64, ${selectedUser.avatar}` : "broken-image.jpg"}
+                          />
+                          {selectedUser.firstname + " " + selectedUser.lastname}
+                        </>
+                      )}
                     </div>
                   </MDBCardHeader>
                   <MDBCardBody className="overflow-auto">
-                    {/* Message Display Area */}
                     <div
                       className="chat-messages"
-                      style={{ maxHeight: "70vh", overflowY: "scroll" }}
+                      style={{ maxHeight: "70vh", overflowY: "auto" }}
                     >
                       {messages.map((msg, index) => (
                         <div
                           key={index}
-                          className={
-                            msg.senderId === user.id ? "text-end" : "text-start"
-                          }
+                          className={msg.senderId === user.id ? "text-end" : "text-start"}
                         >
                           <div
                             className={`message p-2 mb-2 rounded ${msg.senderId === user.id
@@ -241,8 +228,7 @@ export default function ChatPage() {
                           </div>
                         </div>
                       ))}
-                      <div ref={messagesEndRef} />{" "}
-                      {/* Reference for auto-scrolling */}
+                      <div ref={messagesEndRef} />
                     </div>
                   </MDBCardBody>
                   <MDBCardFooter>
@@ -259,7 +245,7 @@ export default function ChatPage() {
                         }}
                       />
                       <MDBBtn color="primary" onClick={handleSendMessage}>
-                        <SendRoundedIcon/>
+                        <SendRoundedIcon />
                       </MDBBtn>
                     </MDBInputGroup>
                   </MDBCardFooter>
@@ -290,11 +276,7 @@ export default function ChatPage() {
                         >
                           <div className="col-md-1 d-flex justify-content-center align-items-center">
                             <Avatar
-                              src={
-                                otherUser.avatar
-                                  ? "data:image/png;base64, " + otherUser.avatar
-                                  : "broken-image.jpg"
-                              }
+                              src={otherUser.avatar ? `data:image/png;base64, ${otherUser.avatar}` : "broken-image.jpg"}
                             />
                           </div>
                           {otherUser.firstname + " " + otherUser.lastname}
@@ -316,6 +298,7 @@ export default function ChatPage() {
         </MDBRow>
       </MDBContainer>
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }
