@@ -20,7 +20,8 @@ const API =  {
         SET_NEW_PASSWORD: "/api/users/reset-password/new-pass",
         CHANGE_PASSWORD: "/api/users/change-pass",
         GET_ALL_RECEIVED_NOTIFICATION: "/api/users/get/notifications/all/",
-        GET_ALL_USER_BY_NAME: "/api/users/get-by-name"
+        GET_ALL_USER_BY_NAME: "/api/users/get-by-name",
+        GET_ALL_USER_BOX_CHAT: "/api/users/get-box-chat/"
     },
 
     Ticket: {
