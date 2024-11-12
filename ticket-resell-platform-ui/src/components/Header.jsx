@@ -164,7 +164,8 @@ function Header() {
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
-              marginLeft: '1%'
+              marginLeft: '1%',
+              cursor: 'pointer'
             }}
             onClick={handleHomepage}
           >

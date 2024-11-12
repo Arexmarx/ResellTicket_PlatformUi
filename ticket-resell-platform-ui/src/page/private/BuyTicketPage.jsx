@@ -10,6 +10,13 @@ import {
   MDBCardTitle,
   MDBCardText,
   MDBBtn,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter,
 } from "mdb-react-ui-kit";
 
 import { MAIN_COLOR } from "../../config/Constant.js";
@@ -39,6 +46,7 @@ export default function BuyTicketPage() {
   const [numberOfTickets, setNumberOfTickets] = useState()
   const [paymentMethods, setPaymentMethods] = useState([])
   const [orderMessage, setOrderMessage] = useState({ status: false, message: '' })
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
 
   const api = useAxios()
@@ -101,6 +109,7 @@ export default function BuyTicketPage() {
         setOrderMessage({ status: false, message: response.data.message })
         errorNotification(response.data.message)
       }
+      setConfirmModalOpen(false)
     }
     else {
       setOrderMessage({ status: false, message: 'Bạn không đủ số dư để mua!' })
@@ -202,7 +211,8 @@ export default function BuyTicketPage() {
                 }
                 <MDBBtn
                   style={{ backgroundColor: MAIN_COLOR }}
-                  onClick={() => handleBuy(ticket)}
+                  // onClick={() => handleBuy(ticket)}
+                  onClick={() => setConfirmModalOpen(!confirmModalOpen)}
                   disabled={numberOfTickets ? false : true}
                 >
                   Mua
@@ -228,6 +238,32 @@ export default function BuyTicketPage() {
           </MDBCol>
         </MDBRow>
       </MDBContainer>
+
+      {/* Confirm modal */}
+      <MDBModal tabIndex="-1" open={confirmModalOpen}>
+        <MDBModalDialog centered="true">
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Xác nhận mua vé</MDBModalTitle>
+              <MDBBtn onClick={() => setConfirmModalOpen(!confirmModalOpen)}
+                className="btn-close"
+                color="none"
+              ></MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>
+              <div>Số lượng vé: <strong>{quantity}</strong></div>
+              <div className="mt-2">Tổng tiền: <strong>{formatToVND(quantity * (ticket.price - (ticket.price * (ticket.salePercent / 100))))}</strong></div>
+            </MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn color="success" onClick={handleBuy}>Xác nhận</MDBBtn>
+              <MDBBtn color="secondary" onClick={() => setConfirmModalOpen(!confirmModalOpen)}>
+                Đóng
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+      
       <Footer />
     </div>
   );

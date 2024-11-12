@@ -66,8 +66,8 @@ export default function NotificationReadBox({ user }) {
                     </div>
                     <hr />
                     <div className="d-flex justify-content-between">
-                        <div>
-                            <strong>{item.content}</strong>
+                        <div className="w-75">
+                            <strong style={{ wordWrap: "break-word", whiteSpace: "normal" }}>{item.content}</strong>
                             <div>{item.subHeader}</div>
                             <div>{formatDateTime(item.sentDate)}</div>
                         </div>

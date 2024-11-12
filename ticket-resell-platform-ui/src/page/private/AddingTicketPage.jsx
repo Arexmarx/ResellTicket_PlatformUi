@@ -10,6 +10,8 @@ import CategoryAPI from "../../service/api/CategoryAPI";
 import EventAPI from "../../service/api/EventAPI";
 import useAxios from "../../utils/useAxios";
 import API from "../../config/API";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const SidebarOption = {
     PROFILE: 'profile',
@@ -22,6 +24,8 @@ export const SidebarOption = {
 export default function AddingTicketPage() {
 
     const api = useAxios()
+    // const successNotification = (str) => toast(str);
+    const errorNotification = (str) => toast.error(str);
     const GENERIC_TICKET_TEMP_KEY = 'generic_ticket_temp';
 
     const [user, setUser] = useState({});
@@ -161,6 +165,15 @@ export default function AddingTicketPage() {
         localStorage.removeItem(GENERIC_TICKET_TEMP_KEY)
     }
 
+    const isInRange = (number, min, max) => {
+        return !isNaN(number) && number >= min && number <= max;
+    }
+
+    const isValidVND = (value) => {
+        const amount = typeof value === "string" ? Number(value) : value;
+        return Number.isInteger(amount) && amount >= 0 && Number.isFinite(amount);
+      }
+
     const handleAddTicket = (e) => {
         e.preventDefault();
         setTicketDetails([...ticketDetails, currentTicket]);
@@ -184,7 +197,16 @@ export default function AddingTicketPage() {
             sellerId: user.id
         }
 
-        console.log(genericTicketRequest);
+        //console.log(genericTicketRequest);
+        if (!isInRange(genericTicketRequest.salePercent, 0, 80)) {
+            errorNotification("Phần trăm giảm giá phải có giá trị từ 0-80%")
+            return;
+        }
+
+        if (!isValidVND(genericTicketRequest.price)) {
+            errorNotification("Giá vé không hợp lệ");
+            return;
+        }
 
         if (genericName && genericPrice && genericExpiredDate) {
             const fetchData = async () => {
@@ -264,6 +286,7 @@ export default function AddingTicketPage() {
 
     return (
         <div>
+            <ToastContainer />
             <div className="row">
                 <Header />
             </div>
