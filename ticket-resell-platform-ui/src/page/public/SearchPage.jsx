@@ -27,7 +27,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import "../../assets/css/BoxDateTime.css";
 import { getDay, getMonth, getYear } from "../../service/DateService";
-import { TextField } from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import ChatBubble from "../../components/ChatBubble";
 import HttpStatus from "../../config/HttpStatus";
 
@@ -116,6 +116,9 @@ export default function SearchPage() {
     setSearchTerm(e.target.value);
   };
 
+  const handleChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
   return (
     <div>
       <Header />
@@ -128,7 +131,7 @@ export default function SearchPage() {
         </MDBTypography>
 
         <MDBRow style={{ marginTop: "2%" }}>
-          <div className="col-md-5 d-flex align-items-center">
+          {/* <div className="col-md-5 d-flex align-items-center">
             <div style={{ width: "100%" }}>
               <div>Tìm kiếm tên sự kiện</div>
               <TextField
@@ -139,17 +142,10 @@ export default function SearchPage() {
                 label="Tìm kiếm sự kiện theo tên"
               />
             </div>
-            {/* <input
-              type="text"
-              placeholder="Tìm kiếm sự kiện theo tên"
-              value={searchTerm}
-              onChange={handleSearchChange}
-              className="form-control"
-            /> */}
-          </div>
+          </div> */}
           <div className="col-md-3">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <div>Tìm kiếm tên sự kiện</div>
+              <div>Tìm kiếm ngày bắt đầu sự kiện</div>
               <DemoContainer components={["DatePicker"]}>
                 <DatePicker
                   label="Chọn ngày bắt đầu sự kiện"
@@ -159,8 +155,23 @@ export default function SearchPage() {
             </LocalizationProvider>
           </div>
           <MDBCol md="4">
-            <MDBTypography>TÌm kiếm theo danh mục</MDBTypography>
-            <MDBDropdown>
+
+            <div>TÌm kiếm theo danh mục</div>
+
+              <FormControl fullWidth sx={{ marginTop: 1 }}>
+                <InputLabel id="demo-simple-select-label">{selectedCategory}</InputLabel>
+                <Select labelId="demo-simple-select-label" id="demo-simple-select"
+                  label="Chọn danh mục"
+                >
+                  <MenuItem onClick={() => handleCategorySelect("Âm Nhạc")}>Âm Nhạc</MenuItem>
+                  <MenuItem onClick={() => handleCategorySelect("Triển Lãm")}>Triển Lãm</MenuItem>
+                  <MenuItem onClick={() => handleCategorySelect("Sự Kiện")}>Sự Kiện</MenuItem>
+                  <MenuItem onClick={() => handleCategorySelect("Khác")}>Khác</MenuItem>
+                  <MenuItem onClick={() => handleCategorySelect("Tất Cả")}>Tất Cả</MenuItem>
+                </Select>
+              </FormControl>
+           
+            {/* <MDBDropdown>
               <MDBDropdownToggle color="light">
                 {selectedCategory}
               </MDBDropdownToggle>
@@ -186,7 +197,8 @@ export default function SearchPage() {
                   Tất Cả
                 </MDBDropdownItem>
               </MDBDropdownMenu>
-            </MDBDropdown>
+            </MDBDropdown> */}
+
           </MDBCol>
         </MDBRow>
         <MDBRow style={{ marginTop: "2%" }}>

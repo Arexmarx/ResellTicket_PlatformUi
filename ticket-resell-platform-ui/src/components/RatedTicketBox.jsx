@@ -4,8 +4,6 @@ import API from "../config/API";
 import HttpStatus from "../config/HttpStatus";
 import { Avatar, Box, Divider, Rating } from "@mui/material";
 import { formatToVND } from "../service/StringService";
-import { formatDateTime } from "../service/DateService";
-import { MDBCollapse, MDBContainer, MDBRow } from "mdb-react-ui-kit";
 
 
 const titleCss = {
@@ -63,12 +61,12 @@ export default function RatedTicketBox({ user }) {
               </div>
               <div className="row">{formatToVND(item.price)}</div>
             </div>
-            <div className="col-md-1">
+            {/* <div className="col-md-1">
               <div style={titleCss} className="row">
                 Loại vé
               </div>
               <div className="row">{item.isPaper ? 'Giấy' : 'Online'}</div>
-            </div>
+            </div> */}
             <div className="col-md-1">
               <div style={titleCss} className="row">
                 Số lượng
@@ -76,11 +74,11 @@ export default function RatedTicketBox({ user }) {
               <div className="row">x{item.tickets.length}</div>
             </div>
             <div className="col-md-2">
-              <div style={{ ...titleCss, marginLeft: 5 }}  className="row">
+              <div style={{ ...titleCss, marginLeft: 5 }} className="row">
                 Số sao đánh giá
               </div>
               <div className="row">
-                <Rating name="simple-controlled" value={item.stars} readOnly={true}/>
+                <Rating name="simple-controlled" value={item.stars} readOnly={true} />
               </div>
             </div>
 
@@ -90,25 +88,26 @@ export default function RatedTicketBox({ user }) {
             </div>
             <div className="row">{item.boughtDate}</div>
           </div> */}
-            <div className="col-md-1">
+            <div className="col-md-3">
               <div style={titleCss} className="row">
-                Tình trạng
+                Nội dung
               </div>
-              <div className="row">
-                Đã đánh giá
+              <div className="row" style={{ wordWrap: "break-word", whiteSpace: "normal", overflowWrap: "break-word" }}>
+                {item.comment}
               </div>
             </div>
           </div>
           <div className="row mt-3 mb-3">
             <Divider />
           </div>
-          <div className="d-flex justify-content-end">
+          {/* <div className="d-flex justify-content-end">
             <div>
               <button onClick={() => handleBasicModal(item.id)} className="btn btn-link">Chi tiết</button>
             </div>
-          </div>
+          </div> */}
         </div>
-        <MDBCollapse open={basicModal === item.id} onClose={() => setBasicModal(null)} >
+
+        {/* <MDBCollapse open={basicModal === item.id} onClose={() => setBasicModal(null)} >
           <MDBContainer fluid>
             <MDBRow>
               {
@@ -117,14 +116,13 @@ export default function RatedTicketBox({ user }) {
                     <div key={index}>
                       <p>Mã số vé: {detail.ticketSerial}</p>
                       <p>Ngày mua: {formatDateTime(detail.boughtDate)}</p>
-                      {/* <img src={detail.image} alt="" /> */}
                     </div>
                   ))
                   : ''
               }
             </MDBRow>
           </MDBContainer>
-        </MDBCollapse>
+        </MDBCollapse> */}
 
       </Box>
     ))

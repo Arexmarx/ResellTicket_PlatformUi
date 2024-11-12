@@ -21,7 +21,7 @@ export default function NotificationNewBox({ user }) {
             const fetchData = async () => {
                 const response = await api.get(API.User.GET_ALL_RECEIVED_NOTIFICATION + user?.id)
                 if (response.data.httpStatus === HttpStatus.OK) {
-                    //console.log(response.data.object);
+                    console.log(response.data.object);
                     setVisibleNotifications(response.data.object)
                 }
             }

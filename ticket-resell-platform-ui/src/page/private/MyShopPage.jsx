@@ -13,6 +13,8 @@ import LoadEffect from "../../components/LoadEffect"
 import OrderTicketInfo from "../../components/OrderTicketInfo"
 import CanceledTicketBox from "../../components/CanceledTicketBox"
 import SoldTicketBox from "../../components/SoldTicketBox"
+import ViewRatedTicketBoxOfSeller from "../../components/ViewRatedTicketBoxOfSeller"
+import { ToastContainer } from "react-toastify"
 
 /*
     Author: Nguyen Tien Thuan
@@ -37,9 +39,9 @@ export default function MyShopPage() {
         { id: '1', label: 'Vé đang bán' },
         { id: '2', label: 'Đơn mua' },
         { id: '3', label: 'Vé đã bán' },
-        { id: '4', label: 'Doanh thu' },
-        { id: '5', label: 'Vé bị hủy' },
-        { id: '6', label: 'Đánh giá' }
+        // { id: '4', label: 'Doanh thu' },
+        { id: '4', label: 'Vé bị hủy' },
+        { id: '5', label: 'Đánh  giá' }
     ];
 
     const [activeTab, setActiveTab] = useState(tabs[0]);
@@ -57,6 +59,7 @@ export default function MyShopPage() {
 
     return (
         <div>
+            
             <div className="row">
                 <Header />
             </div>
@@ -98,7 +101,10 @@ export default function MyShopPage() {
                                                     activeTab.id === tabs[2].id && <SoldTicketBox user={user}/>
                                                 }
                                                 {
-                                                    activeTab.id === tabs[4].id && <CanceledTicketBox user={user}/>
+                                                    activeTab.id === tabs[3].id && <CanceledTicketBox user={user}/>
+                                                }
+                                                {
+                                                    activeTab.id === tabs[4].id && <ViewRatedTicketBoxOfSeller user={user} />
                                                 }
                                             </div>
 

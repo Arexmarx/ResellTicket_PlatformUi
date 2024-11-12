@@ -526,7 +526,7 @@ export default function BoughtTicketBox({ user }) {
                                     Số Seri:
                                   </MDBTypography>
                                   <p>
-                                    {getFirstFiveChars(x.ticketSerial)}*****
+                                    {x.ticketSerial}
                                   </p>
 
                                   <MDBTypography tag="h6">

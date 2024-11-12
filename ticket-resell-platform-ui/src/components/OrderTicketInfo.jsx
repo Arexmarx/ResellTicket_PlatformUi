@@ -8,6 +8,9 @@ import HttpStatus from "../config/HttpStatus";
 import { formatToVND } from "../service/StringService";
 import { formatDateTime } from "../service/DateService";
 import { MDBBtn, MDBModal, MDBModalBody, MDBModalContent, MDBModalDialog, MDBModalFooter, MDBModalHeader, MDBModalTitle } from "mdb-react-ui-kit";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const titleCss = {
     fontSize: "70%",
@@ -18,6 +21,8 @@ export default function OrderTicketInfo({ user }) {
 
     const api = useAxios();
     const [requestOrders, setRequestOrders] = useState(null)
+    const successNotification = (str) => toast.success(str);
+    const errorNotification = (str) => toast.error(str);
 
 
     useEffect(() => {
@@ -64,13 +69,16 @@ export default function OrderTicketInfo({ user }) {
         // console.log(acceptOrDenySellingRequest);
         const response = await api.post(API.Ticket.ACCEPT_SELLING_TICKET_REQUEST, acceptOrDenySellingRequest)
         if (response.data.httpStatus === HttpStatus.OK) {
-            console.log(response.data)
+            //console.log(response.data)
             setAcceptResponseMessage({ status: true, message: response.data.message })
+            successNotification(response.data.message)
         }
         else {
             console.log(response.data)
             setAcceptResponseMessage({ status: false, message: response.data.message })
+            errorNotification(response.data.message)
         }
+        setOpenOrderRequestModal(null);
     }
 
     // Deny selling request api
@@ -97,14 +105,16 @@ export default function OrderTicketInfo({ user }) {
             const response = await api.post(API.Ticket.DENY_SELLING_TICKET_REQUEST, acceptOrDenySellingRequest)
             if (response.data.httpStatus === HttpStatus.OK) {
                 setDenyNoteMessage({ status: true, message: '' })
-                console.log(response.data.message)
+                //console.log(response.data.message)
                 setDenyResponseMessage({ status: true, message: response.data.message })
+                successNotification(response.data.message)
             }
             else {
-                console.log(response.data.message);
-                
+                //console.log(response.data.message);
                 setDenyResponseMessage({ status: false, message: response.data.message })
+                errorNotification(response.data.message)
             }
+            setDenyOrderRequestModal(null)
         }
         else {
             setDenyNoteMessage({ status: false, message: 'Lý do từ chối không được để trống!' })
@@ -121,6 +131,7 @@ export default function OrderTicketInfo({ user }) {
 
     return (
         <Box>
+            <ToastContainer />
             {
                 requestOrders && requestOrders.length > 0 &&
                 (
