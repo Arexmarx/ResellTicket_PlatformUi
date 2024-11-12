@@ -497,7 +497,7 @@ export default function AddingTicketPage() {
                                     <div key={index} className="mt-5 shadow-sm p-3 mb-5 bg-body rounded"
                                         style={{ display: 'flex', alignItems: 'center' }}
                                     >
-                                        <p style={{ marginRight: '5%' }}>Ticket {index + 1}</p>
+                                        <p style={{ marginRight: '5%' }}>Vé {index + 1}</p> 
                                         <p style={{ marginRight: '5%' }}>Mã serial: {ticket.serial}</p>
                                         <p style={{ marginRight: '5%' }}>Hình ảnh: {ticket.image ? ticket.image.name : 'No image uploaded'}</p>
                                         {/* <p style={{ marginRight: '5%' }}>Mô tả: {ticket.description}</p> */}

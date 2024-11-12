@@ -61,12 +61,13 @@ export default function ChatPage() {
         const response = await api.get(API.User.GET_ALL_USER_BOX_CHAT + user.id);
         if (response.data.httpStatus === HttpStatus.OK) {
           setOtherUsers(response.data.object);
+          console.log(response.data.object);
         }
       } catch (error) {
         console.error("Error fetching other users:", error);
       }
     };
-
+  
     if (user) {
       fetchOtherUsers();
     }
@@ -103,7 +104,7 @@ export default function ChatPage() {
     if (value.key === "Enter") {
       if (searchUser.length > 0) {
         setFullUserList(
-          fullUserlist.filter((users) =>
+          otherUsers.filter((users) =>
             fullname(users.firstname, users.lastname)
               .toLowerCase()
               .includes(searchUser.toLowerCase())

@@ -140,7 +140,7 @@ export default function PersonalPage() {
                     </div>
                     <div>
                       <MDBCardText className="mb-1 h5">
-                        {ratings ? ratings.avgStars : 0}
+                        {ratings ? Math.round(ratings.avgStars *10)/10 : 0}
                       </MDBCardText>
                       <MDBCardText className="small text-muted mb-0">
                         Số sao

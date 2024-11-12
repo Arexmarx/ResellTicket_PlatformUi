@@ -442,7 +442,7 @@ export default function BoughtTicketBox({ user }) {
                                     startIcon={<CloudUploadIcon />}
                                     sx={{ backgroundColor: MAIN_COLOR }}
                                   >
-                                    Tải ảnh vé lên
+                                    Tải ảnh bằng chứng
                                     <VisuallyHiddenInput
                                       type="file"
                                       onChange={handleImageChange}
